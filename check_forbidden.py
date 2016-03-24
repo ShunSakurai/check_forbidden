@@ -24,7 +24,6 @@ btn_export = tkinter.Button(text='Export file')
 var_bl = tkinter.StringVar(tk_F)
 var_csv = tkinter.StringVar(tk_F)
 var_export = tkinter.StringVar(tk_F)
-var_default = var_export.get()
 
 three_buttons = [btn_bl, btn_csv, btn_export]
 for i in three_buttons:
