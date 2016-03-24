@@ -129,6 +129,16 @@ def check():
         f1.close()
 
     f2.close()
+    if list_delete:
+        for i in list_delete:
+            os.remove(i+r'/document.mqxliff')
+        time.sleep(0.01)
+        for i in list_delete:
+            try:
+                os.rmdir(i)
+            except:
+                time.sleep(0.05)
+                os.rmdir(i)
 
     if set_found:
         f3w.append(['Summary'])
@@ -142,17 +152,6 @@ def check():
         f3wc = csv.writer(f3,lineterminator='\n')
         f3wc.writerows(f3w)
         f3.close()
-
-        if list_delete:
-            for i in list_delete:
-                os.remove(i+r'/document.mqxliff')
-            time.sleep(0.01)
-            for i in list_delete:
-                try:
-                    os.rmdir(i)
-                except:
-                    time.sleep(0.05)
-                    os.rmdir(i)
 
         print('\n'+var_export.get().rsplit('/')[-1].rsplit('\\')[-1]+' was successfully created.\nPress Enter key to exit.')
     else:
