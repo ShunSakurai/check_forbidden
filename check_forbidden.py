@@ -9,12 +9,11 @@ import os
 import tkinter
 import tkinter.filedialog
 import re
-import time
+from time import sleep
 
 tk_F = tkinter.Frame()
-tk_F.columnconfigure(1,weight=1)
 
-args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff'), ('text', '*.txt')]}
+args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
 args_csv = {'filetypes' : [('csv','*.csv'), ('text', '*.txt')]}
 
 btn_bl = tkinter.Button(text='Billingual file')
@@ -24,7 +23,6 @@ btn_export = tkinter.Button(text='Export file')
 var_bl = tkinter.StringVar(tk_F)
 var_csv = tkinter.StringVar(tk_F)
 var_export = tkinter.StringVar(tk_F)
-var_default = var_export.get()
 
 three_buttons = [btn_bl, btn_csv, btn_export]
 for i in three_buttons:
@@ -62,7 +60,7 @@ three_entries = [ent_bl,ent_csv,ent_export]
 for i in three_entries:
     i.grid(row=three_entries.index(i),column=2,columnspan=2,padx=5)
 
-message = 'CSV format: 0(Number), English, Japapnese(NG), Japanese(OK)'
+message = 'CSV format: 0(Number), Source, Target (NG), Target (OK)'
 label_csv = tkinter.Label(text='')
 label_csv.grid(row=3,column=0,columnspan=3)
 
@@ -112,12 +110,12 @@ def check():
         f2r = csv.reader(f2)
         for row in f2r:
             if len(row) >= 3:
-                jpn_ng = 2
+                target_ng = 2
             else:
-                jpn_ng = 0
+                target_ng = 0
 
             for match in f1r:
-                if match.find(row[jpn_ng]) != -1:
+                if match.find(row[target_ng]) != -1:
                     sl = [row[i] for i in range(len(row))]
                     f3w.append(sl)
                     print(sl)
@@ -132,12 +130,12 @@ def check():
     if list_delete:
         for i in list_delete:
             os.remove(i+r'/document.mqxliff')
-        time.sleep(0.01)
+        sleep(0.01)
         for i in list_delete:
             try:
                 os.rmdir(i)
             except:
-                time.sleep(0.05)
+                sleep(0.05)
                 os.rmdir(i)
 
     if set_found:
