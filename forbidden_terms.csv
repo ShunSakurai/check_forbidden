@@ -1,8 +1,0 @@
-Index,Source,Target (forbidden),Target (OK)
-1,None,can't,cannot
-2,*Can be blank, play,*Space + play
-3,,Play,*Capital case
-4,following,以下の,次の
-5,following,以下に,次に
-6,,次の,*Correct term just for demo
-7,,次の通り,次のとおり
