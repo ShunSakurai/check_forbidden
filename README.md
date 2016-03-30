@@ -3,6 +3,8 @@ This code is for checking if forbidden terms are included in the target segments
 
 [Japanese README](https://github.com/ShunSakurai/password/blob/master/README_jpn.md) is also available.
 
+![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
+
 ## Description
 The motivation behind this tool is that even though memoQ can check forbidden source and target term pairs, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
 
@@ -46,7 +48,7 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 - Result is displayed in Command Prompt, and if any match is found, it is also exported to CSV file
-- Once the term is found in one file, the program stops searching for that term and starts searching for it in the next file
+- Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - Result is displayed for each file, and for the whole files (as the "Summary")
 - You can press "Enter" key or click "X" (close) button to exit the program
 - You can re-run the program without closing it
@@ -58,7 +60,7 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 Two file types are supported:
 
 - .mqxliff
-- .mqxlz, which is a compressed file of document.mqxliff file and skeleton (formatting information). The program extracts the document.mqxliff to a folder and removes it when everything is finished
+- .mqxlz, which is a compressed file of document.mqxliff file, skeleton (formatting information), and sometimes version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV files format
 The items need to be encoded in UTF-8, separated by commas, and formatted in either:
