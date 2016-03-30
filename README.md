@@ -43,7 +43,7 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 - Choose the path and the file name of the result file to be exported. The default is the first bilingual file's path + result.csv
 - Click "Run!"
 
-![]()
+![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 - Result is displayed in Command Prompt, and if any match is found, it is also exported to CSV file
 - Once the term is found in one file, the program stops searching for that term and starts searching for it in the next file
@@ -52,7 +52,7 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 - You can re-run the program without closing it
 - If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
-![]()
+![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
 ### memoQ file types
 Two file types are supported:
@@ -72,7 +72,7 @@ or
 - Three or more lines of e.g. index, source term, target term (forbidden), and target term (correct)
 - Terms in the **third** column will be considered as the forbidden terms
 
-![]()
+![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_CSV.png)
 
 ### Word separation is not taken in account
 This program treats each segment just as a string. It does not distinguish each word.
@@ -124,12 +124,15 @@ Avoid using too short terms, such as one kanji character word:
 - Preparing installer
 - Preparing icon
 - Resizable window
-- File addition by dragging
 - Keyboard shortcuts
 - More useful "Open files" dialog
+- Sorting Summary results on Command Prompt
+- Dividing Summary results in the CSV file
 
 ### Maybe later
 
+- File addition by dragging
+- Choosing multiple bilingual files from different folders
 - Getting rid of { brackets } in the bilingual file field
 - Settings to specify the row of forbidden terms
 - Settings to specify CSV delimiters
