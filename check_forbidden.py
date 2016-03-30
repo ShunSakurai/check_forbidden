@@ -60,7 +60,7 @@ three_entries = [ent_bl,ent_csv,ent_export]
 for i in three_entries:
     i.grid(row=three_entries.index(i),column=2,columnspan=2,padx=5)
 
-message = 'CSV format: 0(Number), Source, Target (NG), Target (OK)'
+message = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
 label_csv = tkinter.Label(text='')
 label_csv.grid(row=3,column=0,columnspan=3)
 
