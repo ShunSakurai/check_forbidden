@@ -1,0 +1,16 @@
+Z:/Users/sakuraishun/Dropbox/Codes/check_forbidden/READMEmd_jpn.mqxlz
+1,None,can't,cannot
+2,*Can be blank, play,*Space + play
+4,following,以下の,次の
+5,following,以下に,次に
+6,,次の,*Correct term just for demo
+Summary
+"['5', 'following', '以下に', '次に']"
+"['6', '', '次の', '*Correct term just for demo']"
+"['1', 'None', ""can't"", 'cannot']"
+"['4', 'following', '以下の', '次の']"
+"['2', '*Can be blank', ' play', '*Space + play']"
+Z:/Users/sakuraishun/Dropbox/Codes/password/README.md_jpn.mqxlz
+6,,次の,*Correct term just for demo
+Summary
+"['6', '', '次の', '*Correct term just for demo']"

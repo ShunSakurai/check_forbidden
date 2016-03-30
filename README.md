@@ -1,6 +1,8 @@
 # check_forbidden
 This code is for checking if forbidden terms are included in the target segments of memoQ bilingual files (.mqxlz / .mqxliff).
 
+[Japanese README](https://github.com/ShunSakurai/password/blob/master/README_jpn.md) is also available.
+
 ## Description
 The motivation behind this tool is that even though memoQ can check forbidden source and target term pairs, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
 
@@ -44,6 +46,8 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 ![]()
 
 - Result is displayed in Command Prompt, and if any match is found, it is also exported to CSV file
+- Once the term is found in one file, the program stops searching for that term and starts searching for it in the next file
+- Result is displayed for each file, and for the whole files (as the "Summary")
 - You can press "Enter" key or click "X" (close) button to exit the program
 - You can re-run the program without closing it
 - If you choose an existing CSV file as the result file, the result will be added to the bottom of it
@@ -57,7 +61,7 @@ Two file types are supported:
 - .mqxlz, which is a compressed file of document.mqxliff file and skeleton (formatting information). The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV files format
-The items need to be separated by commas and formatted in either:
+The items need to be encoded in UTF-8, separated by commas, and formatted in either:
 
 - One line of forbidden terms
 - Two lines of forbidden terms and extra information (e.g. correct terms)
