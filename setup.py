@@ -6,6 +6,6 @@ setup(
       )
 
 '''
-go to the location and
+cd dropbox/codes/check_forbidden
 py -3.4 setup.py py2exe
 '''

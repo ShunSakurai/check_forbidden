@@ -104,6 +104,7 @@ Avoid using too short terms, such as one kanji character word:
 - More useful "Open files" dialog
 - Sorting Summary results on Command Prompt
 - Dividing Summary results in the CSV file
+- Displaying export path and file name candidate when typing / pasting into the Bilingual file field
 
 ### Maybe later
 - File addition by dragging
@@ -114,6 +115,7 @@ Avoid using too short terms, such as one kanji character word:
 - Radio buttons to select export style (command prompt / CSV file)
 - Handling non-memoQ files
 - Support regex in forbidden term list
+- Making the path in the entry fields the initial path when pressing buttons
 
 Please let me know if you need any of the features as soon as possible.
 
