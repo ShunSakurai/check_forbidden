@@ -72,7 +72,7 @@ memoQでは、禁止されている原語と訳語のペアを検証すること
 - 3列以上 (例: 通し番号、原語、訳語(禁止)、訳語(正))
 - **3列目**の用語が禁止語とみなされます
 
-![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_CSV.png)
+![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
 ### 単語の切れ目は考慮されません
 本プログラムでは、各セグメントを単なる文字列として扱います。各単語は区別しません。

@@ -72,7 +72,7 @@ or
 - Three or more lines of e.g. index, source term, target term (forbidden), and target term (correct)
 - Terms in the **third** column will be considered as the forbidden terms
 
-![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_CSV.png)
+![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
 ### Word separation is not taken in account
 This program treats each segment just as a string. It does not distinguish each word.
