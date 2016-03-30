@@ -2,7 +2,7 @@ from distutils.core import setup
 import py2exe
 
 setup(
-      console=[{'script':'check_forbidden.py','version':'1.0.10',}],
+      console=[{'script':'check_forbidden.py','version':'1.1.0',}],
       )
 
 '''
