@@ -23,10 +23,10 @@ This tool searches for the forbidden terms in the bilingual files, displays the 
 This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
 
 ## Installation
-It is currently only available for Windows.
+It is currently only available for Windows at [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 Installer is now being developed. For the moment, please do the following:
 
-- Download the whole "dist" folder (Download the whole thing in zip and choose that folder)
+- Download dist.zip and decompress it
 - Rename the folder to "check_forbidden" or any name you like
 - Move it to C:\Program Files
 - Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs
@@ -92,34 +92,8 @@ Avoid using too short terms, such as one kanji character word:
 
 - JP: Avoid adding "等" (など) in order not to match "等級", for example
 
-## History
-
-"*" at the beginning means bug-fixing.
-
-### ver1.0.10, March 28, 2016
-- Changed the language pair from En->Jp to general Source->Target
-- * Removed .txt format from the bilingual files choices, because the program started using regex when parsing the bilingual files
-- Created Readme.md
-
-### ver1.0.9, March 24, 2016
-- * Resolved an issue where folders are not deleted when no forbidden term is found
-
-### ver1.0.8, March 24, 2016
-- Added to GitHub
-
-### ver1.0.0, March 22, 2016
-### ver0.9.0, March 17, 2016
-- Started using it at my company
-
-### December 8, 2015
-- Bought [a book about Python](http://www.amazon.co.jp/dp/4797371595)
-
-### Jul 30, 2015
-- Came up with the idea
-
 ## Features to come
 ### Working on
-
 - Making it [readable](http://www.amazon.com/dp/0596802293)
 - Preparing installer
 - Preparing icon
@@ -130,7 +104,6 @@ Avoid using too short terms, such as one kanji character word:
 - Dividing Summary results in the CSV file
 
 ### Maybe later
-
 - File addition by dragging
 - Choosing multiple bilingual files from different folders
 - Getting rid of { brackets } in the bilingual file field
@@ -141,6 +114,35 @@ Avoid using too short terms, such as one kanji character word:
 - Support regex in forbidden term list
 
 Please let me know if you need any of the features as soon as possible.
+
+## History
+"*" at the beginning means bug-fixing.
+For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.1.0, March 31, 2016
+- Distributed the binaries
+- Small design improvements
+
+### v1.0.10, March 28, 2016
+- Changed the language pair from En->Jp to general Source->Target
+- * Removed .txt format from the bilingual files choices, because the program started using regex when parsing the bilingual files
+- Created Readme.md
+
+### v1.0.9, March 24, 2016
+- * Resolved an issue where folders are not deleted when no forbidden term is found
+
+### v1.0.8, March 24, 2016
+- Added to GitHub
+
+### v1.0.0, March 22, 2016
+### v0.9.0, March 17, 2016
+- Started using it at my company
+
+### December 8, 2015
+- Bought [a book about Python](http://www.amazon.co.jp/dp/4797371595)
+
+### Jul 30, 2015
+- Came up with the idea
 
 ## Contribution
 This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution is welcome!
