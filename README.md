@@ -126,11 +126,12 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 ### v1.1.0, March 31, 2016
 - Distributed the binaries
 - Small design improvements
+- Created README_jpn.md
 
 ### v1.0.10, March 28, 2016
 - Changed the language pair from En->Jp to general Source->Target
 - * Removed .txt format from the bilingual files choices, because the program started using regex when parsing the bilingual files
-- Created Readme.md
+- Created README.md
 
 ### v1.0.9, March 24, 2016
 - * Resolved an issue where folders are not deleted when no forbidden term is found
