@@ -94,6 +94,11 @@ Avoid using too short terms, such as one kanji character word:
 
 - JP: Avoid adding "等" (など) in order not to match "等級", for example
 
+### Known issues
+Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font.
+
+![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
+
 ## Features to come
 ### Working on
 - Making it [readable](http://www.amazon.com/dp/0596802293)
