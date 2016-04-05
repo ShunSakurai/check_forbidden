@@ -14,7 +14,7 @@ from time import sleep
 tk_F = tkinter.Frame()
 
 args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
-args_csv = {'filetypes' : [('csv','*.csv'), ('text', '*.txt')]}
+args_csv = {'filetypes' : [('csv', '*.csv'), ('text', '*.txt')]}
 
 btn_bl = tkinter.Button(text='Billingual file')
 btn_csv = tkinter.Button(text='CSV file')
@@ -26,7 +26,7 @@ var_export = tkinter.StringVar(tk_F)
 
 three_buttons = [btn_bl, btn_csv, btn_export]
 for i in three_buttons:
-    i.grid(row=three_buttons.index(i),column=0,columnspan=2,sticky=tkinter.W,padx=5)
+    i.grid(row=three_buttons.index(i), column=0, columnspan=2, sticky=tkinter.W, padx=5)
 
 btn_csv.grid(columnspan=1)
 
@@ -35,7 +35,7 @@ def import_bl(self):
     f_bl = tkinter.filedialog.askopenfilenames(**args_bl)
     var_bl.set(f_bl)
     if len(var_bl.get()) >= 1 and len(var_export.get()) == 0:
-        var_export.set(f_bl[0].rsplit(r'/',1)[0]+r'/result.csv')
+        var_export.set(f_bl[0].rsplit(r'/', 1)[0]+r'/result.csv')
 
 
 def import_csv(self):
@@ -44,25 +44,25 @@ def import_csv(self):
 
 
 def export_result(self):
-    f_export = tkinter.filedialog.asksaveasfilename(initialfile='result.csv',**args_csv)
+    f_export = tkinter.filedialog.asksaveasfilename(initialfile='result.csv', **args_csv)
     var_export.set(f_export)
 
 
-btn_bl.bind('<ButtonRelease-1>',import_bl)
-btn_csv.bind('<ButtonRelease-1>',import_csv)
-btn_export.bind('<ButtonRelease-1>',export_result)
+btn_bl.bind('<ButtonRelease-1>', import_bl)
+btn_csv.bind('<ButtonRelease-1>', import_csv)
+btn_export.bind('<ButtonRelease-1>', export_result)
 
 ent_bl = tkinter.Entry(width=65, textvariable=var_bl)
 ent_csv = tkinter.Entry(width=65, textvariable=var_csv)
 ent_export = tkinter.Entry(width=65, textvariable=var_export)
 
-three_entries = [ent_bl,ent_csv,ent_export]
+three_entries = [ent_bl, ent_csv, ent_export]
 for i in three_entries:
-    i.grid(row=three_entries.index(i),column=2,columnspan=2,padx=5)
+    i.grid(row=three_entries.index(i), column=2, columnspan=2, padx=5)
 
 message = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
 label_csv = tkinter.Label(text='')
-label_csv.grid(row=3,column=0,columnspan=3)
+label_csv.grid(row=3, column=0, columnspan=3)
 
 
 def show_format(self):
@@ -73,15 +73,15 @@ def hide_format(self):
     label_csv['text'] = ''
 
 help_csv = tkinter.Label(text='?')
-help_csv.grid(row=1,column=1)
-help_csv.bind('<Enter>',show_format)
-help_csv.bind('<Leave>',hide_format)
+help_csv.grid(row=1, column=1)
+help_csv.bind('<Enter>', show_format)
+help_csv.bind('<Leave>', hide_format)
 
 
 def check():
     print('-' * 40)
     fn1_list_raw = var_bl.get().strip('()').split(', ')
-    fn1_list = [i.strip().strip(',').strip('"').strip("'") for i in fn1_list_raw]
+    fn1_list = [i.strip().strip(', ').strip('"').strip("'") for i in fn1_list_raw]
     fn2 = var_csv.get()
     f2 = open(fn2, encoding='utf-8')
     f3w = []
@@ -91,14 +91,14 @@ def check():
 
     for fn1 in fn1_list:
         if fn1[-5:] == 'mqxlz':
-            path_export = fn1.rsplit(r'.',1)[0]+'_export'
+            path_export = fn1.rsplit(r'.', 1)[0]+'_export'
             list_delete.append(path_export)
             z1 = zipfile.ZipFile(fn1)
             fn1_actual = z1.extract('document.mqxliff', path=path_export)
         else:
             fn1_actual = fn1
 
-        fn1_actual = fn1_actual.replace('\\','/')
+        fn1_actual = fn1_actual.replace('\\', '/')
         f1 = open(fn1_actual, encoding='utf-8')
         f1r_raw = f1.read()
         f1r = regex_pattern.findall(f1r_raw)
@@ -147,7 +147,7 @@ def check():
 
         fn3 = var_export.get()
         f3 = open(fn3, 'a', encoding='utf-8')
-        f3wc = csv.writer(f3,lineterminator='\n')
+        f3wc = csv.writer(f3, lineterminator='\n')
         f3wc.writerows(f3w)
         f3.close()
 
@@ -167,9 +167,9 @@ def run(self):
     if btn_run['state'] == 'normal' or 'active':
         check()
 
-btn_run = tkinter.Button(text='Run',state='disabled')
-btn_run.grid(row=3,column=3,sticky=tkinter.E,padx=15,pady=5)
-btn_run.bind('<ButtonRelease-1>',run)
+btn_run = tkinter.Button(text='Run', state='disabled')
+btn_run.grid(row=3, column=3, sticky=tkinter.E, padx=15, pady=5)
+btn_run.bind('<ButtonRelease-1>', run)
 
 
 def true_false(var, unknown, w):
@@ -182,7 +182,7 @@ def true_false(var, unknown, w):
 
 three_vars = [var_bl, var_csv, var_export]
 for i in three_vars:
-    i.trace('w',true_false)
+    i.trace('w', true_false)
 
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)
