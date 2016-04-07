@@ -15,12 +15,12 @@ For example, you can use this tool in the following situations:
 - JP (Japanese): You can use "次の/次に", but you cannot use "以下の/以下に"
 - JP: You have to keep "例えば" in kanji, you cannot use "たとえば"
 
-You have to prepare:
+All you have to prepare are:
 
 - memoQ bilingual .mqxlz or .mqxliff files
 - A CSV or text file containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on Command Prompt, and exports it to CSV file.
+This tool searches for the forbidden terms in the bilingual files, displays the result on Command Prompt, and exports it to a CSV file.
 
 This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
 
@@ -41,13 +41,13 @@ This program needs to be **kept in the folder** to work. It does not work by its
 You can open the program by double-clicking check_forbidden.exe or its alias.
 
 - Choose bilingual file(s) by clicking "Bilingual" or type / paste the path to the file
-- Choose CSV or text file containing the list of forbidden terms
-- Choose the path and the file name of the result file to be exported. The default is the first bilingual file's path + result.csv
+- Choose CSV or Text file containing the list of forbidden terms
+- Choose the path and the file name of the result file to be exported. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
-- Result is displayed in Command Prompt, and if any match is found, it is also exported to CSV file
+- The result is displayed in Command Prompt, and if any matches are found, they are also exported to the CSV file
 - Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - Result is displayed for each file, and for the whole files (as the "Summary")
 - You can press "Enter" key or click "X" (close) button to exit the program
@@ -60,7 +60,9 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 Two file types are supported:
 
 - .mqxliff
-- .mqxlz, which is a compressed file of document.mqxliff file, skeleton (formatting information), and sometimes version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
+- .mqxlz
+
+A .mqxlz file is a compressed file of document.mqxliff file, skeleton (formatting information), and sometimes version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV files format
 The items need to be encoded in UTF-8, separated by commas, and formatted in either:
@@ -75,6 +77,13 @@ or
 - Terms in the **third** column will be considered as the forbidden terms
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
+
+## Known issues and workarounds
+
+### Garbled display on Command Prompt
+Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font.
+
+![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
 
 ### Word separation is not taken in account
 This program treats each segment just as a string. It does not distinguish each word.
@@ -94,21 +103,21 @@ Avoid using too short terms, such as one kanji character word:
 
 - JP: Avoid adding "等" (など) in order not to match "等級", for example
 
-### Known issues
-Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font.
-
-![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
+### Summary results are not in order
+I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
 
 ## Features to come
 ### Working on
 - Making it [readable](http://www.amazon.com/dp/0596802293)
+- Dividing the script part and the UI part (main)
+- The ability to exclude 101% and 100% matches
+- Create expanded pane for options
+- Sorting Summary results on Command Prompt
 - Preparing installer
 - Preparing icon
 - Resizable window
 - Keyboard shortcuts
 - More useful "Open files" dialog
-- Sorting Summary results on Command Prompt
-- Dividing Summary results in the CSV file
 - Displaying export path and file name candidate when typing / pasting into the Bilingual file field
 
 ### Maybe later
@@ -121,12 +130,19 @@ Sometimes multi-byte characters on Windows Command Prompt seem garbled. To corre
 - Handling non-memoQ files
 - Support regex in forbidden term list
 - Making the path in the entry fields the initial path when pressing buttons
+- Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 
 Please let me know if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.1.3, April 7, 2016
+- Divided the Summary results in the CSV file
+- Reduced the number of files in dist folder
+- Changed button names and the default name of exported csv file
+- * Known issue added: Change the font of command prompt to correct garbled multi-byte characters
 
 ### v1.1.0, March 31, 2016
 - Distributed the binaries
