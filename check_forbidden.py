@@ -16,9 +16,9 @@ tk_F = tkinter.Frame()
 args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
 args_csv = {'filetypes' : [('csv', '*.csv'), ('text', '*.txt')]}
 
-btn_bl = tkinter.Button(text='Billingual file')
-btn_csv = tkinter.Button(text='CSV file')
-btn_export = tkinter.Button(text='Export file')
+btn_bl = tkinter.Button(text='Billingual')
+btn_csv = tkinter.Button(text='CSV')
+btn_export = tkinter.Button(text='Result')
 
 var_bl = tkinter.StringVar(tk_F)
 var_csv = tkinter.StringVar(tk_F)
@@ -35,7 +35,7 @@ def import_bl(self):
     f_bl = tkinter.filedialog.askopenfilenames(**args_bl)
     var_bl.set(f_bl)
     if len(var_bl.get()) >= 1 and len(var_export.get()) == 0:
-        var_export.set(f_bl[0].rsplit(r'/', 1)[0]+r'/result.csv')
+        var_export.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
 
 
 def import_csv(self):
@@ -44,7 +44,7 @@ def import_csv(self):
 
 
 def export_result(self):
-    f_export = tkinter.filedialog.asksaveasfilename(initialfile='result.csv', **args_csv)
+    f_export = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv', **args_csv)
     var_export.set(f_export)
 
 
