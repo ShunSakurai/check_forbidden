@@ -115,12 +115,12 @@ def check():
         f2r = csv.reader(f2)
         for row in f2r:
             if len(row) >= 3:
-                target_ng = 2
+                col_to_check = 2
             else:
-                target_ng = 0
+                col_to_check = 0
 
             for match in f1r:
-                if match.find(row[target_ng]) != -1:
+                if match.find(row[col_to_check]) != -1:
                     sl = [row[i] for i in range(len(row))]
                     f3w.append(sl)
                     print(sl)
