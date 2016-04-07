@@ -1,7 +1,7 @@
 # check_forbidden
 This code is for checking if forbidden terms are included in the target segments of memoQ bilingual files (.mqxlz / .mqxliff).
 
-[Japanese README](https://github.com/ShunSakurai/password/blob/master/README_jpn.md) is also available.
+[Japanese README](https://github.com/ShunSakurai/check_forbidden/blob/master/README_jpn.md) is also available.
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
