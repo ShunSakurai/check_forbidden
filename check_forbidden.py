@@ -78,6 +78,11 @@ help_csv.bind('<Enter>', show_format)
 help_csv.bind('<Leave>', hide_format)
 
 
+def str_to_ls(x):
+    l_f_s = [i.strip('\'') for i in x.strip('[]').split(', ')]
+    return l_f_s
+
+
 def check():
     print('-' * 40)
     fn1_list_raw = var_bl.get().strip('()').split(', ')
@@ -86,7 +91,7 @@ def check():
     f2 = open(fn2, encoding='utf-8')
     f3w = []
     list_delete = []
-    set_found = set([])
+    list_found = []
     regex_pattern = re.compile('<target xml:space="preserve">.*?</target>')
 
     for fn1 in fn1_list:
@@ -119,7 +124,7 @@ def check():
                     sl = [row[i] for i in range(len(row))]
                     f3w.append(sl)
                     print(sl)
-                    set_found.add(str(sl))
+                    list_found.append(sl)
                     break
                 else:
                     continue
@@ -138,11 +143,13 @@ def check():
                 sleep(0.05)
                 os.rmdir(i)
 
-    if set_found:
+    if list_found:
         f3w.append(['Summary'])
         print('\nSummary')
-        for i in list(set_found):
-            f3w.append([i])
+        set_found = {str(i) for i in list_found}
+        list_reduced = list(set_found)
+        for i in list_reduced:
+            f3w.append(str_to_ls(i))
             print(i)
 
         fn3 = var_export.get()
@@ -187,3 +194,4 @@ for i in three_vars:
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)
 tk_F.mainloop()
+
