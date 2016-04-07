@@ -112,7 +112,7 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Dividing the script part and the UI part (main)
 - The ability to exclude 101% and 100% matches
 - Create expanded pane for options
-- Sorting Summary results on Command Prompt
+- Sorting the Summary results
 - Preparing installer
 - Preparing icon
 - Resizable window
