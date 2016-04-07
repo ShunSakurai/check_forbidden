@@ -1,7 +1,7 @@
 ﻿# check_forbidden
 このコードは、memoQのバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に禁止されている訳語が使用されていないか確認するためのものです。
 
-[英語のREADME](https://github.com/ShunSakurai/password/blob/master/README.md)もあります。
+[英語のREADME](https://github.com/ShunSakurai/check_forbidden/blob/master/README.md)もあります。
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
