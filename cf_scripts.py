@@ -95,6 +95,7 @@ def check(frame, var_bl, var_csv, var_export):
         list_reduced = list({str(i) for i in list_found})
         for i in list_reduced:
             print_and_append(i, ls_str_to_ls(i), f3w)
+        print_and_append('', [''], f3w)
 
         fn3 = var_export.get()
         f3 = open(fn3, 'a', encoding='utf-8')
