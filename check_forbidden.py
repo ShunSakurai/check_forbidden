@@ -75,7 +75,7 @@ help_csv.bind('<Leave>', hide_format)
 
 
 def run(self):
-    if btn_run['state'] == 'normal' or 'active':
+    if btn_run['state'] == 'active':
         cf_scripts.check(tk_F, var_bl, var_csv, var_export)
 
 btn_run = tkinter.Button(text='Run', state='disabled')
