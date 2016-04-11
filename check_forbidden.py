@@ -56,7 +56,7 @@ for i in three_entries:
 
 bl_guide = 'Billingual files: .mqxlz or .mqxliff'
 csv_guide = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
-export_guide = ''
+export_guide = 'Can be an existing file. Results are added to the bottom.'
 options_guide = 'Show / hide options'
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=1, sticky=tkinter.W)
@@ -69,17 +69,17 @@ def show_guide(self, guide):
 def hide_guide(self):
     label_guide['text'] = ''
 
-btn_bl.bind('<Enter>', lambda guide: show_guide('<Enter>', bl_guide))
+btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', bl_guide))
 btn_bl.bind('<Leave>', hide_guide)
-btn_csv.bind('<Enter>', lambda guide: show_guide('<Enter>', csv_guide))
+btn_csv.bind('<Enter>', lambda x: show_guide('<Enter>', csv_guide))
 btn_csv.bind('<Leave>', hide_guide)
-btn_export.bind('<Enter>', lambda guide: show_guide('<Enter>', export_guide))
+btn_export.bind('<Enter>', lambda x: show_guide('<Enter>', export_guide))
 btn_export.bind('<Leave>', hide_guide)
 
 
 def run(self):
-    if btn_run['state'] == 'active':
-        cf_scripts.check(frame_main, var_bl, var_csv, var_export)
+    if btn_run['state'] == 'active' or btn_run['state'] == 'normal':
+        cf_scripts.check(frame_main, var_bl.get(), var_csv.get(), var_export.get(), var_rate.get(), var_locked.get())
 
 btn_run = tkinter.Button(text='Run', state='disabled')
 btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
@@ -98,32 +98,41 @@ three_vars = [var_bl, var_csv, var_export]
 for i in three_vars:
     i.trace('w', true_false)
 
-frame_options = tkinter.Frame(borderwidth=10, pady=5)
+frame_options = tkinter.Frame(pady=5)
 frame_options.grid(row=4, column=1, sticky=tkinter.W)
-match_rates = [('Check all segments', None), ('Exclude 101% matches', '101'), ('Exclude 101% and 100 %', '100')]
-v = tkinter.StringVar()
-v.set(None)
+
 label_options = tkinter.Label(frame_options, text='Options')
 label_options.grid(sticky=tkinter.W)
+
+match_rates = [('Check all segments', 'all'), ('Exclude 101% matches', '101'), ('Exclude 101% and 100 %', '100')]
+var_rate = tkinter.StringVar()
+var_rate.set('all')
 for label, rate in match_rates:
-    rb = tkinter.Radiobutton(frame_options, text=label, variable=v, value=rate)
-    rb.grid(sticky=tkinter.W)
+    rb_rate = tkinter.Radiobutton(frame_options, text=label, variable=var_rate, value=rate)
+    rb_rate.grid(row=match_rates.index((label, rate)) + 1, column=0, sticky=tkinter.W, padx=5)
+
+locked_states = [('Check locked segments', 'all'), ('Exclude locked segments', 'locked')]
+var_locked = tkinter.StringVar()
+var_locked.set('all')
+for label, state in locked_states:
+    rb_locked = tkinter.Radiobutton(frame_options, text=label, variable=var_locked, value=state)
+    rb_locked.grid(row=locked_states.index((label, state)) + 1, column=1, sticky=tkinter.W, padx=10)
 
 
-def show_hide_options(self):
-    if self.widget['text'] == '▼':
-        self.widget['text'] = '△'
+def show_hide_options(self, widget):
+    if widget['text'] == '▼':
+        widget['text'] = '△'
         frame_options.grid(row=4, column=1, sticky=tkinter.W)
-    elif self.widget['text'] == '△':
-        self.widget['text'] = '▼'
+    elif widget['text'] == '△':
+        widget['text'] = '▼'
         frame_options.grid_forget()
 
 btn_options = tkinter.Button(text='▼', borderwidth=0)
-#Triangles ▽▼△▲
-btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=65)
-btn_options.bind('<ButtonRelease-1>', show_hide_options)
-btn_options.bind('<Enter>', lambda guide: show_guide('<Enter>', options_guide))
+btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=70)
+btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonRelease-1>', btn_options))
+btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', options_guide))
 btn_options.bind('<Leave>', hide_guide)
+
 
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
