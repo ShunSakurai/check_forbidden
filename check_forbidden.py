@@ -1,13 +1,13 @@
 '''
 cd dropbox/codes/check_forbidden
-py check_forbidden.py
+py -B check_forbidden.py
 '''
 
 import cf_scripts
 import tkinter
 import tkinter.filedialog
 
-tk_F = tkinter.Frame()
+frame_main = tkinter.Frame()
 
 args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
 args_csv = {'filetypes' : [('csv', '*.csv'), ('text', '*.txt')]}
@@ -16,15 +16,13 @@ btn_bl = tkinter.Button(text='Billingual')
 btn_csv = tkinter.Button(text='CSV')
 btn_export = tkinter.Button(text='Result')
 
-var_bl = tkinter.StringVar(tk_F)
-var_csv = tkinter.StringVar(tk_F)
-var_export = tkinter.StringVar(tk_F)
+var_bl = tkinter.StringVar(frame_main)
+var_csv = tkinter.StringVar(frame_main)
+var_export = tkinter.StringVar(frame_main)
 
-three_buttons = [btn_bl, btn_csv, btn_export]
-for i in three_buttons:
-    i.grid(row=three_buttons.index(i), column=0, columnspan=2, sticky=tkinter.W, padx=5)
-
-btn_csv.grid(columnspan=1)
+btn_bl.grid(row=0, column=0, sticky=tkinter.W, padx=5)
+btn_csv.grid(row=1, column=0, sticky=tkinter.W, padx=5)
+btn_export.grid(row=2, column=0, sticky=tkinter.W, padx=5)
 
 
 def import_bl(self):
@@ -48,38 +46,43 @@ btn_bl.bind('<ButtonRelease-1>', import_bl)
 btn_csv.bind('<ButtonRelease-1>', import_csv)
 btn_export.bind('<ButtonRelease-1>', export_result)
 
-ent_bl = tkinter.Entry(width=65, textvariable=var_bl)
-ent_csv = tkinter.Entry(width=65, textvariable=var_csv)
-ent_export = tkinter.Entry(width=65, textvariable=var_export)
+ent_bl = tkinter.Entry(width=70, textvariable=var_bl)
+ent_csv = tkinter.Entry(width=70, textvariable=var_csv)
+ent_export = tkinter.Entry(width=70, textvariable=var_export)
 
 three_entries = [ent_bl, ent_csv, ent_export]
 for i in three_entries:
-    i.grid(row=three_entries.index(i), column=2, columnspan=2, padx=5)
+    i.grid(row=three_entries.index(i), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
-message = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
-label_csv = tkinter.Label(text='')
-label_csv.grid(row=3, column=0, columnspan=3)
+bl_guide = 'Billingual files: .mqxlz or .mqxliff'
+csv_guide = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
+export_guide = ''
+options_guide = 'Show / hide options'
+label_guide = tkinter.Label(text='')
+label_guide.grid(row=3, column=1, sticky=tkinter.W)
 
 
-def show_format(self):
-    label_csv['text'] = message
+def show_guide(self, guide):
+    label_guide['text'] = guide
 
 
-def hide_format(self):
-    label_csv['text'] = ''
+def hide_guide(self):
+    label_guide['text'] = ''
 
-help_csv = tkinter.Label(text='?')
-help_csv.grid(row=1, column=1)
-help_csv.bind('<Enter>', show_format)
-help_csv.bind('<Leave>', hide_format)
+btn_bl.bind('<Enter>', lambda guide: show_guide('<Enter>', bl_guide))
+btn_bl.bind('<Leave>', hide_guide)
+btn_csv.bind('<Enter>', lambda guide: show_guide('<Enter>', csv_guide))
+btn_csv.bind('<Leave>', hide_guide)
+btn_export.bind('<Enter>', lambda guide: show_guide('<Enter>', export_guide))
+btn_export.bind('<Leave>', hide_guide)
 
 
 def run(self):
     if btn_run['state'] == 'active':
-        cf_scripts.check(tk_F, var_bl, var_csv, var_export)
+        cf_scripts.check(frame_main, var_bl, var_csv, var_export)
 
 btn_run = tkinter.Button(text='Run', state='disabled')
-btn_run.grid(row=3, column=3, sticky=tkinter.E, padx=15, pady=5)
+btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
 btn_run.bind('<ButtonRelease-1>', run)
 
 
@@ -95,6 +98,34 @@ three_vars = [var_bl, var_csv, var_export]
 for i in three_vars:
     i.trace('w', true_false)
 
-top = tk_F.winfo_toplevel()
+frame_options = tkinter.Frame(borderwidth=10, pady=5)
+frame_options.grid(row=4, column=1, sticky=tkinter.W)
+match_rates = [('Check all segments', None), ('Exclude 101% matches', '101'), ('Exclude 101% and 100 %', '100')]
+v = tkinter.StringVar()
+v.set(None)
+label_options = tkinter.Label(frame_options, text='Options')
+label_options.grid(sticky=tkinter.W)
+for label, rate in match_rates:
+    rb = tkinter.Radiobutton(frame_options, text=label, variable=v, value=rate)
+    rb.grid(sticky=tkinter.W)
+
+
+def show_hide_options(self):
+    if self.widget['text'] == '▼':
+        self.widget['text'] = '△'
+        frame_options.grid(row=4, column=1, sticky=tkinter.W)
+    elif self.widget['text'] == '△':
+        self.widget['text'] = '▼'
+        frame_options.grid_forget()
+
+btn_options = tkinter.Button(text='▼', borderwidth=0)
+#Triangles ▽▼△▲
+btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=65)
+btn_options.bind('<ButtonRelease-1>', show_hide_options)
+btn_options.bind('<Enter>', lambda guide: show_guide('<Enter>', options_guide))
+btn_options.bind('<Leave>', hide_guide)
+
+top = frame_main.winfo_toplevel()
 top.resizable(False, False)
-tk_F.mainloop()
+frame_options.grid_forget()
+frame_main.mainloop()
