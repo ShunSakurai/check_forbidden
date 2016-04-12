@@ -45,8 +45,6 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 - Choose the path and the file name of the result file to be exported. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 
-![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
-
 - The result is displayed in Command Prompt, and if any matches are found, they are also exported to the CSV file
 - Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - Result is displayed for each file, and for the whole files (as the "Summary")
@@ -55,6 +53,11 @@ You can open the program by double-clicking check_forbidden.exe or its alias.
 - If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
+
+### Options
+You can specify what kind of segments to include in the search range. To display the options pane, click on the Gear icon.
+
+![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
 ### memoQ file types
 Two file types are supported:
@@ -77,6 +80,12 @@ or
 - Terms in the **third** column will be considered as the forbidden terms
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
+
+### Keyboard shortcuts
+Buttons and radio buttons can be selected by pressing underlined character on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
+
+- Run! - with Enter or space
+- Show / hide options - with o
 
 ## Known issues and workarounds
 
@@ -109,16 +118,13 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 ## Features to come
 ### Working on
 - Making it [readable](http://www.amazon.com/dp/0596802293)
-- Dividing the script part and the UI part (main)
-- The ability to exclude 101% and 100% matches
-- Create expanded pane for options
 - Sorting the Summary results
 - Preparing installer
 - Preparing icon
 - Resizable window
-- Keyboard shortcuts
 - More useful "Open files" dialog
 - Displaying export path and file name candidate when typing / pasting into the Bilingual file field
+- Displaying information about the CSV file's name and the used options at the top of the result
 
 ### Maybe later
 - File addition by dragging
@@ -128,15 +134,27 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Settings to specify CSV delimiters
 - Radio buttons to select export style (command prompt / CSV file)
 - Handling non-memoQ files
-- Support regex in forbidden term list
+- Supporting regex in forbidden term list
 - Making the path in the entry fields the initial path when pressing buttons
-- Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
+- Creating forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 
 Please let me know if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.3.0, April 12, 2016
+- Changed the options icon
+- Added keyboard shortcuts
+- The ability to exclude 101% and 100% matches
+- The ability to exclude locked segments
+- Created an expanded pane for options
+- Added and unified the text guides for the buttons
+- Added a line break after Summary results in the exported CSV file
+- Divided the script part and UI part (UI part is main)
+- * Excluded TM entries attached to the bilingual files exported from WorldServer from searching
+- * Fixed a bug where Run button is pressable when disabled
 
 ### v1.1.3, April 7, 2016
 - Divided the Summary results in the CSV file
