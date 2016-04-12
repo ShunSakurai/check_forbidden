@@ -128,14 +128,14 @@ for label, state, ul in locked_states:
 
 
 def show_hide_options(self, widget):
-    if widget['text'] == '▼':
+    if widget['text'] == '⚙':
         widget['text'] = '△'
         frame_options.grid(row=4, column=1, sticky=tkinter.W)
     elif widget['text'] == '△':
-        widget['text'] = '▼'
+        widget['text'] = '⚙'
         frame_options.grid_forget()
 
-btn_options = tkinter.Button(text='▼', borderwidth=0)
+btn_options = tkinter.Button(text='⚙', borderwidth=0)
 btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=70)
 btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonRelease-1>', btn_options))
 btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', options_guide))
