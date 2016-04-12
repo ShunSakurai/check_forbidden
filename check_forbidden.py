@@ -47,9 +47,9 @@ btn_bl.bind('<ButtonRelease-1>', import_bl)
 btn_csv.bind('<ButtonRelease-1>', import_csv)
 btn_export.bind('<ButtonRelease-1>', export_result)
 
-ent_bl = tkinter.Entry(width=80, textvariable=var_bl)
-ent_csv = tkinter.Entry(width=80, textvariable=var_csv)
-ent_export = tkinter.Entry(width=80, textvariable=var_export)
+ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
+ent_csv = tkinter.Entry(width=85, textvariable=var_csv)
+ent_export = tkinter.Entry(width=85, textvariable=var_export)
 
 three_entries = [ent_bl, ent_csv, ent_export]
 for i in three_entries:
