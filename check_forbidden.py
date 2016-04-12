@@ -47,9 +47,9 @@ btn_bl.bind('<ButtonRelease-1>', import_bl)
 btn_csv.bind('<ButtonRelease-1>', import_csv)
 btn_export.bind('<ButtonRelease-1>', export_result)
 
-ent_bl = tkinter.Entry(width=70, textvariable=var_bl)
-ent_csv = tkinter.Entry(width=70, textvariable=var_csv)
-ent_export = tkinter.Entry(width=70, textvariable=var_export)
+ent_bl = tkinter.Entry(width=80, textvariable=var_bl)
+ent_csv = tkinter.Entry(width=80, textvariable=var_csv)
+ent_export = tkinter.Entry(width=80, textvariable=var_export)
 
 three_entries = [ent_bl, ent_csv, ent_export]
 for i in three_entries:
@@ -102,8 +102,10 @@ for i in three_vars:
 frame_options = tkinter.Frame(root, pady=5)
 frame_options.grid(row=4, column=1, sticky=tkinter.W)
 
-label_options = tkinter.Label(frame_options, text='Options')
-label_options.grid(sticky=tkinter.W)
+label_rates = tkinter.Label(frame_options, text='\tMatch rates')
+label_rates.grid(row=0, column=0, sticky=tkinter.W)
+label_locked = tkinter.Label(frame_options, text='\tLocked status')
+label_locked.grid(row=0, column=1, sticky=tkinter.W)
 
 match_rates = [('Check all segments', 'all', 6),
                            ('Exclude 101% matches', '101', 10),
@@ -113,7 +115,7 @@ var_rate.set('all')
 rbs_rate = []
 for label, rate, ul in match_rates:
     rb_rate = tkinter.Radiobutton(frame_options, text=label, variable=var_rate, value=rate, underline=ul)
-    rb_rate.grid(row=match_rates.index((label, rate, ul)) + 1, column=0, sticky=tkinter.W, padx=5)
+    rb_rate.grid(row=match_rates.index((label, rate, ul)) + 1, column=0, sticky=tkinter.W, padx=10)
     rbs_rate.append(rb_rate)
 
 locked_states = [('Include locked segments', 'all', 0),
@@ -129,14 +131,16 @@ for label, state, ul in locked_states:
 
 def show_hide_options(self, widget):
     if widget['text'] == '⚙':
-        widget['text'] = '△'
+        widget['text'] = '▲'
+        widget['font'] = ('', 12)
         frame_options.grid(row=4, column=1, sticky=tkinter.W)
-    elif widget['text'] == '△':
+    elif widget['text'] == '▲':
         widget['text'] = '⚙'
+        widget['font'] = ('', 15)
         frame_options.grid_forget()
 
-btn_options = tkinter.Button(text='⚙', borderwidth=0)
-btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=70)
+btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
+btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=80)
 btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonRelease-1>', btn_options))
 btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', options_guide))
 btn_options.bind('<Leave>', hide_guide)
