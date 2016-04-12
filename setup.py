@@ -2,7 +2,7 @@ from distutils.core import setup
 import py2exe
 
 setup(
-      console=[{'script': 'check_forbidden.py', 'version': '1.1.3', }],
+      console=[{'script': 'check_forbidden.py', 'version': '1.3.0', }],
       options={'py2exe': {'bundle_files': 2}}
       )
 
