@@ -7,14 +7,15 @@ import cf_scripts
 import tkinter
 import tkinter.filedialog
 
-frame_main = tkinter.Frame()
+root = tkinter.Tk()
+frame_main = tkinter.Frame(root)
 
 args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
 args_csv = {'filetypes' : [('csv', '*.csv'), ('text', '*.txt')]}
 
-btn_bl = tkinter.Button(text='Billingual')
-btn_csv = tkinter.Button(text='CSV')
-btn_export = tkinter.Button(text='Result')
+btn_bl = tkinter.Button(text='Billingual', underline=0)
+btn_csv = tkinter.Button(text='CSV', underline=0)
+btn_export = tkinter.Button(text='Result', underline=0)
 
 var_bl = tkinter.StringVar(frame_main)
 var_csv = tkinter.StringVar(frame_main)
@@ -98,25 +99,32 @@ three_vars = [var_bl, var_csv, var_export]
 for i in three_vars:
     i.trace('w', true_false)
 
-frame_options = tkinter.Frame(pady=5)
+frame_options = tkinter.Frame(root, pady=5)
 frame_options.grid(row=4, column=1, sticky=tkinter.W)
 
 label_options = tkinter.Label(frame_options, text='Options')
 label_options.grid(sticky=tkinter.W)
 
-match_rates = [('Check all segments', 'all'), ('Exclude 101% matches', '101'), ('Exclude 101% and 100 %', '100')]
+match_rates = [('Check all segments', 'all', 6),
+                           ('Exclude 101% matches', '101', 10),
+                           ('Exclude 100% and 101 %', '100', 10)]
 var_rate = tkinter.StringVar()
 var_rate.set('all')
-for label, rate in match_rates:
-    rb_rate = tkinter.Radiobutton(frame_options, text=label, variable=var_rate, value=rate)
-    rb_rate.grid(row=match_rates.index((label, rate)) + 1, column=0, sticky=tkinter.W, padx=5)
+rbs_rate = []
+for label, rate, ul in match_rates:
+    rb_rate = tkinter.Radiobutton(frame_options, text=label, variable=var_rate, value=rate, underline=ul)
+    rb_rate.grid(row=match_rates.index((label, rate, ul)) + 1, column=0, sticky=tkinter.W, padx=5)
+    rbs_rate.append(rb_rate)
 
-locked_states = [('Check locked segments', 'all'), ('Exclude locked segments', 'locked')]
+locked_states = [('Include locked segments', 'all', 0),
+                              ('Exclude locked segments', 'locked', 0)]
 var_locked = tkinter.StringVar()
 var_locked.set('all')
-for label, state in locked_states:
-    rb_locked = tkinter.Radiobutton(frame_options, text=label, variable=var_locked, value=state)
-    rb_locked.grid(row=locked_states.index((label, state)) + 1, column=1, sticky=tkinter.W, padx=10)
+rbs_locked = []
+for label, state, ul in locked_states:
+    rb_locked = tkinter.Radiobutton(frame_options, text=label, variable=var_locked, value=state, underline=ul)
+    rb_locked.grid(row=locked_states.index((label, state, ul)) + 1, column=1, sticky=tkinter.W, padx=10)
+    rbs_locked.append(rb_locked)
 
 
 def show_hide_options(self, widget):
@@ -133,6 +141,17 @@ btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonReleas
 btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', options_guide))
 btn_options.bind('<Leave>', hide_guide)
 
+root.bind('<Return>', run)
+root.bind('<space>', run)
+root.bind('o', lambda x: show_hide_options('<o>', btn_options))
+root.bind('b', import_bl)
+root.bind('c', import_csv)
+root.bind('r', export_result)
+root.bind('a', lambda x: rbs_rate[0].select())
+root.bind('1', lambda x: rbs_rate[1].select())
+root.bind('0', lambda x: rbs_rate[2].select())
+root.bind('i', lambda x: rbs_locked[0].select())
+root.bind('e', lambda x: rbs_locked[1].select())
 
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
