@@ -12,54 +12,54 @@ print('Loading...')
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
-args_bl = {'filetypes' : [('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]}
-args_csv = {'filetypes' : [('csv', '*.csv'), ('text', '*.txt')]}
+args_bl = {'filetypes' : [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff')]}
+args_csv = {'filetypes' : [('csv / text', '*.csv;*.txt')]}
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_csv = tkinter.Button(text='CSV', underline=0)
-btn_export = tkinter.Button(text='Result', underline=0)
+btn_result = tkinter.Button(text='Result', underline=0)
 
 var_bl = tkinter.StringVar(frame_main)
 var_csv = tkinter.StringVar(frame_main)
-var_export = tkinter.StringVar(frame_main)
+var_result = tkinter.StringVar(frame_main)
 
 btn_bl.grid(row=0, column=0, sticky=tkinter.W, padx=5)
 btn_csv.grid(row=1, column=0, sticky=tkinter.W, padx=5)
-btn_export.grid(row=2, column=0, sticky=tkinter.W, padx=5)
+btn_result.grid(row=2, column=0, sticky=tkinter.W, padx=5)
 
 
-def import_bl(self):
+def choose_bl(self):
     f_bl = tkinter.filedialog.askopenfilenames(**args_bl)
     var_bl.set(f_bl)
-    if len(var_bl.get()) >= 1 and len(var_export.get()) == 0:
-        var_export.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
+    if len(var_bl.get()) >= 1 and len(var_result.get()) == 0:
+        var_result.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
 
 
-def import_csv(self):
+def choose_csv(self):
     f_csv = tkinter.filedialog.askopenfilename(**args_csv)
     var_csv.set(f_csv)
 
 
-def export_result(self):
-    f_export = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv', **args_csv)
-    var_export.set(f_export)
+def choose_result(self):
+    f_result = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv')
+    var_result.set(f_result)
 
 
-btn_bl.bind('<ButtonRelease-1>', import_bl)
-btn_csv.bind('<ButtonRelease-1>', import_csv)
-btn_export.bind('<ButtonRelease-1>', export_result)
+btn_bl.bind('<ButtonRelease-1>', choose_bl)
+btn_csv.bind('<ButtonRelease-1>', choose_csv)
+btn_result.bind('<ButtonRelease-1>', choose_result)
 
 ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
 ent_csv = tkinter.Entry(width=85, textvariable=var_csv)
-ent_export = tkinter.Entry(width=85, textvariable=var_export)
+ent_result = tkinter.Entry(width=85, textvariable=var_result)
 
-three_entries = [ent_bl, ent_csv, ent_export]
+three_entries = [ent_bl, ent_csv, ent_result]
 for i in three_entries:
     i.grid(row=three_entries.index(i), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
 guide_bl = 'Billingual files: .mqxlz or .mqxliff'
 guide_csv = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
-guide_export = 'Can be an existing file. Results are added to the bottom.'
+guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_options = 'Show / hide options'
 guide_run = 'Run button is enabled when all the three fields are filled.'
 label_guide = tkinter.Label(text='')
@@ -77,13 +77,13 @@ btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', guide_bl))
 btn_bl.bind('<Leave>', hide_guide)
 btn_csv.bind('<Enter>', lambda x: show_guide('<Enter>', guide_csv))
 btn_csv.bind('<Leave>', hide_guide)
-btn_export.bind('<Enter>', lambda x: show_guide('<Enter>', guide_export))
-btn_export.bind('<Leave>', hide_guide)
+btn_result.bind('<Enter>', lambda x: show_guide('<Enter>', guide_result))
+btn_result.bind('<Leave>', hide_guide)
 
 
 def run(self):
     if btn_run['state'] == 'active' or btn_run['state'] == 'normal':
-        cf_scripts.check(frame_main, var_bl.get(), var_csv.get(), var_export.get(), var_rate.get(), var_locked.get())
+        cf_scripts.check(frame_main, var_bl.get(), var_csv.get(), var_result.get(), var_rate.get(), var_locked.get())
 
 btn_run = tkinter.Button(text='Run', state='disabled')
 btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
@@ -93,14 +93,14 @@ btn_run.bind('<Leave>', hide_guide)
 
 
 def true_false(var, unknown, w):
-    if var_bl.get() and var_csv.get() and var_export.get():
+    if var_bl.get() and var_csv.get() and var_result.get():
         btn_run['state'] = 'normal'
         btn_run['text'] = 'Run!'
     else:
         btn_run['state'] = 'disabled'
         btn_run['text'] = 'Run'
 
-three_vars = [var_bl, var_csv, var_export]
+three_vars = [var_bl, var_csv, var_result]
 for i in three_vars:
     i.trace('w', true_false)
 
@@ -153,9 +153,9 @@ btn_options.bind('<Leave>', hide_guide)
 root.bind('<Return>', run)
 root.bind('<space>', run)
 root.bind('o', lambda x: show_hide_options('<o>', btn_options))
-root.bind('b', import_bl)
-root.bind('c', import_csv)
-root.bind('r', export_result)
+root.bind('b', choose_bl)
+root.bind('c', choose_csv)
+root.bind('r', choose_result)
 root.bind('a', lambda x: rbs_rate[0].select())
 root.bind('1', lambda x: rbs_rate[1].select())
 root.bind('0', lambda x: rbs_rate[2].select())
