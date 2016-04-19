@@ -6,12 +6,12 @@ import zipfile
 
 
 def mqxlz_dir_fname(fn):
-    path_export = fn.rsplit(r'.', 1)[0] + '_export'
-    fn_actual = zipfile.ZipFile(fn).extract('document.mqxliff', path=path_export)
-    return path_export, fn_actual
+    path_extract = fn.rsplit(r'.', 1)[0] + '_extract'
+    fn_actual = zipfile.ZipFile(fn).extract('document.mqxliff', path=path_extract)
+    return path_extract, fn_actual
 
 
-def filter_segments(raw, str_rate, str_locked):
+def limit_range(raw, str_rate, str_locked):
     regex_unit = re.compile('<trans-unit id=".*?</trans-unit>', re.S)
     units = regex_unit.findall(raw)
     regex_header = re.compile('<trans-unit id=".*?>')
@@ -55,7 +55,7 @@ def try_to_rmdir(i):
             sleep(0.01)
             os.rmdir(i)
         except:
-            print('Please check the bilingual file location and delete the _export folder manually.')
+            print('Please go to the bilingual file location and delete the _extract folder manually.')
 
 
 def list_str_to_list(x):
@@ -68,12 +68,12 @@ def tuple_str_to_ls(x):
     return list_from_str
 
 
-def check(frame, str_bl, str_csv, str_export, str_rate, str_locked):
+def check(frame, str_bl, str_csv, str_result, str_rate, str_locked):
     print('-' * 40)
     fn_bl_list = tuple_str_to_ls(str_bl)
     fn_csv = str_csv
     f_csv = open(fn_csv, encoding='utf-8')
-    f_export_w = []
+    f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
     regex_pattern = re.compile('<target xml:space="preserve">.*?</target>')
@@ -88,9 +88,9 @@ def check(frame, str_bl, str_csv, str_export, str_rate, str_locked):
         fn_bl_actual = fn_bl_actual.replace('\\', '/')
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_r_raw = f_bl.read()
-        f_bl_r_filtered_list = filter_segments(f_bl_r_raw, str_rate, str_locked)
-        f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_filtered_list])
-        print_and_append(fn_bl, [fn_bl], f_export_w)
+        f_bl_r_range_list = limit_range(f_bl_r_raw, str_rate, str_locked)
+        f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_range_list])
+        print_and_append(fn_bl, [fn_bl], f_result_w)
 
         f_csv.seek(0)
         f_csv_r = csv.reader(f_csv)
@@ -98,7 +98,7 @@ def check(frame, str_bl, str_csv, str_export, str_rate, str_locked):
             col_to_check = return_col_num(row)
             if f_bl_r.find(row[col_to_check]) != -1:
                 row_found = [row[i] for i in range(len(row))]
-                print_and_append(row_found, row_found, f_export_w)
+                print_and_append(row_found, row_found, f_result_w)
                 list_found_rows.append(row_found)
             else:
                 continue
@@ -108,18 +108,18 @@ def check(frame, str_bl, str_csv, str_export, str_rate, str_locked):
     f_csv.close()
 
     if list_found_rows:
-        print_and_append('\n' + 'Summary', ['Summary'], f_export_w)
+        print_and_append('\n' + 'Summary', ['Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
-            print_and_append(i, list_str_to_list(i), f_export_w)
-        print_and_append('', [''], f_export_w)
+            print_and_append(i, list_str_to_list(i), f_result_w)
+        print_and_append('', [''], f_result_w)
 
-        fn_export = str_export
-        f_export = open(fn_export, 'a', encoding='utf-8')
-        f_export_wc = csv.writer(f_export, lineterminator='\n')
-        f_export_wc.writerows(f_export_w)
-        f_export.close()
-        print(str_export.rsplit('/')[-1].rsplit('\\')[-1] + ' was successfully created.')
+        fn_result = str_result
+        f_result = open(fn_result, 'a', encoding='utf-8')
+        f_result_wc = csv.writer(f_result, lineterminator='\n')
+        f_result_wc.writerows(f_result_w)
+        f_result.close()
+        print(str_result.rsplit('/')[-1].rsplit('\\')[-1] + ' was successfully created.')
     else:
         print('No forbidden term was found!')
 
