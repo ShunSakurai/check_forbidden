@@ -35,8 +35,8 @@ Installer is now being developed. For the moment, please do the following:
 
 When you use an updated version, you only have to move the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
-If you have Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
+If you have Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
 ## Usage
 
