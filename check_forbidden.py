@@ -7,6 +7,8 @@ import cf_scripts
 import tkinter
 import tkinter.filedialog
 
+print('Loading...')
+
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
@@ -55,10 +57,11 @@ three_entries = [ent_bl, ent_csv, ent_export]
 for i in three_entries:
     i.grid(row=three_entries.index(i), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
-bl_guide = 'Billingual files: .mqxlz or .mqxliff'
-csv_guide = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
-export_guide = 'Can be an existing file. Results are added to the bottom.'
-options_guide = 'Show / hide options'
+guide_bl = 'Billingual files: .mqxlz or .mqxliff'
+guide_csv = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
+guide_export = 'Can be an existing file. Results are added to the bottom.'
+guide_options = 'Show / hide options'
+guide_run = 'Run button is enabled when all the three fields are filled.'
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=1, sticky=tkinter.W)
 
@@ -70,11 +73,11 @@ def show_guide(self, guide):
 def hide_guide(self):
     label_guide['text'] = ''
 
-btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', bl_guide))
+btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', guide_bl))
 btn_bl.bind('<Leave>', hide_guide)
-btn_csv.bind('<Enter>', lambda x: show_guide('<Enter>', csv_guide))
+btn_csv.bind('<Enter>', lambda x: show_guide('<Enter>', guide_csv))
 btn_csv.bind('<Leave>', hide_guide)
-btn_export.bind('<Enter>', lambda x: show_guide('<Enter>', export_guide))
+btn_export.bind('<Enter>', lambda x: show_guide('<Enter>', guide_export))
 btn_export.bind('<Leave>', hide_guide)
 
 
@@ -85,6 +88,8 @@ def run(self):
 btn_run = tkinter.Button(text='Run', state='disabled')
 btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
 btn_run.bind('<ButtonRelease-1>', run)
+btn_run.bind('<Enter>', lambda x: show_guide('<Enter>', guide_run))
+btn_run.bind('<Leave>', hide_guide)
 
 
 def true_false(var, unknown, w):
@@ -142,7 +147,7 @@ def show_hide_options(self, widget):
 btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
 btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=80)
 btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonRelease-1>', btn_options))
-btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', options_guide))
+btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', guide_options))
 btn_options.bind('<Leave>', hide_guide)
 
 root.bind('<Return>', run)

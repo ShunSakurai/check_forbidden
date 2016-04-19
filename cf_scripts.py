@@ -5,10 +5,9 @@ from time import sleep
 import zipfile
 
 
-def mqxlz_path_fname(fn):
+def mqxlz_dir_fname(fn):
     path_export = fn.rsplit(r'.', 1)[0] + '_export'
-    z1 = zipfile.ZipFile(fn)
-    fn_actual = z1.extract('document.mqxliff', path=path_export)
+    fn_actual = zipfile.ZipFile(fn).extract('document.mqxliff', path=path_export)
     return path_export, fn_actual
 
 
@@ -23,9 +22,9 @@ def filter_segments(raw, str_rate, str_locked):
     for unit in units:
         header = regex_header.findall(unit)[0]
         if str_rate == '100' and header.find(string_100) != -1:
-                continue
+            continue
         elif str_rate == '100' and header.find(string_101) != -1:
-                continue
+            continue
         elif str_rate == '101' and header.find(string_101) != -1:
             continue
         elif str_locked == 'locked' and header.find(string_locked) != -1:
@@ -59,78 +58,78 @@ def try_to_rmdir(i):
             print('Please check the bilingual file location and delete the _export folder manually.')
 
 
-def ls_str_to_ls(x):
-    l_f_s = [i.strip('\'') for i in x.strip('[]').split(', ')]
-    return l_f_s
+def list_str_to_list(x):
+    list_from_str = [i.strip('\'') for i in x.strip('[]').split(', ')]
+    return list_from_str
 
 
-def tp_str_to_ls(x):
-    l_f_s = [i.strip().strip(', ').strip('"').strip("'") for i in x.strip('()').split(', ')]
-    return l_f_s
+def tuple_str_to_ls(x):
+    list_from_str = [i.strip().strip(', ').strip('"').strip("'") for i in x.strip('()').split(', ')]
+    return list_from_str
 
 
 def check(frame, str_bl, str_csv, str_export, str_rate, str_locked):
     print('-' * 40)
-    fn1_list = tp_str_to_ls(str_bl)
-    fn2 = str_csv
-    f2 = open(fn2, encoding='utf-8')
-    f3w = []
-    list_delete = []
-    list_found = []
+    fn_bl_list = tuple_str_to_ls(str_bl)
+    fn_csv = str_csv
+    f_csv = open(fn_csv, encoding='utf-8')
+    f_export_w = []
+    list_mqxlz_dir = []
+    list_found_rows = []
     regex_pattern = re.compile('<target xml:space="preserve">.*?</target>')
 
-    for fn1 in fn1_list:
-        if fn1[-5:] == 'mqxlz':
-            list_delete.append(mqxlz_path_fname(fn1)[0])
-            fn1_actual = mqxlz_path_fname(fn1)[1]
+    for fn_bl in fn_bl_list:
+        if fn_bl[-5:] == 'mqxlz':
+            list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
+            fn_bl_actual = mqxlz_dir_fname(fn_bl)[1]
         else:
-            fn1_actual = fn1
+            fn_bl_actual = fn_bl
 
-        fn1_actual = fn1_actual.replace('\\', '/')
-        f1 = open(fn1_actual, encoding='utf-8')
-        f1r_raw = f1.read()
-        f1r_filtered_list = filter_segments(f1r_raw, str_rate, str_locked)
-        f1r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f1r_filtered_list])
-        print_and_append(fn1, [fn1], f3w)
+        fn_bl_actual = fn_bl_actual.replace('\\', '/')
+        f_bl = open(fn_bl_actual, encoding='utf-8')
+        f_bl_r_raw = f_bl.read()
+        f_bl_r_filtered_list = filter_segments(f_bl_r_raw, str_rate, str_locked)
+        f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_filtered_list])
+        print_and_append(fn_bl, [fn_bl], f_export_w)
 
-        f2.seek(0)
-        f2r = csv.reader(f2)
-        for row in f2r:
+        f_csv.seek(0)
+        f_csv_r = csv.reader(f_csv)
+        for row in f_csv_r:
             col_to_check = return_col_num(row)
-            if f1r.find(row[col_to_check]) != -1:
-                sl = [row[i] for i in range(len(row))]
-                print_and_append(sl, sl, f3w)
-                list_found.append(sl)
+            if f_bl_r.find(row[col_to_check]) != -1:
+                row_found = [row[i] for i in range(len(row))]
+                print_and_append(row_found, row_found, f_export_w)
+                list_found_rows.append(row_found)
             else:
                 continue
 
-        f1.close()
+        f_bl.close()
 
-    f2.close()
+    f_csv.close()
 
-    if list_found:
-        print_and_append('\n' + 'Summary', ['Summary'], f3w)
-        list_reduced = list({str(i) for i in list_found})
+    if list_found_rows:
+        print_and_append('\n' + 'Summary', ['Summary'], f_export_w)
+        list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
-            print_and_append(i, ls_str_to_ls(i), f3w)
-        print_and_append('', [''], f3w)
+            print_and_append(i, list_str_to_list(i), f_export_w)
+        print_and_append('', [''], f_export_w)
 
-        fn3 = str_export
-        f3 = open(fn3, 'a', encoding='utf-8')
-        f3wc = csv.writer(f3, lineterminator='\n')
-        f3wc.writerows(f3w)
-        f3.close()
+        fn_export = str_export
+        f_export = open(fn_export, 'a', encoding='utf-8')
+        f_export_wc = csv.writer(f_export, lineterminator='\n')
+        f_export_wc.writerows(f_export_w)
+        f_export.close()
         print(str_export.rsplit('/')[-1].rsplit('\\')[-1] + ' was successfully created.')
     else:
         print('No forbidden term was found!')
 
-    if list_delete:
-        for i in list_delete:
+    if list_mqxlz_dir:
+        for i in list_mqxlz_dir:
             os.remove(i+r'/document.mqxliff')
-        for i in list_delete:
+        for i in list_mqxlz_dir:
             try_to_rmdir(i)
 
-    print('Focus on this screen and Press Enter key to exit.')
+    print('Focus on this screen and Press Enter key to exit the program.')
     try:
         input('\n')
     except:
