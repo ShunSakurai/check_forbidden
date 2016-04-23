@@ -16,6 +16,7 @@ import py2exe
 
 setup(
       console=[{'author': 'Shun Sakurai',
+                       'dest_base': 'Check Forbidden',
                        'script': 'check_forbidden.py',
                        'version': '1.4.0',
                        }],
