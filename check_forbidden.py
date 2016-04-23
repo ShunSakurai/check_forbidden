@@ -2,7 +2,6 @@
 cd dropbox/codes/check_forbidden
 py -B check_forbidden.py
 '''
-
 import cf_scripts
 import tkinter
 import tkinter.filedialog
@@ -14,6 +13,7 @@ frame_main = tkinter.Frame(root)
 
 args_bl = {'filetypes' : [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff')]}
 args_csv = {'filetypes' : [('csv / text', '*.csv;*.txt')]}
+args_result = {'filetypes' : [('csv', '*.csv')]}
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_csv = tkinter.Button(text='CSV', underline=0)
@@ -41,7 +41,7 @@ def choose_csv(self):
 
 
 def choose_result(self):
-    f_result = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv')
+    f_result = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv', **args_result)
     var_result.set(f_result)
 
 
