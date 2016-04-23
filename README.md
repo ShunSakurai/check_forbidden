@@ -29,7 +29,7 @@ This tool is currently only available for Windows at [Releases](https://github.c
 Installer is now being developed. For the moment, please do the following:
 
 - Download dist.zip and decompress it
-- Rename the folder to "check_forbidden" or any name you like
+- Rename the folder to "Check Forbidden" or any name you like
 - Move it to C:\Program Files
 - Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs
 
@@ -41,14 +41,14 @@ If you have Python environment installed, you can run the source code with `pyth
 ## Usage
 
 ### Overview
-You can open the program by double-clicking check_forbidden.exe or its alias.
+You can open the program by double-clicking Check Forbidden.exe or its alias.
 
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose a CSV or text file containing the list of forbidden terms
 - Choose the path and the name of the result file to be exported. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 
-- The result is displayed in the Command Prompt, and if any matches are found, they are also exported to the CSV file
+- The result is displayed in the Command Prompt, and if any matches are found, they are also exported into the CSV file
 - Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - The result is displayed for both individual and whole files (as the "Summary")
 - Press "Enter" key or click "X" (close) button to exit the program
@@ -108,9 +108,9 @@ This program is case-sensitive. If necessary, add terms to the CSV file in both 
 ### Beware of false positives
 Below are some best practices to avoid false positives.
 
-Do not use single symbols used in tags and special characters:
+Avoid using single symbols used in tags and special characters:
 
-- Avoid using <, /, >, &, ;, etc.
+- Avoid adding <, /, >, &, ;, etc.
 
 Add spaces:
 
@@ -151,6 +151,14 @@ Please let me know if you need any of the features as soon as possible.
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.4.0, April 23, 2016
+- Change the application name to 'Check Forbidden'
+- Ensure the name of the result file ends with .csv
+- Reduce the size of the dist folder
+- Enable choosing .mqxlz and .mqxliff files at the same time
+- Add a splash message
+- * Add a known issue: Avoid using single symbols used in tags and special characters
 
 ### v1.3.0, April 12, 2016
 - Change the options icon
@@ -198,6 +206,8 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 
 ## Contribution
 This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution is welcome!
+
+Dear colleague translators and PMs, please help me brush up my English on this page.
 
 ## License
 You can use it for free.
