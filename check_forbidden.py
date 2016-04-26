@@ -12,19 +12,19 @@ root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
 args_bl = {'filetypes' : [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff')]}
-args_csv = {'filetypes' : [('csv / text', '*.csv;*.txt')]}
+args_terms = {'filetypes' : [('csv / text', '*.csv;*.txt')]}
 args_result = {'filetypes' : [('csv', '*.csv')]}
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
-btn_csv = tkinter.Button(text='CSV', underline=0)
+btn_terms = tkinter.Button(text='Terms', underline=0)
 btn_result = tkinter.Button(text='Result', underline=0)
 
 var_bl = tkinter.StringVar(frame_main)
-var_csv = tkinter.StringVar(frame_main)
+var_terms = tkinter.StringVar(frame_main)
 var_result = tkinter.StringVar(frame_main)
 
 btn_bl.grid(row=0, column=0, sticky=tkinter.W, padx=5)
-btn_csv.grid(row=1, column=0, sticky=tkinter.W, padx=5)
+btn_terms.grid(row=1, column=0, sticky=tkinter.W, padx=5)
 btn_result.grid(row=2, column=0, sticky=tkinter.W, padx=5)
 
 
@@ -35,9 +35,9 @@ def choose_bl(self):
         var_result.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
 
 
-def choose_csv(self):
-    f_csv = tkinter.filedialog.askopenfilename(**args_csv)
-    var_csv.set(f_csv)
+def choose_terms(self):
+    f_terms = tkinter.filedialog.askopenfilename(**args_terms)
+    var_terms.set(f_terms)
 
 
 def choose_result(self):
@@ -46,19 +46,19 @@ def choose_result(self):
 
 
 btn_bl.bind('<ButtonRelease-1>', choose_bl)
-btn_csv.bind('<ButtonRelease-1>', choose_csv)
+btn_terms.bind('<ButtonRelease-1>', choose_terms)
 btn_result.bind('<ButtonRelease-1>', choose_result)
 
 ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
-ent_csv = tkinter.Entry(width=85, textvariable=var_csv)
+ent_terms = tkinter.Entry(width=85, textvariable=var_terms)
 ent_result = tkinter.Entry(width=85, textvariable=var_result)
 
-three_entries = [ent_bl, ent_csv, ent_result]
+three_entries = [ent_bl, ent_terms, ent_result]
 for i in three_entries:
     i.grid(row=three_entries.index(i), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
 guide_bl = 'Billingual files: .mqxlz or .mqxliff'
-guide_csv = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
+guide_terms = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_options = 'Show / hide options'
 guide_run = 'Run button is enabled when all the three fields are filled.'
@@ -75,15 +75,15 @@ def hide_guide(self):
 
 btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', guide_bl))
 btn_bl.bind('<Leave>', hide_guide)
-btn_csv.bind('<Enter>', lambda x: show_guide('<Enter>', guide_csv))
-btn_csv.bind('<Leave>', hide_guide)
+btn_terms.bind('<Enter>', lambda x: show_guide('<Enter>', guide_terms))
+btn_terms.bind('<Leave>', hide_guide)
 btn_result.bind('<Enter>', lambda x: show_guide('<Enter>', guide_result))
 btn_result.bind('<Leave>', hide_guide)
 
 
 def run(self):
     if btn_run['state'] == 'active' or btn_run['state'] == 'normal':
-        cf_scripts.check(frame_main, var_bl.get(), var_csv.get(), var_result.get(), var_rate.get(), var_locked.get())
+        cf_scripts.check(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_rate.get(), var_locked.get())
 
 btn_run = tkinter.Button(text='Run', state='disabled')
 btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
@@ -93,14 +93,14 @@ btn_run.bind('<Leave>', hide_guide)
 
 
 def true_false(var, unknown, w):
-    if var_bl.get() and var_csv.get() and var_result.get():
+    if var_bl.get() and var_terms.get() and var_result.get():
         btn_run['state'] = 'normal'
         btn_run['text'] = 'Run!'
     else:
         btn_run['state'] = 'disabled'
         btn_run['text'] = 'Run'
 
-three_vars = [var_bl, var_csv, var_result]
+three_vars = [var_bl, var_terms, var_result]
 for i in three_vars:
     i.trace('w', true_false)
 
@@ -154,7 +154,7 @@ root.bind('<Return>', run)
 root.bind('<space>', run)
 root.bind('o', lambda x: show_hide_options('<o>', btn_options))
 root.bind('b', choose_bl)
-root.bind('c', choose_csv)
+root.bind('t', choose_terms)
 root.bind('r', choose_result)
 root.bind('a', lambda x: rbs_rate[0].select())
 root.bind('1', lambda x: rbs_rate[1].select())
