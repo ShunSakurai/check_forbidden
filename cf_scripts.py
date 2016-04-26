@@ -68,11 +68,11 @@ def tuple_str_to_ls(x):
     return list_from_str
 
 
-def check(frame, str_bl, str_csv, str_result, str_rate, str_locked):
+def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
     print('-' * 40)
     fn_bl_list = tuple_str_to_ls(str_bl)
-    fn_csv = str_csv
-    f_csv = open(fn_csv, encoding='utf-8')
+    fn_terms = str_terms
+    f_terms = open(fn_terms, encoding='utf-8')
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
@@ -92,9 +92,9 @@ def check(frame, str_bl, str_csv, str_result, str_rate, str_locked):
         f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_range_list])
         print_and_append(fn_bl, [fn_bl], f_result_w)
 
-        f_csv.seek(0)
-        f_csv_r = csv.reader(f_csv)
-        for row in f_csv_r:
+        f_terms.seek(0)
+        f_terms_r = csv.reader(f_terms)
+        for row in f_terms_r:
             col_to_check = return_col_num(row)
             if f_bl_r.find(row[col_to_check]) != -1:
                 row_found = [row[i] for i in range(len(row))]
@@ -105,7 +105,7 @@ def check(frame, str_bl, str_csv, str_result, str_rate, str_locked):
 
         f_bl.close()
 
-    f_csv.close()
+    f_terms.close()
 
     if list_found_rows:
         print_and_append('\n' + 'Summary', ['Summary'], f_result_w)
