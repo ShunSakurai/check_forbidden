@@ -11,9 +11,9 @@ print('Loading...')
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
-args_bl = {'filetypes' : [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff')]}
-args_terms = {'filetypes' : [('csv / text', '*.csv;*.txt')]}
-args_result = {'filetypes' : [('csv', '*.csv')]}
+ext_bl = [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff'), ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]
+ext_terms = [('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
+ext_result = [('csv', '*.csv')]
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
@@ -29,19 +29,19 @@ btn_result.grid(row=2, column=0, sticky=tkinter.W, padx=5)
 
 
 def choose_bl(self):
-    f_bl = tkinter.filedialog.askopenfilenames(**args_bl)
+    f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl)
     var_bl.set(f_bl)
     if len(var_bl.get()) >= 1 and len(var_result.get()) == 0:
         var_result.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
 
 
 def choose_terms(self):
-    f_terms = tkinter.filedialog.askopenfilename(**args_terms)
+    f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms)
     var_terms.set(f_terms)
 
 
 def choose_result(self):
-    f_result = tkinter.filedialog.asksaveasfilename(initialfile='checked_result.csv', **args_result)
+    f_result = tkinter.filedialog.asksaveasfilename(filetypes=ext_result, initialfile='checked_result.csv')
     var_result.set(f_result)
 
 
