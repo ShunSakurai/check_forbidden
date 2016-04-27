@@ -19,13 +19,26 @@ btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
 btn_result = tkinter.Button(text='Result', underline=0)
 
+btn_bl.grid(row=0, column=0, sticky=tkinter.W, padx=5)
+btn_terms.grid(row=1, column=0, sticky=tkinter.W, padx=5)
+btn_result.grid(row=2, column=0, sticky=tkinter.W, padx=5)
+
 var_bl = tkinter.StringVar(frame_main)
 var_terms = tkinter.StringVar(frame_main)
 var_result = tkinter.StringVar(frame_main)
 
-btn_bl.grid(row=0, column=0, sticky=tkinter.W, padx=5)
-btn_terms.grid(row=1, column=0, sticky=tkinter.W, padx=5)
-btn_result.grid(row=2, column=0, sticky=tkinter.W, padx=5)
+ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
+ent_terms = tkinter.Entry(width=85, textvariable=var_terms)
+ent_result = tkinter.Entry(width=85, textvariable=var_result)
+
+
+def focus_off():
+    btn_bl.focus_set()
+
+three_entries = [ent_bl, ent_terms, ent_result]
+for ent in three_entries:
+    ent.grid(row=three_entries.index(ent), column=1, sticky=tkinter.W, columnspan=2, padx=5)
+    ent.bind('<Leave>', lambda x: focus_off())
 
 
 def choose_bl(self):
@@ -33,29 +46,23 @@ def choose_bl(self):
     var_bl.set(f_bl)
     if len(var_bl.get()) >= 1 and len(var_result.get()) == 0:
         var_result.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
+    focus_off()
 
 
 def choose_terms(self):
     f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms)
     var_terms.set(f_terms)
+    focus_off()
 
 
 def choose_result(self):
     f_result = tkinter.filedialog.asksaveasfilename(filetypes=ext_result, initialfile='checked_result.csv')
     var_result.set(f_result)
-
+    focus_off()
 
 btn_bl.bind('<ButtonRelease-1>', choose_bl)
 btn_terms.bind('<ButtonRelease-1>', choose_terms)
 btn_result.bind('<ButtonRelease-1>', choose_result)
-
-ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
-ent_terms = tkinter.Entry(width=85, textvariable=var_terms)
-ent_result = tkinter.Entry(width=85, textvariable=var_result)
-
-three_entries = [ent_bl, ent_terms, ent_result]
-for i in three_entries:
-    i.grid(row=three_entries.index(i), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
 guide_bl = 'Billingual files: .mqxlz or .mqxliff'
 guide_terms = 'CSV format: 0(Index), Source, Target (NG), Target (OK)'
@@ -150,17 +157,28 @@ btn_options.bind('<ButtonRelease-1>', lambda x: show_hide_options('<ButtonReleas
 btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', guide_options))
 btn_options.bind('<Leave>', hide_guide)
 
-root.bind('<Return>', run)
-root.bind('<space>', run)
-root.bind('o', lambda x: show_hide_options('<o>', btn_options))
-root.bind('b', choose_bl)
-root.bind('t', choose_terms)
-root.bind('r', choose_result)
-root.bind('a', lambda x: rbs_rate[0].select())
-root.bind('1', lambda x: rbs_rate[1].select())
-root.bind('0', lambda x: rbs_rate[2].select())
-root.bind('i', lambda x: rbs_locked[0].select())
-root.bind('e', lambda x: rbs_locked[1].select())
+
+def run_when_out_of_ent(func):
+    if type(frame_main.focus_get()) == tkinter.Entry:
+        pass
+    else:
+        func('')
+
+
+def bind_keys(key, func):
+    root.bind(key, lambda x: run_when_out_of_ent(func))
+
+bind_keys('<Return>', run)
+bind_keys('<space>', run)
+bind_keys('o', lambda y: show_hide_options('o', btn_options))
+bind_keys('b', choose_bl)
+bind_keys('t', choose_terms)
+bind_keys('r', choose_result)
+bind_keys('a', lambda y: rbs_rate[0].select())
+bind_keys('1', lambda y: rbs_rate[1].select())
+bind_keys('0', lambda y: rbs_rate[2].select())
+bind_keys('i', lambda y: rbs_locked[0].select())
+bind_keys('e', lambda y: rbs_locked[1].select())
 
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
