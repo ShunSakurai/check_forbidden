@@ -131,6 +131,12 @@ def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
 
     f_terms.close()
 
+    if list_mqxlz_dir:
+        for i in list_mqxlz_dir:
+            os.remove(i+r'/document.mqxliff')
+        for i in list_mqxlz_dir:
+            try_to_rmdir(i)
+
     if list_found_rows:
         print_and_append('\n' + 'Summary', ['Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
@@ -146,12 +152,6 @@ def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
         print(str_result.rsplit('/')[-1].rsplit('\\')[-1] + ' was successfully created.')
     else:
         print('No forbidden term was found!')
-
-    if list_mqxlz_dir:
-        for i in list_mqxlz_dir:
-            os.remove(i+r'/document.mqxliff')
-        for i in list_mqxlz_dir:
-            try_to_rmdir(i)
 
     print('Focus on this screen and Press Enter key to exit the program.')
     try:
