@@ -1,4 +1,5 @@
 import csv
+import datetime
 import os
 import re
 from time import sleep
@@ -47,6 +48,21 @@ def return_col_num(row):
     return col_to_check
 
 
+def settings_to_str(str_rate, str_locked):
+    if str_rate == 'all':
+        setting_rate = 'Check all match rates'
+    elif str_rate == '101':
+        setting_rate = r'Exclude 101% matches'
+    elif str_rate == '100':
+        setting_rate = r'Exclude 100% / 101%'
+    if str_locked == 'all':
+        setting_locked = 'Include locked segments'
+    else:
+        setting_locked = 'Exclude locked segments'
+    settings = setting_rate + ', ' + setting_locked
+    return settings
+
+
 def try_to_rmdir(i):
     try:
         os.rmdir(i)
@@ -69,7 +85,6 @@ def tuple_str_to_ls(x):
 
 
 def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
-    print('-' * 40)
     fn_bl_list = tuple_str_to_ls(str_bl)
     fn_terms = str_terms
     f_terms = open(fn_terms, encoding='utf-8')
@@ -77,6 +92,15 @@ def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
     list_mqxlz_dir = []
     list_found_rows = []
     regex_pattern = re.compile('<target xml:space="preserve">.*?</target>')
+
+    print('-' * 70)
+    date_and_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    list_name = str_terms.rsplit('/')[-1].rsplit('\\')[-1]
+    settings = settings_to_str(str_rate, str_locked)
+    print_and_append(date_and_time, [date_and_time], f_result_w)
+    print_and_append(list_name, [list_name], f_result_w)
+    print_and_append(settings, [settings], f_result_w)
+    print('-' * 70)
 
     for fn_bl in fn_bl_list:
         if fn_bl[-5:] == 'mqxlz':
