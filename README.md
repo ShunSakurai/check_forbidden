@@ -6,7 +6,8 @@ A tool for checking if forbidden terms are included in the target segments of me
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 ## Description
-The motivation behind this tool is that even though memoQ can check forbidden source and target term pairs, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
+Even though memoQ can check forbidden source and target term pairs using the term base, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
+Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. It helps you efficiently maintain the translation quality.
 
 For example, you can use this tool in the following situations:
 
@@ -18,15 +19,15 @@ For example, you can use this tool in the following situations:
 All you have to prepare are:
 
 - memoQ bilingual .mqxlz or .mqxliff files
-- A CSV or text file containing the list of forbidden terms
+- A CSV file or a text file containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file.
+This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is good for searching and storing information. The Summary result is useful when you are working on a "View.''
 
-This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
+This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
 ## Installation
 This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
-Installer is now being developed. For the moment, please do the following:
+Installer is now under development. In the meantime, please follow the steps below:
 
 - Download dist.zip and decompress it
 - Rename the folder to "Check Forbidden" or any name you like
@@ -36,7 +37,7 @@ Installer is now being developed. For the moment, please do the following:
 When you use an updated version, you only have to move the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
-If you have Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
+If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
 ## Usage
 
@@ -44,7 +45,7 @@ If you have Python environment installed, you can run the source code with `pyth
 You can open the program by double-clicking Check Forbidden.exe or its alias.
 
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
-- Choose a CSV or text file containing the list of forbidden terms
+- Choose a CSV file or a text file containing the list of forbidden terms
 - Choose the path and the name of the result file to be exported. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 
@@ -71,7 +72,7 @@ Two file types are supported:
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV file formats
-The items need to be separated by commas, and the file needs to be encoded in UTF-8, and formatted in either of the following:
+The term items need to be separated by comma. The file needs to be encoded in UTF-8, and formatted in either of the following:
 
 - One column of forbidden terms
 - Two columns of forbidden terms and extra information (e.g. correct terms)
@@ -84,16 +85,23 @@ or
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
+The exported result CSV file is also encoded in UTF-8 with commas as the delimiters.
+
 ### Keyboard shortcuts
 Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
-- Run! - with Enter or the space bar
+- Run! - with the space bar
 - Show / hide options - with O
+
+The "Enter (Return)" key can be used to invoke the focused widget.
+
+The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
+
 
 ## Known issues and workarounds
 
 ### Garbled display on Command Prompt
-Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font.
+Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font. The quickest way to open the Properties may be to press Alt + Space and then P.
 
 ![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
 
@@ -123,6 +131,13 @@ Avoid using too short terms, such as one kanji character word:
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
 
+### Garbled UTF-8 CSV files opened with Shift-JIS Excel
+If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
+
+- Change the extension from .csv to .txt. A dialog window pops up and allows you to select the encoding
+- Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
+- Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
+
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
@@ -132,16 +147,17 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Display the export path and the file name candidate when typing / pasting the path into the Bilingual file field
-- Display the information about the CSV file's name and the used options at the top of the result
+- Display the result within context
+- Display the memoQ segment ID in results
 
 ### Maybe later
 - Enable file addition by dragging
-- Add the ability to choose multiple bilingual files from different folders
+- Add an ability to choose multiple bilingual files from different folders
 - Get rid of { brackets } in the bilingual file field
 - Add settings to specify the row of forbidden terms
 - Add settings to specify CSV delimiters
 - Add radio buttons to select export style (command prompt / CSV file)
-- Add the ability to handle non-memoQ files
+- Add an ability to handle non-memoQ files
 - Support regex in forbidden term list
 - Make the path in the entry fields the initial path when pressing buttons
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
@@ -151,6 +167,17 @@ Please let me know if you need any of the features as soon as possible.
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.4.7, April 28, 2016
+- Display the current time, the CSV file's name, and the used options at the top of the result
+- Assign the return (enter) key to each widget's event
+- * Resolve an issue where folders are not deleted when the result CSV file is already open
+
+### v1.4.4, April 28, 2016
+- Add some information users need to know when they use this program for the first time
+- Disable the keyboard shortcuts when the cursor is in the entry fields
+- Change the label of the second button from CSV to Terms
+- * Resolve an issue where multiple filetypes arguments prevent selecting files on Mac
 
 ### v1.4.0, April 23, 2016
 - Change the application name to 'Check Forbidden'
@@ -163,14 +190,14 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 ### v1.3.0, April 12, 2016
 - Change the options icon
 - Add keyboard shortcuts
-- Add the ability to exclude 101% and 100% matches
-- Add the ability to exclude locked segments
+- Add an ability to exclude 101% and 100% matches
+- Add an ability to exclude locked segments
 - Create an expanded pane for options
 - Add and unify the text guides for the buttons
 - Add a line break after the Summary results in the exported CSV file
 - Divide the script part and UI part (UI part is main)
 - * Exclude the TM entries attached to the bilingual files exported from WorldServer from searching
-- * Fix a bug where Run button is pressable when disabled
+- * Resolve an issue where Run button is pressable when disabled
 
 ### v1.1.3, April 7, 2016
 - Divide the Summary results in the CSV file
