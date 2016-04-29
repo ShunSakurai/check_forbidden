@@ -168,6 +168,9 @@ Please let me know if you need any of the features as soon as possible.
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### v1.4.8, April 29, 2016
+- * Resolve an issue where the search fails when a br tag is in the target segment
+
 ### v1.4.7, April 28, 2016
 - Display the current time, the CSV file's name, and the used options at the top of the result
 - Assign the return (enter) key to each widget's event

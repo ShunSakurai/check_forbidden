@@ -91,7 +91,7 @@ def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
-    regex_pattern = re.compile('<target xml:space="preserve">.*?</target>')
+    regex_pattern = re.compile('<target xml:space="preserve">.*?</target>', re.S)
 
     print('-' * 70)
     date_and_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
