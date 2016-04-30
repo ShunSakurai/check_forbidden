@@ -37,6 +37,14 @@ three_entries = [ent_bl, ent_terms, ent_result]
 for ent in three_entries:
     ent.grid(row=three_entries.index(ent), column=1, sticky=tkinter.W, columnspan=2, padx=5)
 
+path_saved_bl = tkinter.StringVar(frame_main)
+path_saved_terms = tkinter.StringVar(frame_main)
+path_saved_result = tkinter.StringVar(frame_main)
+three_saved_paths = [path_saved_bl, path_saved_terms, path_saved_result]
+
+for path in three_saved_paths:
+    path.set('')
+
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=2, sticky=tkinter.W)
 
@@ -91,22 +99,31 @@ for ent in three_entries:
 
 
 def choose_bl(self):
+    path_saved_bl.set(var_bl.get())
     f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl)
     var_bl.set(f_bl)
     if len(var_bl.get()) >= 1 and len(var_result.get()) == 0:
         var_result.set(f_bl[0].rsplit(r'/', 1)[0]+r'/checked_result.csv')
+    if var_bl.get() == '':
+        var_bl.set(path_saved_bl.get())
     focus_off()
 
 
 def choose_terms(self):
+    path_saved_terms.set(var_terms.get())
     f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms)
     var_terms.set(f_terms)
+    if var_terms.get() == '':
+        var_terms.set(path_saved_terms.get())
     focus_off()
 
 
 def choose_result(self):
+    path_saved_result.set(var_terms.get())
     f_result = tkinter.filedialog.asksaveasfilename(filetypes=ext_result, initialfile='checked_result.csv')
     var_result.set(f_result)
+    if var_result.get() == '':
+        var_result.set(path_saved_result.get())
     focus_off()
 
 three_funcs = [choose_bl, choose_terms, choose_result]
