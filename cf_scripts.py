@@ -84,7 +84,7 @@ def tuple_str_to_ls(x):
     return list_from_str
 
 
-def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
+def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_rate, str_locked):
     fn_bl_list = tuple_str_to_ls(str_bl)
     fn_terms = str_terms
     f_terms = open(fn_terms, encoding='utf-8')
@@ -121,9 +121,8 @@ def check(frame, str_bl, str_terms, str_result, str_rate, str_locked):
         for row in f_terms_r:
             col_to_check = return_col_num(row)
             if f_bl_r.find(row[col_to_check]) != -1:
-                row_found = [row[i] for i in range(len(row))]
-                print_and_append(row_found, row_found, f_result_w)
-                list_found_rows.append(row_found)
+                print_and_append(row, row, f_result_w)
+                list_found_rows.append(row)
             else:
                 continue
 
