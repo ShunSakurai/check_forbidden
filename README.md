@@ -92,6 +92,7 @@ Buttons and radio buttons can be selected by pressing the underlined characters 
 
 - Run! - with the space bar
 - Show / hide options - with O
+- Check box - with C
 
 The "Enter (Return)" key can be used to invoke the focused widget.
 
@@ -156,7 +157,6 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Get rid of { brackets } in the bilingual file field
 - Add settings to specify the row of forbidden terms
 - Add settings to specify CSV delimiters
-- Add radio buttons to select export style (command prompt / CSV file)
 - Add an ability to handle non-memoQ files
 - Support regex in forbidden term list
 - Make the path in the entry fields the initial path when pressing buttons
@@ -167,6 +167,10 @@ Please let me know if you need any of the features as soon as possible.
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.4.10, May 1, 2016
+- Add a check box to select the exporting styles (Command Prompt only / CSV file)
+- Keep the entry fields uncleared when open file dialog is canceled
 
 ### v1.4.8, April 29, 2016
 - * Resolve an issue where the search fails when a br tag is in the target segment

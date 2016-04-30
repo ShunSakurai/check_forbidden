@@ -20,9 +20,9 @@ btn_terms = tkinter.Button(text='Terms', underline=0)
 btn_result = tkinter.Button(text='Result', underline=0)
 three_buttons = [btn_bl, btn_terms, btn_result]
 
-for btn in three_buttons:
-    btn.grid(row=three_buttons.index(btn), column=0, sticky=tkinter.W, padx=5)
-
+btn_bl.grid(row=0, column=0, columnspan=2, sticky=tkinter.W, padx=5)
+btn_terms.grid(row=1, column=0, columnspan=2, sticky=tkinter.W, padx=5)
+btn_result.grid(row=2, column=0, columnspan=1, sticky=tkinter.W, padx=5)
 
 var_bl = tkinter.StringVar(frame_main)
 var_terms = tkinter.StringVar(frame_main)
@@ -35,7 +35,7 @@ ent_result = tkinter.Entry(width=85, textvariable=var_result)
 three_entries = [ent_bl, ent_terms, ent_result]
 
 for ent in three_entries:
-    ent.grid(row=three_entries.index(ent), column=1, sticky=tkinter.W, columnspan=2, padx=5)
+    ent.grid(row=three_entries.index(ent), column=2, sticky=tkinter.W, columnspan=2, padx=5)
 
 path_saved_bl = tkinter.StringVar(frame_main)
 path_saved_terms = tkinter.StringVar(frame_main)
@@ -45,18 +45,23 @@ three_saved_paths = [path_saved_bl, path_saved_terms, path_saved_result]
 for path in three_saved_paths:
     path.set('')
 
+var_method = tkinter.StringVar()
+cb_method = tkinter.Checkbutton(variable=var_method)
+cb_method.deselect()
+cb_method.grid(row=2, column=1, sticky=tkinter.E)
+
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=2, sticky=tkinter.W)
 
 btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
-btn_options.grid(row=3, column=2, sticky=tkinter.E, padx=80)
+btn_options.grid(row=3, column=3, sticky=tkinter.E, padx=80)
 
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
-btn_run.grid(row=3, column=2, sticky=tkinter.E, padx=15, pady=5)
-five_buttons = three_buttons + [btn_options, btn_run]
+btn_run.grid(row=3, column=3, sticky=tkinter.E, padx=15, pady=5)
+six_buttons = three_buttons + [cb_method, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
-frame_options.grid(row=4, column=1, sticky=tkinter.W)
+frame_options.grid(row=4, column=2, sticky=tkinter.W)
 
 label_rates = tkinter.Label(frame_options, text='\tMatch rates')
 label_rates.grid(row=0, column=0, sticky=tkinter.W)
@@ -132,6 +137,23 @@ for i in range(3):
     three_buttons[i].bind('<ButtonRelease-1>', three_funcs[i])
 
 
+def toggle_method_click(self, widget):
+    if var_method.get() == '0':
+        path_saved_result.set(var_result.get())
+        var_result.set('Command Prompt only.')
+        btn_result['state'] = 'disabled'
+    elif var_method.get() == '1':
+        var_result.set(path_saved_result.get())
+        btn_result['state'] = 'normal'
+
+cb_method.bind('<ButtonRelease-1>', lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
+
+
+def toggle_method_sc(self, widget):
+    toggle_method_click('<ButtonRelease-1>', widget)
+    cb_method.toggle()
+
+
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
@@ -147,7 +169,7 @@ def toggle_options(self, widget):
     if widget['text'] == '⚙':
         widget['text'] = '▲'
         widget['font'] = ('', 12)
-        frame_options.grid(row=4, column=1, sticky=tkinter.W)
+        frame_options.grid(row=4, column=2, sticky=tkinter.W)
     elif widget['text'] == '▲':
         widget['text'] = '⚙'
         widget['font'] = ('', 15)
@@ -158,7 +180,7 @@ btn_options.bind('<ButtonRelease-1>', lambda x: toggle_options('<ButtonRelease-1
 
 def run(self):
     if btn_run['state'] == 'active' or btn_run['state'] == 'normal':
-        cf_scripts.check_forbidden_terms(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_rate.get(), var_locked.get())
+        cf_scripts.check_forbidden_terms(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_method.get(), var_rate.get(), var_locked.get())
 btn_run.bind('<ButtonRelease-1>', run)
 
 
@@ -176,6 +198,7 @@ for i in three_vars:
 guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Index, Source, Target (NG), Target (OK)'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
+guide_method = 'Select this check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide options.'
 guide_run = 'Enabled when all the three fields are filled.'
 
@@ -190,10 +213,11 @@ def hide_guide(self):
 btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', guide_bl))
 btn_terms.bind('<Enter>', lambda x: show_guide('<Enter>', guide_terms))
 btn_result.bind('<Enter>', lambda x: show_guide('<Enter>', guide_result))
+cb_method.bind('<Enter>', lambda x: show_guide('<Enter>', guide_method))
 btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', guide_options))
 btn_run.bind('<Enter>', lambda x: show_guide('<Enter>', guide_run))
-for i in range(5):
-    five_buttons[i].bind('<Leave>', hide_guide)
+for i in range(6):
+    six_buttons[i].bind('<Leave>', hide_guide)
 
 
 def sc_when_out_of_ent(func):
@@ -207,15 +231,16 @@ def bind_keys(key, func):
     root.bind(key, lambda x: sc_when_out_of_ent(func))
 
 bind_keys('<space>', run)
-bind_keys('o', lambda y: toggle_options('o', btn_options))
+bind_keys('o', lambda x: toggle_options('o', btn_options))
 bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
-bind_keys('a', lambda y: rbs_rate[0].select())
-bind_keys('1', lambda y: rbs_rate[1].select())
-bind_keys('0', lambda y: rbs_rate[2].select())
-bind_keys('i', lambda y: rbs_locked[0].select())
-bind_keys('e', lambda y: rbs_locked[1].select())
+bind_keys('c', lambda x: toggle_method_sc('c', cb_method))
+bind_keys('a', lambda x: rbs_rate[0].select())
+bind_keys('1', lambda x: rbs_rate[1].select())
+bind_keys('0', lambda x: rbs_rate[2].select())
+bind_keys('i', lambda x: rbs_locked[0].select())
+bind_keys('e', lambda x: rbs_locked[1].select())
 
 
 def return_to_click(self):

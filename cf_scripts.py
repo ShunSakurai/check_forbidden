@@ -35,9 +35,12 @@ def limit_range(raw, str_rate, str_locked):
     return string_to_search
 
 
-def print_and_append(to_print, to_write, file_to_write_in):
-    file_to_write_in.append(to_write)
+def print_and_append(str_method, to_print, to_write, file_to_write_in):
     print(to_print)
+    if str_method == '0':
+        file_to_write_in.append(to_write)
+    else:
+        pass
 
 
 def return_col_num(row):
@@ -84,7 +87,7 @@ def tuple_str_to_ls(x):
     return list_from_str
 
 
-def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_rate, str_locked):
+def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_rate, str_locked):
     fn_bl_list = tuple_str_to_ls(str_bl)
     fn_terms = str_terms
     f_terms = open(fn_terms, encoding='utf-8')
@@ -97,9 +100,9 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_rate, str_lo
     date_and_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     list_name = str_terms.rsplit('/')[-1].rsplit('\\')[-1]
     settings = settings_to_str(str_rate, str_locked)
-    print_and_append(date_and_time, [date_and_time], f_result_w)
-    print_and_append(list_name, [list_name], f_result_w)
-    print_and_append(settings, [settings], f_result_w)
+    print_and_append(str_method, date_and_time, [date_and_time], f_result_w)
+    print_and_append(str_method, list_name, [list_name], f_result_w)
+    print_and_append(str_method, settings, [settings], f_result_w)
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
@@ -114,14 +117,14 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_rate, str_lo
         f_bl_r_raw = f_bl.read()
         f_bl_r_range_list = limit_range(f_bl_r_raw, str_rate, str_locked)
         f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_range_list])
-        print_and_append(fn_bl, [fn_bl], f_result_w)
+        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
 
         f_terms.seek(0)
         f_terms_r = csv.reader(f_terms)
         for row in f_terms_r:
             col_to_check = return_col_num(row)
             if f_bl_r.find(row[col_to_check]) != -1:
-                print_and_append(row, row, f_result_w)
+                print_and_append(str_method, row, row, f_result_w)
                 list_found_rows.append(row)
             else:
                 continue
@@ -137,20 +140,24 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_rate, str_lo
             try_to_rmdir(i)
 
     if list_found_rows:
-        print_and_append('\n' + 'Summary', ['Summary'], f_result_w)
+        print_and_append(str_method, '\n' + 'Summary', ['Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
-            print_and_append(i, list_str_to_list(i), f_result_w)
-        print_and_append('', [''], f_result_w)
+            print_and_append(str_method, i, list_str_to_list(i), f_result_w)
+        print_and_append(str_method, '', [''], f_result_w)
+    else:
+        print('No forbidden term was found!')
 
+    if list_found_rows and str_method == '0':
         fn_result = str_result
         f_result = open(fn_result, 'a', encoding='utf-8')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
         print(str_result.rsplit('/')[-1].rsplit('\\')[-1] + ' was successfully created.')
-    else:
-        print('No forbidden term was found!')
+
+    if list_found_rows and str_method == '1':
+        print('The search was successfully finished.')
 
     print('Focus on this screen and Press Enter key to exit the program.')
     try:
