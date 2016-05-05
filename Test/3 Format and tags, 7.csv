@@ -1,0 +1,8 @@
+0 or Target(NG),Source,Target(NG),Target(OK),Description
+0,bold segment,太字のセグメント,,
+1,italic segment,斜体のセグメント,,
+2,underlined segment,下線付きのセグメント,,
+3,underlined,下線付き,,
+4,"bold, italic, and underlined segment",太字、斜体、下線付きのセグメント,,
+5,segment with a ### tag,タグ付きのセグメント,,
+6,HTML,HTML,HTML,

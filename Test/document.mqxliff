@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:mq="MQXliff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<file original="very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx" mq:id="5a2d2643-8d25-4443-badd-c0988ea5462b" mq:projectid="3f49385b-e783-466c-9483-0f84f0ab6e80" source-language="en" target-language="ja" datatype="x-docx">
+<header>
+<tool tool-id="MQ" tool-name="MemoQ" tool-version="7.8.124" tool-company="Kilgray" />
+<mq:export-path>Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\check_forbidden.wiki\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment_jpn.docx</mq:export-path>
+<mq:docinformation mq:isabstract="isabstract" mq:hashistory="true" mq:docname="very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx" mq:majorversion="1" mq:minorversion="3" mq:nosplitjoin="false" mq:langindepgroupid="5bf547e6-9881-47bb-9ff0-382507fb01f9" mq:multidocgroupid="01aa70f2-aa87-4b0a-adc6-4b8a7e34b80e" mq:origfile="Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\check_forbidden.wiki\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx" mq:numberofwords="271" mq:filterconfigname="default" mq:filterconfigserverurl="">
+<mq:versioninfos mq:majorversion="1"><mq:minorversioninfo mq:minorversion="0" mq:comment="" mq:createdthroughview="false" mq:createreason="Import" mq:creationtime="264454493" mq:creatoruser="sakuraishun" mq:tag=""><mq:details mq:type="MinorVersionDetailsImport"><![CDATA[<?xml version="1.0"?>
+<MinorVersionDetailsImport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FilePath>Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\check_forbidden.wiki\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx</FilePath>
+</MinorVersionDetailsImport>]]></mq:details></mq:minorversioninfo>
+<mq:minorversioninfo mq:minorversion="1" mq:comment="" mq:createdthroughview="false" mq:createreason="BilingualExport" mq:creationtime="264455713" mq:creatoruser="sakuraishun" mq:tag=""><mq:details mq:type="MinorVersionDetailsBilingExport"><![CDATA[<?xml version="1.0"?>
+<MinorVersionDetailsBilingExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BilingualType>Xliff</BilingualType>
+  <TargetPath>Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\Test\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx_jpn.mqxlz</TargetPath>
+  <TwoColumpRtfProperties>MutipleDocuments</TwoColumpRtfProperties>
+  <BilingRtfProperties>EmptySegmentsWithMarkup</BilingRtfProperties>
+  <XliffProperties>ExportMajorVersionHistory</XliffProperties>
+</MinorVersionDetailsBilingExport>]]></mq:details></mq:minorversioninfo>
+<mq:minorversioninfo mq:minorversion="2" mq:comment="" mq:createdthroughview="false" mq:createreason="BilingualExport" mq:creationtime="264465865" mq:creatoruser="sakuraishun" mq:tag=""><mq:details mq:type="MinorVersionDetailsBilingExport"><![CDATA[<?xml version="1.0"?>
+<MinorVersionDetailsBilingExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BilingualType>Xliff</BilingualType>
+  <TargetPath>Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\Test\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx_jpn.mqxliff</TargetPath>
+  <TwoColumpRtfProperties>MutipleDocuments</TwoColumpRtfProperties>
+  <BilingRtfProperties>EmptySegmentsWithMarkup</BilingRtfProperties>
+  <XliffProperties>IncludePreview</XliffProperties>
+</MinorVersionDetailsBilingExport>]]></mq:details></mq:minorversioninfo>
+<mq:minorversioninfo mq:minorversion="3" mq:comment="" mq:createdthroughview="false" mq:createreason="BilingualExport" mq:creationtime="264470546" mq:creatoruser="sakuraishun" mq:tag=""><mq:details mq:type="MinorVersionDetailsBilingExport"><![CDATA[<?xml version="1.0"?>
+<MinorVersionDetailsBilingExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BilingualType>Xliff</BilingualType>
+  <TargetPath>Z:\Users\sakuraishun\Dropbox\Codes\check_forbidden\Test\very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment.docx_jpn.mqxlz</TargetPath>
+  <TwoColumpRtfProperties>MutipleDocuments</TwoColumpRtfProperties>
+  <BilingRtfProperties>EmptySegmentsWithMarkup</BilingRtfProperties>
+  <XliffProperties>Compressed</XliffProperties>
+</MinorVersionDetailsBilingExport>]]></mq:details></mq:minorversioninfo>
+</mq:versioninfos>
+<mq:tagdefinition alignhighlight="false" caseinsensitive="false" oeid="1200" oename="utf-16" rawhtml="false" showitags="true" basicformat="true" supersubscript="true" xmlcommands="true"><mq:tagdefelement name="b" placeholder="false"></mq:tagdefelement><mq:tagdefelement name="btn" placeholder="false"><mq:tagdefattribute name="dt" filtered="true" required="true" translatable="true" /><mq:tagdefattribute name="name" filtered="false" required="true" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="i" placeholder="false"></mq:tagdefelement><mq:tagdefelement name="underline-sng" placeholder="false"></mq:tagdefelement><mq:tagdefelement name="rtl-on" placeholder="false"></mq:tagdefelement><mq:tagdefelement name="rtl-off" placeholder="false"></mq:tagdefelement><mq:tagdefelement name="rpr" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="transform" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="idx" placeholder="false"><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="transform" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="idxm" placeholder="false"><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="l" placeholder="false"><mq:tagdefattribute name="depth" filtered="false" required="true" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="instr" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="sym" placeholder="false"><mq:tagdefattribute name="font" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="char" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="mqc" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="pict" placeholder="true"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="bmk" placeholder="false"><mq:tagdefattribute name="colFirst" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="colLast" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="displacedByCustomXml" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="transform" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="name" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="cmt" placeholder="false"><mq:tagdefattribute name="transform" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="displacedByCustomXml" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="comment" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="creator" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="creationtime" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="day" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="month" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="monthL" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="year" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="yearL" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="dayL" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="pgNum" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:ch" placeholder="false"><mq:tagdefattribute name="val" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="o" placeholder="false"><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="fld" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="ruby" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="draw" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="sdt" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="ptab" placeholder="false"><mq:tagdefattribute name="alignment" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="relativeTo" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="leader" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="ent" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="customMarkFollows" filtered="false" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="fnt" placeholder="false"><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="customMarkFollows" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="b" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="i" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="underline-sng" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="vertAlign-sub" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="vertAlign-super" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="hlnk" placeholder="false"><mq:tagdefattribute name="tgtFrame" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="tooltip" filtered="false" required="false" translatable="true" /><mq:tagdefattribute name="docLocation" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="history" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="anchor" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="id" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="entr" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="fntr" placeholder="false"><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="b" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="i" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="underline-sng" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="vertAlign-sub" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="vertAlign-super" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:nt" placeholder="false"><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="type" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="text" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="val" filtered="false" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mo" placeholder="false"><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /><mq:tagdefattribute name="rprid" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:cmt" placeholder="false"><mq:tagdefattribute name="val" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="prv" filtered="false" required="false" translatable="false" /><mq:tagdefattribute name="id" filtered="true" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:pi" placeholder="false"><mq:tagdefattribute name="instruction" filtered="false" required="false" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:rxt" placeholder="false"><mq:tagdefattribute name="displaytext" filtered="true" required="true" translatable="false" /><mq:tagdefattribute name="val" filtered="true" required="true" translatable="false" /></mq:tagdefelement><mq:tagdefelement name="mq:rxt-req" placeholder="true"><mq:tagdefattribute name="displaytext" filtered="true" required="true" translatable="false" /><mq:tagdefattribute name="val" filtered="true" required="true" translatable="false" /></mq:tagdefelement></mq:tagdefinition>
+<mq:doccomments />
+<mq:lqamodel><![CDATA[<XMLSerializedLQAModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Version>1</Version><Name /><RevisionID>00000000-0000-0000-0000-000000000000</RevisionID><UseSeverityLevels>false</UseSeverityLevels><UsePenaltyPoints>false</UsePenaltyPoints><RequiresReviewerCommenting>false</RequiresReviewerCommenting><SeverityLevelNames /><ModelEntries /><PassFailCriterion><CountMultipleErrorOccuranceAsOne>false</CountMultipleErrorOccuranceAsOne><CritDefType>PenaltyPoints</CritDefType><PenaltyPointsNominator>0</PenaltyPointsNominator><PenaltyPointPerWordsDenominator>0</PenaltyPointPerWordsDenominator><NormalizedPenaltyScoreLimit>0</NormalizedPenaltyScoreLimit><CritDefinitionRules /></PassFailCriterion><QALQAMapping /><Timestamp>0001-01-01T00:00:00</Timestamp></XMLSerializedLQAModel>]]></mq:lqamodel>
+</mq:docinformation>
+</header>
+<body>
+<trans-unit id="1" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="8e3f370f-b690-401b-9f72-42735f564f35" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:05:45Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="1" mq:lastlabel="1" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="1">very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment</source>
+<target xml:space="preserve">とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント とても長いセグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#1 / struct-rpr#1</context>
+</context-group>
+<mq:warnings40>
+<mq:errorwarning mq:errorwarning-code="03085" mq:errorwarning-ignorable="errorwarning-ignorable" mq:errorwarning-shorttext="Duplicate words in the target" mq:errorwarning-problemname="Duplicate words" mq:errorwarning-longdesc="There are duplicate words in the target: とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント" mq:errorwarning-localizationargs="とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント, とても長いセグメント" mq:errorwarning-dataspecific="errorwarning-dataspecific" mq:errorwarning-segmenthash="1587136457" mq:errorwarning-combinedposstart="0" mq:errorwarning-combinedposlength="10" mq:errorwarning-posinsource="errorwarning-posinsource" mq:errorwarning-correction="AAroYOZggmH3qgLEYLthsGHhYfNhyGEAAAAAAAAAAAAA" />
+</mq:warnings40>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="8e3f370f-b690-401b-9f72-42735f564f35" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="1" mq:lastlabel="1" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="1" mq:hasfollowingobject="hasfollowingobject">very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment very long segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#1 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve"> </mq:endingws>
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve"> </mq:endingws>
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:05:45Z" username="sakuraishun" editingtime="3727" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="2" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="69" mq:segmentguid="2648fbfb-d19f-4b8c-8a0c-4a0ac798c824" mq:translatorcommitmatchrate="69" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:05:58Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="2" mq:lastlabel="2" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="2">empty segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#2 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="2648fbfb-d19f-4b8c-8a0c-4a0ac798c824" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="2" mq:lastlabel="2" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="2" mq:hasfollowingobject="hasfollowingobject">empty segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#2 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="69" role="1000" timestamp="2016-05-04T08:05:58Z" username="sakuraishun" editingtime="11746" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="69" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="3" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="1048c110-0b48-47d3-b269-d7199375ed76" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:06:01Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="3" mq:lastlabel="3" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="3">single-byte and multi-byte</source>
+<target xml:space="preserve">A123あいうえお</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#3 / struct-rpr#1</context>
+</context-group>
+<mq:warnings40>
+<mq:errorwarning mq:errorwarning-code="03030" mq:errorwarning-ignorable="errorwarning-ignorable" mq:errorwarning-shorttext="First letters are not capitalized the same way" mq:errorwarning-problemname="first letter's capitalization" mq:errorwarning-longdesc="" mq:errorwarning-localizationargs="" mq:errorwarning-segmenthash="738115812" mq:errorwarning-combinedposstart="0" mq:errorwarning-combinedposlength="1" mq:errorwarning-correction="AAFhAA==" />
+<mq:errorwarning mq:errorwarning-code="03062" mq:errorwarning-ignorable="errorwarning-ignorable" mq:errorwarning-shorttext="Numbers in source and target segment do not match" mq:errorwarning-problemname="numbers do not match" mq:errorwarning-longdesc="" mq:errorwarning-localizationargs="" mq:errorwarning-segmenthash="0" mq:errorwarning-combinedposstart="-1" mq:errorwarning-combinedposlength="0" mq:errorwarning-correction="AAA=" />
+</mq:warnings40>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="1048c110-0b48-47d3-b269-d7199375ed76" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="3" mq:lastlabel="3" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="3" mq:hasfollowingobject="hasfollowingobject">single-byte and multi-byte</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#3 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:01Z" username="sakuraishun" editingtime="2854" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="4" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="55197117-407b-4271-babf-0700dbc81660" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:06:17Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="4" mq:lastlabel="4" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="4">small case</source>
+<target xml:space="preserve">small case</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#4 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="55197117-407b-4271-babf-0700dbc81660" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="4" mq:lastlabel="4" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="4" mq:hasfollowingobject="hasfollowingobject">small case</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#4 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:17Z" username="sakuraishun" editingtime="1980" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="5" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="6b496639-3c2e-4139-8143-2fabb016aa6c" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="5" mq:lastlabel="5" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="5">Large Case</source>
+<target xml:space="preserve">Large Case</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#5 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="6b496639-3c2e-4139-8143-2fabb016aa6c" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="5" mq:lastlabel="5" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="5" mq:hasfollowingobject="hasfollowingobject">Large Case</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#5 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="0" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="6" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="20b13a4e-de43-4bb1-86b4-2a9564b8808e" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="6" mq:lastlabel="6" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="6"><bpt id="1" ctype="bold">{}</bpt>Bold<ept id="1">{}</ept> segment</source>
+<target xml:space="preserve"><bpt id="1" ctype="bold">{}</bpt>太字の<ept id="1">{}</ept>セグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#6 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="20b13a4e-de43-4bb1-86b4-2a9564b8808e" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="6" mq:lastlabel="6" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="6" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="bold">{}</bpt>Bold<ept id="1">{}</ept> segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#6 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="0" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="7" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="c079b336-be54-4f5a-b6b7-fd41fbf9a602" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="7" mq:lastlabel="7" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="7"><bpt id="1" ctype="italic">{}</bpt>Italic<ept id="1">{}</ept> segment</source>
+<target xml:space="preserve"><bpt id="1" ctype="italic">{}</bpt>斜体の<ept id="1">{}</ept>セグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#7 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="c079b336-be54-4f5a-b6b7-fd41fbf9a602" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="7" mq:lastlabel="7" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="7" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="italic">{}</bpt>Italic<ept id="1">{}</ept> segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#7 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="0" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="8" mq:minorversionend="3" mq:minorversionstart="3" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="833a0569-6dc4-4302-b625-c99557a1142e" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T12:27:27Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="8" mq:lastlabel="8" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="8"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>Underlined<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>下線付きの<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt>セグメント<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#8</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="2" mq:minorversionstart="2" mq:status="PartiallyEdited" mq:percent="101" mq:segmentguid="833a0569-6dc4-4302-b625-c99557a1142e" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T11:12:38Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="8" mq:lastlabel="8" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="8" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>Underlined<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>下線付きの<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt>セグ&lt;メ&gt;ント<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#8</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="6179" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</mq:historical-unit>
+<mq:historical-unit mq:minorversionend="1" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="833a0569-6dc4-4302-b625-c99557a1142e" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T08:06:14Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="8" mq:lastlabel="8" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="8" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>Underlined<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt><bpt id="1" ctype="underlined">{}</bpt>下線付きの<ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt><ept id="1">{}</ept>セグメント<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#8</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="0" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</mq:historical-unit>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="833a0569-6dc4-4302-b625-c99557a1142e" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="8" mq:lastlabel="8" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="8" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="underlined">{}</bpt><bpt id="2">&lt;rpr id=&quot;0&quot;&gt;</bpt>Underlined<ept id="1">{}</ept><ept id="2">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="3">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="3">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#8</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T12:27:27Z" username="sakuraishun" editingtime="28155" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="9" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="e4609108-7501-4a52-a44f-c1aebad3b7dd" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="9" mq:lastlabel="9" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="9"><bpt id="1" ctype="bold">{}</bpt><bpt id="2" ctype="italic">{}</bpt><bpt id="3" ctype="underlined">{}</bpt><bpt id="4">&lt;rpr id=&quot;0&quot;&gt;</bpt>Bold, Italic, and Underlined<ept id="1">{}</ept><ept id="2">{}</ept><ept id="3">{}</ept><ept id="4">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="5">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="5">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"><bpt id="4">&lt;rpr id=&quot;0&quot;&gt;</bpt><bpt id="1" ctype="bold">{}</bpt><bpt id="2" ctype="italic">{}</bpt><bpt id="3" ctype="underlined">{}</bpt>太字、斜体、下線付きの<ept id="4">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="5">&lt;rpr id=&quot;1&quot;&gt;</bpt><ept id="1">{}</ept><ept id="2">{}</ept><ept id="3">{}</ept>セグメント<ept id="5">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#9</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="e4609108-7501-4a52-a44f-c1aebad3b7dd" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="9" mq:lastlabel="9" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="9" mq:hasfollowingobject="hasfollowingobject"><bpt id="1" ctype="bold">{}</bpt><bpt id="2" ctype="italic">{}</bpt><bpt id="3" ctype="underlined">{}</bpt><bpt id="4">&lt;rpr id=&quot;0&quot;&gt;</bpt>Bold, Italic, and Underlined<ept id="1">{}</ept><ept id="2">{}</ept><ept id="3">{}</ept><ept id="4">&lt;/rpr id=&quot;0&quot; transform=&quot;close&quot;&gt;</ept><bpt id="5">&lt;rpr id=&quot;1&quot;&gt;</bpt> segment<ept id="5">&lt;/rpr id=&quot;1&quot; transform=&quot;close&quot;&gt;</ept></source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#9</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="0" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="10" mq:minorversionend="3" mq:minorversionstart="3" mq:status="ManuallyConfirmed" mq:segmentguid="1306d2a7-b97c-4810-ba99-f17a9bb026b8" mq:translatorcommitmatchrate="0" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T12:30:12Z" mq:lastchangedtimestamp="2016-05-04T12:30:12Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="10" mq:lastlabel="10" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="10">segment with <ph id="1">&lt;mq:rxt displaytext=&quot;###&quot; val=&quot;###&quot; /&gt;</ph> tags</source>
+<target xml:space="preserve">タグ<ph id="1">&lt;mq:rxt displaytext=&quot;###&quot; val=&quot;###&quot; /&gt;</ph>付きのセグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#10 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="2" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="8e49f937-08ea-4a37-975e-4084b731937c" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:13Z" mq:lastchangedtimestamp="2016-05-04T08:06:14Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="10" mq:lastlabel="10" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="10" mq:hasfollowingobject="hasfollowingobject">segment with <ph id="1">&lt;mq:rxt displaytext=&quot;###&quot; val=&quot;###&quot; /&gt;</ph> tags</source>
+<target xml:space="preserve">タグ<ph id="1">&lt;mq:rxt displaytext=&quot;###&quot; val=&quot;###&quot; /&gt;</ph>付きのセグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#10 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:13Z" username="" editingtime="6817" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</mq:historical-unit>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="8e49f937-08ea-4a37-975e-4084b731937c" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="10" mq:lastlabel="10" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="10" mq:hasfollowingobject="hasfollowingobject">segment with ### tags</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#10 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="0" role="1000" timestamp="2016-05-04T12:30:12Z" username="sakuraishun" editingtime="14840" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</trans-unit>
+<trans-unit id="11" mq:minorversionend="3" mq:minorversionstart="3" mq:status="ManuallyConfirmed" mq:segmentguid="fee390bc-818d-4747-8340-129b4db05821" mq:translatorcommitmatchrate="0" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T12:30:13Z" mq:lastchangedtimestamp="2016-05-04T12:30:13Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="10" mq:lastlabel="10" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="10">HTML Code</source>
+<target xml:space="preserve">&lt;p&gt;Some HTML content.&lt;br&gt;To check tags.&lt;/p&gt;</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#10 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+</mq:minorversions>
+<mq:startingws xml:space="preserve"> </mq:startingws>
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="0" role="1000" timestamp="2016-05-04T12:30:13Z" username="sakuraishun" editingtime="59308" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="true" />
+</trans-unit>
+<trans-unit id="12" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="b54e07d6-ccbd-4458-b3a8-1b74f32b6696" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:04:44Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="11" mq:lastlabel="11" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="11">101%</source>
+<target xml:space="preserve">101%</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#11 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="b54e07d6-ccbd-4458-b3a8-1b74f32b6696" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="11" mq:lastlabel="11" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="11" mq:hasfollowingobject="hasfollowingobject">101%</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#11 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:04:44Z" username="" editingtime="4820" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="13" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="100" mq:segmentguid="4fd5fee8-669d-4412-a048-9f620bd3e3b0" mq:translatorcommitmatchrate="100" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:04:44Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="12" mq:lastlabel="12" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="12">100%</source>
+<target xml:space="preserve">100%</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#12 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="4fd5fee8-669d-4412-a048-9f620bd3e3b0" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="12" mq:lastlabel="12" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="12" mq:hasfollowingobject="hasfollowingobject">100%</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#12 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="100" role="1000" timestamp="2016-05-04T08:04:44Z" username="" editingtime="10888" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="100" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="14" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="99" mq:segmentguid="5837a4d7-411b-43de-9306-263eb4a991cd" mq:translatorcommitmatchrate="99" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:05:27Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="13" mq:lastlabel="13" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="13">99%</source>
+<target xml:space="preserve">99%</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#13 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="5837a4d7-411b-43de-9306-263eb4a991cd" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="13" mq:lastlabel="13" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="13" mq:hasfollowingobject="hasfollowingobject">99%</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#13 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="99" role="1000" timestamp="2016-05-04T08:05:27Z" username="sakuraishun" editingtime="61852" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="true">99%</mq:originalsource>
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="99" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+<trans-unit id="15" mq:minorversionend="3" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:segmentguid="633b7f6f-0354-4be3-ae42-bd0cbfc42528" mq:translatorcommitmatchrate="0" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T08:05:27Z" mq:lastchangedtimestamp="2016-05-04T12:28:45Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="14" mq:lastlabel="14" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="14">0%</source>
+<target xml:space="preserve">0%</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#14 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="633b7f6f-0354-4be3-ae42-bd0cbfc42528" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="14" mq:lastlabel="14" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="14" mq:hasfollowingobject="hasfollowingobject">0%</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#14 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="0" role="1000" timestamp="2016-05-04T08:05:27Z" username="sakuraishun" editingtime="6816" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</trans-unit>
+<trans-unit id="16" translate="no" mq:locked="locked" mq:minorversionend="3" mq:minorversionstart="3" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="aa64ca9a-9d78-45b0-86a8-fe1d99942bd7" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="sakuraishun" mq:translatorcommittimestamp="2016-05-04T12:28:58Z" mq:lastchangedtimestamp="2016-05-04T12:29:02Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="15" mq:lastlabel="15" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="15">Locked segment</source>
+<target xml:space="preserve">ロックされたセグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#15 / struct-rpr#1</context>
+</context-group>
+<mq:minorversions>
+<mq:historical-unit translate="no" mq:locked="locked" mq:minorversionend="2" mq:minorversionstart="1" mq:status="ManuallyConfirmed" mq:percent="101" mq:segmentguid="aa64ca9a-9d78-45b0-86a8-fe1d99942bd7" mq:translatorcommitmatchrate="101" mq:translatorcommitusername="" mq:translatorcommittimestamp="2016-05-04T08:06:31Z" mq:lastchangedtimestamp="2016-05-04T08:06:33Z" mq:lastchanginguser="sakuraishun" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="15" mq:lastlabel="15" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="15" mq:hasfollowingobject="hasfollowingobject">Locked segment</source>
+<target xml:space="preserve">ロックされたセグメント</target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#15 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T08:06:31Z" username="" editingtime="25317" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</mq:historical-unit>
+<mq:historical-unit mq:minorversionend="0" mq:minorversionstart="0" mq:status="NotStarted" mq:segmentguid="aa64ca9a-9d78-45b0-86a8-fe1d99942bd7" mq:lastchangedtimestamp="0001-01-01T00:00:00Z" mq:maxlengthchars="-1" mq:nosplitjoin="false" mq:firstlabel="15" mq:lastlabel="15" mq:autosplitjoinstate="0" mq:lastmodifrole="0" mq:multipleexactmatch="false">
+<source xml:space="preserve" mq:segpart="15" mq:hasfollowingobject="hasfollowingobject">Locked segment</source>
+<target xml:space="preserve"></target>
+<context-group>
+<context context-type="x-mmq-structural-context">trans-units / trans-unit#15 / struct-rpr#1</context>
+</context-group>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff" /><mq:nosplitjoins />
+<mq:originalsource edited="false" />
+</mq:historical-unit>
+</mq:minorversions>
+<mq:startingws xml:space="preserve" />
+<mq:endingws xml:space="preserve" />
+<mq:commitinfos xmlns="MQXliff"><commitinfo matchrate="101" role="1000" timestamp="2016-05-04T12:28:58Z" username="sakuraishun" editingtime="49825" /></mq:commitinfos><mq:nosplitjoins />
+<mq:originalsource edited="true">Locked segment</mq:originalsource>
+<mq:insertedmatch matchtype="0" source="My TM / sakuraishun" matchrate="101" originalmatchrate="0" ambiguousexact="false" />
+</trans-unit>
+</body>
+</file>
+</xliff>
