@@ -46,10 +46,9 @@ You can open the program by double-clicking Check Forbidden.exe or its alias.
 
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose a CSV file or a text file containing the list of forbidden terms
-- Choose the path and the name of the result file to be exported. The default is the first bilingual file's path + "checked_result.csv"
+- Choose the path and the name of the result file to be exported or disable exporting by selecting the check box. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
-
-- The result is displayed in the Command Prompt, and if any matches are found, they are also exported into the CSV file
+- The result is displayed in the Command Prompt, and if any matches are found and exporting is enabled, they are also exported into the CSV file
 - Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - The result is displayed for both individual and whole files (as the "Summary")
 - Press "Enter" key or click "X" (close) button to exit the program
@@ -117,9 +116,9 @@ This program is case-sensitive. If necessary, add terms to the CSV file in both 
 ### Beware of false positives
 Below are some best practices to avoid false positives.
 
-Avoid using single symbols used in tags and special characters:
+Avoid using single symbols used in special characters:
 
-- Avoid adding <, /, >, &, ;, etc.
+- Avoid adding &, ;, etc.
 
 Add spaces:
 
@@ -147,26 +146,32 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Prepare the icon
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
-- Display the export path and the file name candidate when typing / pasting the path into the Bilingual file field
 - Display the result within context
 - Display the memoQ segment ID in results
 
 ### Maybe later
-- Enable file addition by dragging
 - Add an ability to choose multiple bilingual files from different folders
 - Get rid of { brackets } in the bilingual file field
 - Add settings to specify the row of forbidden terms
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
 - Support regex in forbidden term list
-- Make the path in the entry fields the initial path when pressing buttons
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
+
+### Unavailable
+- Add file by dragging. The drag and drop feature is hard to use in tkinter
 
 Please let me know if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.4.14, May 6, 2016
+- Exclude tags from searching
+- Display the export path and the file name candidate when typing / pasting the path into the Bilingual file field
+- Make the path in the entry fields the initial path when pressing buttons
+- * Create test cases and resolve some issues
 
 ### v1.4.10, May 1, 2016
 - Add a check box to select the exporting styles (Command Prompt only / CSV file)
