@@ -77,6 +77,12 @@ def print_and_append(str_method, to_print, to_write, file_to_write_in):
         pass
 
 
+def remove_tags(segment):
+    regex_tag = re.compile('<.*?>.*?</.*?>', re.S)
+    segment_clean = regex_tag.sub('', segment)
+    return segment_clean
+
+
 def replace_back_slash(path):
     path.replace('\\', '/')
     return path
@@ -152,7 +158,8 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_r_raw = f_bl.read()
         f_bl_r_limit_list = limit_range(f_bl_r_raw, str_rate, str_locked)
-        f_bl_r = '\n'.join([regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_limit_list])
+        f_bl_r_with_tag = [regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_limit_list]
+        f_bl_r = '\n'.join([remove_tags(i) for i in f_bl_r_with_tag])
         print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
 
         f_terms.seek(0)

@@ -19,7 +19,7 @@ setup(
       console=[{'author': 'Shun Sakurai',
                        'dest_base': 'Check Forbidden',
                        'script': 'check_forbidden.py',
-                       'version': '1.4.7',
+                       'version': '1.4.14',
                        }],
       options={'py2exe': {
                      'bundle_files': 2,
