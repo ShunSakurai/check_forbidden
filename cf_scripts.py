@@ -8,12 +8,14 @@ import zipfile
 
 def dir_from_path(path):
     if path:
+        path = replace_back_slash(path)
         path_first = ls_from_tuple_str(path)[0]
+        path_no_slash = path_first.rstrip('/')
         regex_file = re.compile('/.*?\..*?')
-        if regex_file.findall(path_first.rsplit('/', 1)[-1]):
-            path_dir = path_first.rsplit('/', 1)[0]
+        if regex_file.findall(path_no_slash.rsplit('/', 1)[-1]):
+            path_dir = path_no_slash.rsplit('/', 1)[0]
         else:
-            path_dir = path_first
+            path_dir = path_no_slash
     else:
         path_dir = None
     return path_dir
@@ -58,7 +60,7 @@ def ls_from_list_str(x):
 
 
 def ls_from_tuple_str(x):
-    x_split = x.replace('{', ',').strip('()').split(',')
+    x_split = x.replace('{', ',').strip('()').strip(',').split(',')
     list_from_str = [strip_many(i, ['', '{}', ', ', '"', "'"]) for i in x_split]
     return list_from_str
 
