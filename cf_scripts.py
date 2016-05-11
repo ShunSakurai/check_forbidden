@@ -11,8 +11,7 @@ def dir_from_path(path):
         path = replace_back_slash(path)
         path_first = ls_from_tuple_str(path)[0]
         path_no_slash = path_first.rstrip('/')
-        regex_file = re.compile('/.*?\..*?')
-        if regex_file.findall(path_no_slash.rsplit('/', 1)[-1]):
+        if '.' in path_no_slash.rsplit('/', 1)[-1]:
             path_dir = path_no_slash.rsplit('/', 1)[0]
         else:
             path_dir = path_no_slash
@@ -33,21 +32,22 @@ def fname_from_path(path):
 
 def limit_range(raw, str_rate, str_locked):
     regex_unit = re.compile('<trans-unit id=".*?</trans-unit>', re.S)
-    units = regex_unit.findall(raw)
     regex_header = re.compile('<trans-unit id=".*?>')
     string_101 = 'mq:percent="101"'
     string_100 = 'mq:percent="100"'
     string_locked = 'mq:locked="locked"'
     string_to_search = []
-    for unit in units:
-        header = regex_header.findall(unit)[0]
-        if str_rate == '100' and header.find(string_100) != -1:
+    for unit_mo in regex_unit.finditer(raw):
+        unit = unit_mo.group(0)
+        header_mo = regex_header.search(unit)
+        header = header_mo.group(0)
+        if str_rate == '100' and string_100 in header:
             continue
-        elif str_rate == '100' and header.find(string_101) != -1:
+        elif str_rate == '100' and string_101 in header:
             continue
-        elif str_rate == '101' and header.find(string_101) != -1:
+        elif str_rate == '101' and string_101 in header:
             continue
-        elif str_locked == 'locked' and header.find(string_locked) != -1:
+        elif str_locked == 'locked' and string_locked in header:
             continue
         else:
             string_to_search.append(unit)
@@ -173,7 +173,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
                 col_to_check = return_col_num(row)
             if row[col_to_check] is None:
                 continue
-            if f_bl_r.find(row[col_to_check]) != -1:
+            if row[col_to_check] in f_bl_r:
                 print_and_append(str_method, row, row, f_result_w)
                 list_found_rows.append(row)
             else:

@@ -6,7 +6,7 @@ A tool for checking if forbidden terms are included in the target segments of me
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 ## Description
-Even though memoQ can check forbidden source and target term pairs using the term base, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
+Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
 Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. It helps you efficiently maintain the translation quality.
 
 For example, you can use this tool in the following situations:
