@@ -167,6 +167,10 @@ Please let me know if you need any of the features as soon as possible.
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### v1.4.16, May 12, 2016
+- Implement Python's recommendations and add the link to memoQ
+- * Resolve an issues around the result file path
+
 ### v1.4.14, May 6, 2016
 - Exclude tags from searching
 - Display the export path and the file name candidate when typing / pasting the path into the Bilingual file field
