@@ -6,7 +6,7 @@ A tool for checking if forbidden terms are included in the target segments of me
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 ## Description
-Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
+Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, and can check forbidden characters using the QA settings, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
 Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. It helps you efficiently maintain the translation quality.
 
 For example, you can use this tool in the following situations:
@@ -161,15 +161,20 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 ### Unavailable
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
 
-Please let me know if you need any of the features as soon as possible.
+Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### Newest version
+- Add contact information
+
 ### v1.4.16, May 12, 2016
-- Implement Python's recommendations and add the link to memoQ
+- Implement Python's recommendations
+- Add the link to memoQ
 - * Resolve an issues around the result file path
+- * Resolve an issues around the bilingual file path
 
 ### v1.4.14, May 6, 2016
 - Exclude tags from searching
@@ -248,7 +253,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 - Come up with the idea
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) and contribution is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 

@@ -16,14 +16,15 @@ from distutils.core import setup
 import py2exe
 
 setup(
-      console=[{'author': 'Shun Sakurai',
-                       'dest_base': 'Check Forbidden',
-                       'script': 'check_forbidden.py',
-                       'version': '1.4.16',
-                       }],
-      options={'py2exe': {
-                     'bundle_files': 2,
-                     'compressed': True,
-                     'excludes': ['_hashlib', '_frozen_importlib', 'argparse', '_lzma', '_bz2', '_ssl', 'calendar', 'difflib', 'doctest', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline'],
-                     }}
-     )
+    console=[{
+        'author': 'Shun Sakurai',
+        'dest_base': 'Check Forbidden',
+        'script': 'check_forbidden.py',
+        'version': '1.4.16',
+    }],
+    options={'py2exe': {
+        'bundle_files': 2,
+        'compressed': True,
+        'excludes': ['_hashlib', '_frozen_importlib', 'argparse', '_lzma', '_bz2', '_ssl', 'calendar', 'difflib', 'doctest', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline'],
+    }}
+)
