@@ -31,8 +31,8 @@ Installer is now under development. In the meantime, please follow the steps bel
 
 - Download dist.zip and decompress it
 - Rename the folder to "Check Forbidden" or any name you like
-- Move it to C:\Program Files
-- Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+- (Optional) Move the folder to C:\Program Files
+- (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
 When you use an updated version, you only have to move the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
@@ -42,20 +42,22 @@ If you have the Python environment installed, you can run the source code with `
 ## Usage
 
 ### Overview
-You can open the program by double-clicking Check Forbidden.exe or its alias.
-
+- You can open the program by double-clicking Check Forbidden.exe or its alias
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose a CSV file or a text file containing the list of forbidden terms
 - Choose the path and the name of the result file to be exported or disable exporting by selecting the check box. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 - The result is displayed in the Command Prompt, and if any matches are found and exporting is enabled, they are also exported into the CSV file
-- Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
-- The result is displayed for both individual and whole files (as the "Summary")
 - Press "Enter" key or click "X" (close) button to exit the program
-- You can re-run the program without closing it
-- If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
+
+### Tips
+- If you type or paste a path into the entry field and press the button afterwards, browsing starts from the path specified in the field
+- The result is displayed for both individual and whole files (as the "Summary")
+- Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
+- You can re-run the program without closing it
+- If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
 ### Options
 You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▲ icon.
