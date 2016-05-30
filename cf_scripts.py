@@ -1,3 +1,7 @@
+'''
+cd dropbox/codes/check_forbidden
+py cf_scripts.py
+'''
 import csv
 import datetime
 import os
@@ -55,11 +59,22 @@ def limit_range(raw, str_rate, str_locked):
 
 
 def ls_from_list_str(x):
+    r'''
+    >>> ls_from_list_str("['Index', 'Source', 'Target (NG)', 'Target (OK)']")
+    ['Index', 'Source', 'Target (NG)', 'Target (OK)']
+    '''
     list_from_str = [i.strip('\'') for i in x.strip('[]').split(', ')]
     return list_from_str
 
 
 def ls_from_tuple_str(x):
+    r'''
+    >>> ls_from_tuple_str(r'/Users/path/mqxliff.mqxliff {/Users/path/mqxlz.mqxlz}')
+    ['/Users/path/mqxliff.mqxliff', '/Users/path/mqxlz.mqxlz']
+
+    >>> ls_from_tuple_str(r' C:/Users/path/mqxliff1.mqxliff {C:/Users/path/mqxliff2.mqxliff} {C:\Users\path\mqxlz1.mqxlz} {C:\Users\path\mqxlz2.mqxlz}')
+    ['C:/Users/path/mqxliff1.mqxliff', 'C:/Users/path/mqxliff2.mqxliff', 'C:\\Users\\path\\mqxlz1.mqxlz', 'C:\\Users\\path\\mqxlz2.mqxlz']
+    '''
     x_split = x.replace('{', ',').strip('(),').split(',')
     list_from_str = [i.strip(' {},"\'') for i in x_split]
     return list_from_str
@@ -209,3 +224,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         pass
 
     frame.quit()
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
