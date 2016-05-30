@@ -60,8 +60,8 @@ def ls_from_list_str(x):
 
 
 def ls_from_tuple_str(x):
-    x_split = x.replace('{', ',').strip('()').strip(',').split(',')
-    list_from_str = [strip_many(i, ['', '{}', ', ', '"', "'"]) for i in x_split]
+    x_split = x.replace('{', ',').strip('(),').split(',')
+    list_from_str = [i.strip(' {},"\'') for i in x_split]
     return list_from_str
 
 
@@ -96,12 +96,6 @@ def return_col_num(row):
     else:
         col_to_check = 0
     return col_to_check
-
-
-def strip_many(x, str_list):
-    for i in str_list:
-        x = x.strip(i)
-    return x
 
 
 def str_from_settings(str_rate, str_locked):
@@ -208,7 +202,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
     if list_found_rows and str_method == '1':
         print('The search was successfully finished.')
 
-    print('Focus on this screen and press Enter key to exit the program.')
+    print('Click [x] on the tk window or press [Enter] on this screen to exit.')
     try:
         input('\n')
     except:
