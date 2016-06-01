@@ -1,6 +1,6 @@
-0 or Target(NG),Source,Target(NG),Target(OK),Description
+Target(NG),Index,Source,Target(OK),Description
 あいうえお,,,,
-あいうえお,Description,,,
-0,AIUEO,あいうえお,,
-1,AIUEO,あいうえお,アイウエオ,
-2,AIUEO,あいうえお,アイウエオ,This is description
+あいうえお,,Description,,
+あいうえお,0,AIUEO,,
+あいうえお,1,AIUEO,アイウエオ,
+あいうえお,2,AIUEO,アイウエオ,This is description
