@@ -105,14 +105,6 @@ def replace_back_slash(path):
     return path
 
 
-def return_col_num(row):
-    if len(row) >= 3:
-        col_to_check = 2
-    else:
-        col_to_check = 0
-    return col_to_check
-
-
 def str_from_settings(str_rate, str_locked):
     if str_rate == 'all':
         setting_rate = 'Check all match rates'
@@ -179,11 +171,11 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
             if len(row) == 0:
                 continue
             else:
-                col_to_check = return_col_num(row)
-            if row[col_to_check] is None:
+                pass
+            if row[0] is None:
                 continue
             for line in f_bl_r:
-                if re.search(row[col_to_check], line) is not None:
+                if re.search(row[0], line) is not None:
                     print_and_append(str_method, row, row, f_result_w)
                     print(line)
                     list_found_rows.append(row)

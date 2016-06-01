@@ -203,7 +203,7 @@ for i in three_vars:
     i.trace('w', enable_run_if_filled)
 
 guide_bl = '.mqxlz or .mqxliff'
-guide_terms = 'Text or CSV: Index, Source, Target (NG), Target (OK)'
+guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_method = 'Select this check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide options.'
