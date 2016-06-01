@@ -171,7 +171,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         f_bl_r_limit_list = limit_range(f_bl_r_raw, str_rate, str_locked)
         f_bl_r_with_tag = [regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_limit_list]
         f_bl_r = [remove_tags(i) for i in f_bl_r_with_tag]
-        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
+        print_and_append(str_method, '\n' + fn_bl, [fn_bl], f_result_w)
 
         f_terms.seek(0)
         f_terms_r = csv.reader(f_terms)
@@ -185,6 +185,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
             for line in f_bl_r:
                 if re.search(row[col_to_check], line) is not None:
                     print_and_append(str_method, row, row, f_result_w)
+                    print(line)
                     list_found_rows.append(row)
                 else:
                     continue
