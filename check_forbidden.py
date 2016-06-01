@@ -17,7 +17,7 @@ ext_result = [('csv', '*.csv')]
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
-btn_result = tkinter.Button(text='Result', underline=0)
+btn_result = tkinter.Button(text='Result', underline=0, state='disabled')
 three_buttons = [btn_bl, btn_terms, btn_result]
 
 btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
@@ -27,6 +27,7 @@ btn_result.grid(row=2, column=0, columnspan=1, sticky='w', padx=5)
 var_bl = tkinter.StringVar(frame_main)
 var_terms = tkinter.StringVar(frame_main)
 var_result = tkinter.StringVar(frame_main)
+var_result.set('Command Prompt only.')
 three_vars = [var_bl, var_terms, var_result]
 
 ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
@@ -47,7 +48,7 @@ for path in three_saved_paths:
 
 var_method = tkinter.StringVar()
 cb_method = tkinter.Checkbutton(variable=var_method)
-cb_method.deselect()
+cb_method.select()
 cb_method.grid(row=2, column=1, sticky='e')
 
 label_guide = tkinter.Label(text='')
@@ -108,7 +109,7 @@ def choose_bl(self):
     initial_dir = cf_scripts.dir_from_path(var_bl.get())
     f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
-    if len(var_bl.get()) >= 1 and var_result.get() == '':
+    if len(var_bl.get()) is not None and var_result.get() is None:
         var_result.set(cf_scripts.dir_from_path(f_bl[0]) + '/checked_result.csv')
     if var_bl.get() == '':
         var_bl.set(path_saved_bl.get())
