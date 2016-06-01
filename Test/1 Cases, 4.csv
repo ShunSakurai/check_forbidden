@@ -1,7 +1,7 @@
-0 or Target(NG),Source,Target(NG),Target(OK),Description
-0,case,case,,
-1,Case,Case,,
-2,small,Small,small,
-3,Large,large,Large,
-4,l case,l case,l case,
-5,ase,ase,ase,
+Target(NG),0 or Target(NG),Source,Target(OK),Description
+case,0,case,,
+Case,1,Case,,
+Small,2,small,small,
+large,3,Large,Large,
+l case,4,l case,l case,
+ase,5,ase,ase,

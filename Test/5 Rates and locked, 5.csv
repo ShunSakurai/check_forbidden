@@ -1,6 +1,6 @@
-0 or Target(NG),Source,Target(NG),Target(OK),Description
-0,101%,101%,,
-1,100%,100%,,
-2,99%,99%,,
-3,0%,0%,,
-4,Locked segment,ロックされたセグメント,,
+Target(NG),0 or Target(NG),Source,Target(OK),Description
+101%,0,101%,,
+100%,1,100%,,
+99%,2,99%,,
+0%,3,0%,,
+ロックされたセグメント,4,Locked segment,,
