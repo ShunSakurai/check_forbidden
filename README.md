@@ -7,12 +7,12 @@ A tool for checking if forbidden terms are included in the target segments of me
 
 ## Description
 Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, and can check forbidden characters using the QA settings, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
-Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. It helps you efficiently maintain the translation quality.
+Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
 
 For example, you can use this tool in the following situations:
 
 - The style guide does not allow you to use contractions such as "doesn't" and "can't" in the translation
-- You can use the currency format "US$1,000" but the use of "US 1,000 dollar/Dollar" is forbidden
+- The style guide does not allow you to use a whitespace between a half-width character and a full-width character
 - JP (Japanese): You can use "次の/次に", but you cannot use "以下の/以下に"
 - JP: You have to keep "例えば" in kanji, and you cannot use "たとえば"
 
@@ -73,16 +73,10 @@ Two file types are supported:
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV file formats
-The term items need to be separated by comma. The file needs to be encoded in UTF-8, and formatted in either of the following:
+The term items need to be separated by comma. The file needs to be encoded in UTF-8. Special characters ('(', ')', '[', ']', etc.) used in regex need to be **escaped** with a backslash.
 
-- One column of forbidden terms
-- Two columns of forbidden terms and extra information (e.g. correct terms)
 - Terms in the **first** column will be considered as the forbidden terms
-
-or
-
-- Three or more columns of e.g. the index number, the source term, the target term (forbidden), and the target term (correct)
-- Terms in the **third** column will be considered as the forbidden terms
+- You can use the other columns to provide detailed information e.g. the index number, the source term, and the correct target term
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
@@ -98,7 +92,6 @@ Buttons and radio buttons can be selected by pressing the underlined characters 
 The "Enter (Return)" key can be used to invoke the focused widget.
 
 The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
-
 
 ## Known issues and workarounds
 
@@ -130,6 +123,12 @@ Avoid using too short terms, such as one kanji character word:
 
 - JP: Avoid adding "等" (など) in order not to match "等級", for example
 
+Use regular expressions:
+
+- Add [!-~]\s[あ-熙] to search for whitespace inserted between ASCII half-width characters and Japanese full-width characters
+- Add \)\S to search for a bracket without whitespace around it
+- More examples to be added
+
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
 
@@ -148,7 +147,6 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Prepare the icon
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
-- Display the result within context
 - Display the memoQ segment ID in results
 
 ### Maybe later
@@ -157,7 +155,6 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Add settings to specify the row of forbidden terms
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
-- Support regex in forbidden term list
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 
 ### Unavailable
@@ -169,7 +166,11 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.5.0, June 1, 2016
+- Always make the first column of the CSV or the text file the forbidden term
+- Support regex in the forbidden term list
+- Display the result within the context
+- Make 'Command Prompt only.' the default choice
 - Add contact information
 
 ### v1.4.16, May 12, 2016
