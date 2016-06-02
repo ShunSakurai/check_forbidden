@@ -73,7 +73,7 @@ Two file types are supported:
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
 
 ### CSV file formats
-The term items need to be separated by comma. The file needs to be encoded in UTF-8. Special characters ('(', ')', '[', ']', etc.) used in regex need to be **escaped** with a backslash.
+The term items need to be separated by comma. The file needs to be encoded in UTF-8. All terms are considered as regex. Special characters ('(', ')', '[', ']', '.', '*', '?', '!' ,etc.) used in regex need to be **escaped** with a backslash.
 
 - Terms in the **first** column will be considered as the forbidden terms
 - You can use the other columns to provide detailed information e.g. the index number, the source term, and the correct target term
@@ -125,7 +125,7 @@ Avoid using too short terms, such as one kanji character word:
 
 Use regular expressions:
 
-- Add [!-~]\s[あ-熙] to search for whitespace inserted between ASCII half-width characters and Japanese full-width characters
+- Add [!-~]\s[^!-~] and [^!-~]\s[!-~] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
 - Add \)\S to search for a bracket without whitespace around it
 - More examples to be added
 
@@ -148,6 +148,8 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Display the memoQ segment ID in results
+- Display the heading row of the CSV file
+- Create a tk pane for displaying and filtering the result
 
 ### Maybe later
 - Add an ability to choose multiple bilingual files from different folders
@@ -157,7 +159,7 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 
-### Unavailable
+### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
