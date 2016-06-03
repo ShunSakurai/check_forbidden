@@ -12,9 +12,7 @@ import zipfile
 
 def dir_from_path(path):
     if path:
-        path = replace_back_slash(path)
-        path_first = ls_from_tuple_str(path)[0]
-        path_no_slash = path_first.rstrip('/')
+        path_no_slash = path.rstrip('/')
         if '.' in path_no_slash.rsplit('/', 1)[-1]:
             path_dir = path_no_slash.rsplit('/', 1)[0]
         else:
@@ -163,43 +161,45 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         f_bl_r_limit_list = limit_range(f_bl_r_raw, str_rate, str_locked)
         f_bl_r_with_tag = [regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_limit_list]
         f_bl_r = [remove_tags(i) for i in f_bl_r_with_tag]
-        print_and_append(str_method, '\n' + fn_bl, [fn_bl], f_result_w)
+        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
 
         f_terms.seek(0)
         f_terms_r = csv.reader(f_terms)
         for row in f_terms_r:
-            if len(row) == 0:
+            if not row:
                 continue
             else:
                 pass
             if row[0] is None:
                 continue
             for line in f_bl_r:
-                if re.search(row[0], line) is not None:
+                match = re.search(row[0], line)
+                if match:
                     print_and_append(str_method, row, row, f_result_w)
                     print(line)
                     list_found_rows.append(row)
                 else:
                     continue
 
+        print('\n')
         f_bl.close()
 
     f_terms.close()
 
-    if list_mqxlz_dir:
-        for i in list_mqxlz_dir:
-            os.remove(i + r'/document.mqxliff')
-        for i in list_mqxlz_dir:
-            try_rmdir(i)
-
     if list_found_rows:
-        print_and_append(str_method, '\n' + 'Summary', ['Summary'], f_result_w)
+        print_and_append(str_method, 'Summary', ['\n' + 'Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
         print_and_append(str_method, '', [''], f_result_w)
     else:
         print('No forbidden term was found!')
+
+    if list_mqxlz_dir:
+        for i in list_mqxlz_dir:
+            os.remove(i + r'/document.mqxliff')
+        for i in list_mqxlz_dir:
+            try_rmdir(i)
 
     if list_found_rows and str_method == '0':
         f_result = open(fn_result, 'a', encoding='utf-8')
