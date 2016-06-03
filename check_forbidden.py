@@ -109,9 +109,10 @@ def choose_bl(self):
     initial_dir = cf_scripts.dir_from_path(var_bl.get())
     f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
-    if len(var_bl.get()) is not None and var_result.get() is None:
-        var_result.set(cf_scripts.dir_from_path(f_bl[0]) + '/checked_result.csv')
-    if var_bl.get() == '':
+    if var_bl.get() and not var_result.get():
+        path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
+        var_result.set(cf_scripts.dir_from_path(path_1) + '/checked_result.csv')
+    if not var_bl.get():
         var_bl.set(path_saved_bl.get())
     focus_off()
 
@@ -121,20 +122,20 @@ def choose_terms(self):
     initial_dir = cf_scripts.dir_from_path(var_terms.get())
     f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms, initialdir=initial_dir)
     var_terms.set(f_terms)
-    if var_terms.get() == '':
+    if not var_terms.get():
         var_terms.set(path_saved_terms.get())
     focus_off()
 
 
 def choose_result(self):
     path_saved_result.set(var_result.get())
-    if var_result.get() == '':
+    if not var_result.get():
         initial_dir = cf_scripts.dir_from_path(var_bl.get())
     else:
         initial_dir = cf_scripts.dir_from_path(var_result.get())
     f_result = tkinter.filedialog.asksaveasfilename(filetypes=ext_result, initialdir=initial_dir, initialfile='checked_result.csv')
     var_result.set(f_result)
-    if var_result.get() == '':
+    if not var_result.get():
         var_result.set(path_saved_result.get())
     focus_off()
 
@@ -150,7 +151,13 @@ def toggle_method_click(self, widget):
         var_result.set('Command Prompt only.')
         btn_result['state'] = 'disabled'
     elif var_method.get() == '1':
-        var_result.set(path_saved_result.get())
+        if path_saved_result.get():
+            var_result.set(path_saved_result.get())
+        elif not path_saved_result.get() and var_bl.get():
+            path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
+            var_result.set(cf_scripts.dir_from_path(path_1) + '/checked_result.csv')
+        else:
+            var_result.set('')
         btn_result['state'] = 'normal'
 
 cb_method.bind('<ButtonRelease-1>', lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
