@@ -128,6 +128,8 @@ def choose_terms(self):
 
 
 def choose_result(self):
+    if btn_result['state'] == 'disabled':
+        return
     path_saved_result.set(var_result.get())
     if not var_result.get():
         initial_dir = cf_scripts.dir_from_path(var_bl.get())
@@ -193,8 +195,10 @@ btn_options.bind('<ButtonRelease-1>', lambda x: toggle_options('<ButtonRelease-1
 
 
 def run(self):
-    if btn_run['state'] == 'active' or btn_run['state'] == 'normal':
-        cf_scripts.check_forbidden_terms(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_method.get(), var_rate.get(), var_locked.get())
+    if btn_run['state'] == 'disabled':
+        return
+    cf_scripts.check_forbidden_terms(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_method.get(), var_rate.get(), var_locked.get())
+
 btn_run.bind('<ButtonRelease-1>', run)
 
 
