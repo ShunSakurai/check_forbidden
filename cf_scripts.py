@@ -1,5 +1,5 @@
 '''
-cd dropbox/codes/check_forbidden
+cd dropboxcodes/check_forbidden
 py cf_scripts.py
 '''
 import csv
@@ -143,9 +143,12 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
     date_and_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     list_name = fname_from_path(fn_terms)
     settings = str_from_settings(str_rate, str_locked)
+    heading = f_terms.readline().rstrip('\n')
+    f_terms.seek(0)
     print_and_append(str_method, date_and_time, [date_and_time], f_result_w)
     print_and_append(str_method, list_name, [list_name], f_result_w)
     print_and_append(str_method, settings, [settings], f_result_w)
+    print_and_append(str_method, 'Heading: [' + heading + ']', heading.split(','), f_result_w)
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
@@ -175,8 +178,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
             for line in f_bl_r:
                 match = re.search(row[0], line)
                 if match:
-                    print_and_append(str_method, row, row, f_result_w)
-                    print(line)
+                    print_and_append(str_method, str(row) + '\n' + str(line), row + [line], f_result_w)
                     list_found_rows.append(row)
                 else:
                     continue
