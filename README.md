@@ -7,7 +7,7 @@ A tool for checking if forbidden terms are included in the target segments of me
 
 ## Description
 Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, and can check forbidden characters using the QA settings, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
-Using this tool, you can quickly narrow down the forbidden terms used in memoQ bilingual files and spot the terms in memoQ. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
+Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
 
 For example, you can use this tool in the following situations:
 
@@ -21,7 +21,7 @@ All you have to prepare are:
 - memoQ bilingual .mqxlz or .mqxliff files
 - A CSV file or a text file containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is good for searching and storing information. The Summary result is useful when you are working on a "View.''
+This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is good for searching and storing data. The Summary result is useful when you are working on a "View.''
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
@@ -34,7 +34,7 @@ Installer is now under development. In the meantime, please follow the steps bel
 - (Optional) Move the folder to C:\Program Files
 - (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
-When you use an updated version, you only have to move the files and folders with newer dates.
+When you use an updated version, you only have to copy and overwrite the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
@@ -82,23 +82,25 @@ The term items need to be separated by comma. The file needs to be encoded in UT
 
 The exported result CSV file is also encoded in UTF-8 with commas as the delimiters.
 
+### Regular expressions
+
+- Add [0-9A-Za-z]\s[^!-~] and [^!-~]\s[0-9A-Za-z] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
+- Add \\)\S to search for a bracket without whitespace around it
+- More examples to be added
+- Currently memoQ's regex for tags (\tag) is not supported
+
 ### Keyboard shortcuts
 Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
-- Run! - with the space bar
-- Show / hide options - with O
-- Check box - with C
+- Run!: with the space bar
+- Show / hide the options: with O
+- Turn the check box on /off: with C
 
 The "Enter (Return)" key can be used to invoke the focused widget.
 
 The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
 
-## Known issues and workarounds
-
-### Garbled display on Command Prompt
-Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose another font. The quickest way to open the Properties may be to press Alt + Space and then P.
-
-![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
+## Answers to FAQ, and known issues and workarounds
 
 ### Word separation is not taken in account
 This program treats each segment just as a string. It does not distinguish each word.
@@ -108,26 +110,26 @@ This program treats each segment just as a string. It does not distinguish each 
 ### Case sensitive
 This program is case-sensitive. If necessary, add terms to the CSV file in both upper and lower cases.
 
-### Beware of false positives
-Below are some best practices to avoid false positives.
+### Garbled display on Command Prompt
+Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose a larger font or another font. The quickest way to open the Properties may be to press Alt + Space and then P.
 
-Avoid using single symbols used in special characters:
+![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
+
+### _extract folder is not deleted
+
+_extract folders are created when opening the .mqxlz files. Sometimes the program fails to delete them, when an error happens. In that case, please delete them by yourself.
+
+### &, >, and < are converted to special entities by memoQ:
 
 - Avoid adding &, ;, etc.
+- Use &amp;, &gt;, and &lt; instead of &, >, and <
 
-Add spaces:
+### False positives
+Below are some best practices to avoid false positives.
 
-- Add " play" (space + play) in CSV to avoid matching "display", for example
-
-Avoid using too short terms, such as one kanji character word:
-
-- JP: Avoid adding "等" (など) in order not to match "等級", for example
-
-Use regular expressions:
-
-- Add [!-~]\s[^!-~] and [^!-~]\s[!-~] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
-- Add \)\S to search for a bracket without whitespace around it
-- More examples to be added
+- Add " play" or "\splay" (space + play) in CSV to avoid matching "display"
+- Avoid using too short terms, such as "等" (など) in order avoid matching "等級"
+- When many false positives are found for 1 term, consider dividing the CSV file
 
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
@@ -139,6 +141,8 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
 - Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
 
+If you open and overwrite the UTF-8 CSV file with Excel using another encoding, the encoding is changed and this program cannot open it.
+
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
@@ -148,7 +152,6 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Display the memoQ segment ID in results
-- Display the heading row of the CSV file
 - Create a tk pane for displaying and filtering the result
 
 ### Maybe later
@@ -158,15 +161,22 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
+- Make the program callable from external programs
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
+- Mark and ignore false positives. It is technically difficult
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v.1.5.3, June 6, 2016
+- Display the heading row of the CSV file
+- * Resolve an issue where the result path candidate is not displayed
+- * Resolve an issue where the result button is pressable when disabled
 
 ### v1.5.0, June 1, 2016
 - Always make the first column of the CSV or the text file the forbidden term
