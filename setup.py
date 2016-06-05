@@ -21,11 +21,11 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Check Forbidden',
         'script': 'check_forbidden.py',
-        'version': '1.5.0',
+        'version': '1.5.3',
     }],
     options={'py2exe': {
         'bundle_files': 2,
         'compressed': True,
-        'excludes': ['_hashlib', '_frozen_importlib', 'argparse', '_lzma', '_bz2', '_ssl', 'calendar', 'difflib', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline'],
+        'excludes': ['_bz2', '_hashlib', '_frozen_importlib', '_lzma', '_ssl'  'argparse', 'calendar', 'difflib', 'doctest' 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline'],
     }}
 )

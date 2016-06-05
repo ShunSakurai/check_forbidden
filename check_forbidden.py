@@ -106,7 +106,10 @@ for ent in three_entries:
 
 def choose_bl(self):
     path_saved_bl.set(var_bl.get())
-    initial_dir = cf_scripts.dir_from_path(var_bl.get())
+    if var_bl.get():
+        initial_dir = cf_scripts.dir_from_path(var_bl.get())
+    else:
+        initial_dir = None
     f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
     if var_bl.get() and not var_result.get():
@@ -119,7 +122,10 @@ def choose_bl(self):
 
 def choose_terms(self):
     path_saved_terms.set(var_terms.get())
-    initial_dir = cf_scripts.dir_from_path(var_terms.get())
+    if var_terms.get():
+        initial_dir = cf_scripts.dir_from_path(var_terms.get())
+    else:
+        initial_dir = None
     f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms, initialdir=initial_dir)
     var_terms.set(f_terms)
     if not var_terms.get():
