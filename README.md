@@ -173,6 +173,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### v1.5.4, June 8, 2016
+- * Resolve an issue where printing a special character fails
+
 ### v.1.5.3, June 6, 2016
 - Display the heading row of the CSV file
 - * Resolve an issue where the result path candidate is not displayed
