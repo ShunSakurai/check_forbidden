@@ -85,7 +85,12 @@ def mqxlz_dir_fname(fn):
 
 
 def print_and_append(str_method, to_print, to_write, file_to_write_in):
-    print(to_print)
+    try:
+        print(to_print)
+    except:
+        special_char = re.compile(r'[^\w\s -~]')
+        print(special_char.sub(' ', to_print))
+        print('Some special characters could not be printed.')
     if str_method == '0':
         file_to_write_in.append(to_write)
     else:

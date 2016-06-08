@@ -21,7 +21,7 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Check Forbidden',
         'script': 'check_forbidden.py',
-        'version': '1.5.3',
+        'version': '1.5.4',
     }],
     options={'py2exe': {
         'bundle_files': 2,
