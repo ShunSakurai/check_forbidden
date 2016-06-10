@@ -6,8 +6,9 @@ A tool for checking if forbidden terms are included in the target segments of me
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 ## Description
-Even though [memoQ](https://www.memoq.com/) can check forbidden source and target term pairs using the term base, and can check forbidden characters using the QA settings, it cannot check **only forbidden target terms** regardless of the corresponding source terms.
-Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
+[memoQ](https://www.memoq.com/) allows us to check forbidden source and target term pairs using the term base, and check forbidden terms using the QA settings. However, it takes time to add each forbidden term one by one, choosing the settings.
+Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files, by using a term list in CSV format. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
+(memoQ recently did a great [update](https://www.memoq.com/memoq-build-june) and now allows us to check only forbidden target terms regardless of the corresponding source terms. Hope they will support CSV import to QA settings soon, like we do for term base.)
 
 For example, you can use this tool in the following situations:
 
