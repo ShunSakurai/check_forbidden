@@ -20,8 +20,9 @@ setup(
     console=[{
         'author': 'Shun Sakurai',
         'dest_base': 'Check Forbidden',
+        'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
         'script': 'check_forbidden.py',
-        'version': '1.5.4',
+        'version': '1.5.5',
     }],
     options={'py2exe': {
         'bundle_files': 2,
