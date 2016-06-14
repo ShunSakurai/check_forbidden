@@ -149,7 +149,6 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Sort the Summary results
 - Prepare the installer
-- Prepare the icon
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Display the memoQ segment ID in results
@@ -173,6 +172,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v.1.5.5, June 14, 2016
+- Create the icon
 
 ### v1.5.4, June 8, 2016
 - * Resolve an issue where printing a special character fails
