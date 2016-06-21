@@ -1,5 +1,5 @@
 '''
-cd dropboxcodes/check_forbidden
+cd dropbox/codes/check_forbidden
 py cf_scripts.py
 '''
 import csv
@@ -88,7 +88,7 @@ def print_and_append(str_method, to_print, to_write, file_to_write_in):
     try:
         print(to_print)
     except:
-        special_char = re.compile(r'[^\w\s -~]')
+        special_char = re.compile(r'[^\w\s -~]| ')
         print(special_char.sub(' ', to_print))
         print('Some special characters could not be printed.')
     if str_method == '0':
@@ -194,7 +194,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
     f_terms.close()
 
     if list_found_rows:
-        print_and_append(str_method, 'Summary', ['\n' + 'Summary'], f_result_w)
+        print_and_append(str_method, 'Summary', ['\nSummary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
@@ -213,7 +213,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
-        print(fname_from_path(fn_result) + ' was successfully created.')
+        print(fname_from_path(fn_result), ' was successfully created.')
 
     if list_found_rows and str_method == '1':
         print('The search was successfully finished.')

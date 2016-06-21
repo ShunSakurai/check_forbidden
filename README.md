@@ -120,10 +120,15 @@ Sometimes multi-byte characters on Windows Command Prompt seem garbled. To corre
 
 _extract folders are created when opening the .mqxlz files. Sometimes the program fails to delete them, when an error happens. In that case, please delete them by yourself.
 
-### &, >, and < are converted to special entities by memoQ:
+### &, >, and < are converted to special entities by memoQ
 
 - Avoid adding &, ;, etc.
 - Use &amp;, &gt;, and &lt; instead of &, >, and <
+
+### Some special characters in the CSV file cause an error
+
+- When the following character is included in the CSV file, the program throws an error: 'μ'
+- The program can handle the following characters without a problem: '©', '®', '™'
 
 ### False positives
 Below are some best practices to avoid false positives.
@@ -135,7 +140,7 @@ Below are some best practices to avoid false positives.
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
 
-### Garbled UTF-8 CSV files opened with Shift-JIS Excel
+### UTF-8 CSV files are garbled when opened with Shift-JIS Excel
 If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
 
 - Change the extension from .csv to .txt. A dialog window pops up and allows you to select the encoding
@@ -173,7 +178,10 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### v.1.5.5, June 14, 2016
+### v1.5.6, June 21, 2016
+- * Avoid errors caused by no-breaking spaces in the bilingual file
+
+### v1.5.5, June 14, 2016
 - Create the icon
 
 ### v1.5.4, June 8, 2016
