@@ -2,6 +2,7 @@
 cd dropbox/codes/check_forbidden
 py cf_scripts.py
 '''
+import setup
 import csv
 import datetime
 import os
@@ -151,12 +152,12 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
     regex_pattern = re.compile('<target xml:space="preserve">.*?</target>', re.S)
 
     print('-' * 70)
-    date_and_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
     list_name = fname_from_path(fn_terms)
     settings = str_from_settings(str_rate, str_locked)
     heading = f_terms.readline().rstrip('\n')
     f_terms.seek(0)
-    print_and_append(str_method, date_and_time, [date_and_time], f_result_w)
+    print_and_append(str_method, date_time_version, [date_time_version], f_result_w)
     print_and_append(str_method, list_name, [list_name], f_result_w)
     print_and_append(str_method, settings, [settings], f_result_w)
     print_and_append(str_method, 'Heading: [' + heading + ']', heading.split(','), f_result_w)
