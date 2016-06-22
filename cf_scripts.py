@@ -85,12 +85,7 @@ def mqxlz_dir_fname(fn):
 
 
 def print_and_append(str_method, to_print, to_write, file_to_write_in):
-    try:
-        print(to_print)
-    except:
-        special_char = re.compile(r'[^\w\s -~]| ')
-        print(special_char.sub(' ', to_print))
-        print('Some special characters could not be printed.')
+    try_printing(to_print)
     if str_method == '0':
         file_to_write_in.append(to_write)
     else:
@@ -121,6 +116,17 @@ def str_from_settings(str_rate, str_locked):
         setting_locked = 'Exclude locked segments'
     settings = setting_rate + ', ' + setting_locked
     return settings
+
+
+def try_printing(to_print):
+    try:
+        print(to_print)
+    except:
+        special_char = re.compile(r'[^\w\s -~]| ')
+        try:
+            print(special_char.sub(' ', to_print))
+        except:
+            print('**Some special characters could not be printed.**')
 
 
 def try_rmdir(i):
@@ -183,7 +189,8 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
             for line in f_bl_r:
                 match = re.search(row[0], line)
                 if match:
-                    print_and_append(str_method, str(row) + '\n' + str(line), row + [line], f_result_w)
+                    print_and_append(str_method, str(row), row + [line], f_result_w)
+                    try_printing(line)
                     list_found_rows.append(row)
                 else:
                     continue
