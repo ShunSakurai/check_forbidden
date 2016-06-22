@@ -179,6 +179,7 @@ UTF-8のCSVファイルを別のエンコーディングのExcelで開き、上�
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
 
 ### 最新版
+- プログラム内からフォルダーを開くボタンを追加
 - バージョン番号を表示
 - * 特殊文字を画面に表示する際に失敗する問題を再解決
 
