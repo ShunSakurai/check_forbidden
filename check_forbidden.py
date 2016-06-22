@@ -24,6 +24,11 @@ btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
 btn_terms.grid(row=1, column=0, columnspan=2, sticky='w', padx=5)
 btn_result.grid(row=2, column=0, columnspan=1, sticky='w', padx=5)
 
+var_method = tkinter.StringVar()
+cb_method = tkinter.Checkbutton(variable=var_method)
+cb_method.select()
+cb_method.grid(row=2, column=1, sticky='e')
+
 var_bl = tkinter.StringVar(frame_main)
 var_terms = tkinter.StringVar(frame_main)
 var_result = tkinter.StringVar(frame_main)
@@ -46,10 +51,19 @@ three_saved_paths = [path_saved_bl, path_saved_terms, path_saved_result]
 for path in three_saved_paths:
     path.set('')
 
-var_method = tkinter.StringVar()
-cb_method = tkinter.Checkbutton(variable=var_method)
-cb_method.select()
-cb_method.grid(row=2, column=1, sticky='e')
+btn_open_bl = tkinter.Button(
+    text='⇨', state='disabled', takefocus=True,
+    command=lambda: cf_scripts.open_folder(var_bl), borderwidth=0)
+btn_open_terms = tkinter.Button(
+    text='⇨', state='disabled', takefocus=True,
+    command=lambda: cf_scripts.open_folder(var_terms), borderwidth=0)
+btn_open_result = tkinter.Button(
+    text='⇨', state='disabled', takefocus=True,
+    command=lambda: cf_scripts.open_folder(var_bl), borderwidth=0)
+three_open_buttons = [btn_open_bl, btn_open_terms, btn_open_result]
+
+for btn in three_open_buttons:
+    btn.grid(row=three_open_buttons.index(btn), column=4)
 
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=2, sticky='w')
@@ -59,7 +73,8 @@ btn_options.grid(row=3, column=3, sticky='e', padx=80)
 
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
-six_buttons = three_buttons + [cb_method, btn_options, btn_run]
+
+all_buttons = three_buttons + three_open_buttons + [cb_method, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
 frame_options.grid(row=4, column=2, sticky='w')
@@ -105,14 +120,15 @@ for ent in three_entries:
 
 
 def choose_bl(self):
-    path_saved_bl.set(var_bl.get())
-    if var_bl.get():
-        initial_dir = cf_scripts.dir_from_path(var_bl.get())
+    path = var_bl.get()
+    path_saved_bl.set(path)
+    if path:
+        initial_dir = cf_scripts.dir_from_path(path)
     else:
         initial_dir = None
     f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
-    if var_bl.get() and not var_result.get():
+    if path and not var_result.get():
         path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
         var_result.set(cf_scripts.dir_from_path(path_1) + '/checked_result.csv')
     if not var_bl.get():
@@ -176,6 +192,34 @@ def toggle_method_sc(self, widget):
     cb_method.toggle()
 
 
+def enable_open_btn_if_filled(statement, btn):
+    if statement:
+        btn['text'] = '➔'
+        btn['state'] = 'normal'
+    else:
+        btn['text'] = '⇨'
+        btn['state'] = 'disabled'
+
+
+def enable_open_bl_if_filled(var, unknown, w):
+    enable_open_btn_if_filled(var_bl.get(), btn_open_bl)
+
+
+def enable_open_terms_if_filled(var, unknown, w):
+    enable_open_btn_if_filled(var_terms.get(), btn_open_terms)
+
+
+def enable_open_result_if_filled(var, unknown, w):
+    statement = var_result.get() and var_result.get() != 'Command Prompt only.'
+    enable_open_btn_if_filled(statement, btn_open_result)
+
+three_open_funcs = [enable_open_bl_if_filled, enable_open_terms_if_filled, enable_open_result_if_filled]
+
+for var, btn, func in zip(three_vars, three_open_buttons, three_open_funcs):
+    btn.grid(row=three_open_buttons.index(btn), column=4)
+    var.trace('w', func)
+
+
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
@@ -216,12 +260,13 @@ def enable_run_if_filled(var, unknown, w):
         btn_run['state'] = 'disabled'
         btn_run['text'] = 'Run'
 
-for i in three_vars:
-    i.trace('w', enable_run_if_filled)
+for var in three_vars:
+    var.trace('w', enable_run_if_filled)
 
 guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
+guide_open = 'Open the folder'
 guide_method = 'Select this check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide options.'
 guide_run = 'Enabled when all the three fields are filled.'
@@ -234,14 +279,21 @@ def show_guide(self, guide):
 def hide_guide(self):
     label_guide['text'] = ''
 
-btn_bl.bind('<Enter>', lambda x: show_guide('<Enter>', guide_bl))
-btn_terms.bind('<Enter>', lambda x: show_guide('<Enter>', guide_terms))
-btn_result.bind('<Enter>', lambda x: show_guide('<Enter>', guide_result))
-cb_method.bind('<Enter>', lambda x: show_guide('<Enter>', guide_method))
-btn_options.bind('<Enter>', lambda x: show_guide('<Enter>', guide_options))
-btn_run.bind('<Enter>', lambda x: show_guide('<Enter>', guide_run))
+
+def bind_show_guide(btn, guide):
+    btn.bind('<Enter>', lambda x: show_guide('<Enter>', guide))
+
+bind_show_guide(btn_bl, guide_bl)
+bind_show_guide(btn_terms, guide_terms)
+bind_show_guide(btn_result, guide_result)
+for btn in three_open_buttons:
+    bind_show_guide(btn, guide_open)
+bind_show_guide(cb_method, guide_method)
+bind_show_guide(btn_options, guide_options)
+bind_show_guide(btn_run, guide_run)
+
 for i in range(6):
-    six_buttons[i].bind('<Leave>', hide_guide)
+    all_buttons[i].bind('<Leave>', hide_guide)
 
 
 def sc_when_out_of_ent(func):

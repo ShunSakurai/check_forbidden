@@ -23,7 +23,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.5.8',
+    'version': '1.5.9',
 }
 
 dict_options = {

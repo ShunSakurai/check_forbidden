@@ -85,6 +85,14 @@ def mqxlz_dir_fname(fn):
     return path_extract, fn_actual
 
 
+def open_folder(var):
+    path = var.get()
+    if path and path != 'Command Prompt only.':
+        path_1 = ls_from_tuple_str(path)[0]
+        path_dir = dir_from_path(path_1)
+        os.startfile(path_dir)
+
+
 def print_and_append(str_method, to_print, to_write, file_to_write_in):
     try_printing(to_print)
     if str_method == '0':
