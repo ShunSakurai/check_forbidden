@@ -22,7 +22,7 @@ All you have to prepare are:
 - memoQ bilingual .mqxlz or .mqxliff files
 - A CSV file or a text file containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is good for searching and storing data. The Summary result is useful when you are working on a "View.''
+This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is useful when you have many matches and when many non-printable characters are included in the bilingual file. The Summary result is useful when you are working on a "View.''
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
@@ -177,6 +177,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- * Re-resolve an issue where printing a special character fails
 
 ### v1.5.6, June 21, 2016
 - * Avoid errors caused by no-breaking spaces in the bilingual file
