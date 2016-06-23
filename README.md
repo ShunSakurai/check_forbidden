@@ -178,9 +178,10 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.5.10, June 23, 2016
 - Add buttons to open the folders from inside the program
 - Display the version number
+- Make the code more readable
 - * Re-resolve an issue where printing a special character fails
 
 ### v1.5.6, June 21, 2016
@@ -193,7 +194,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 - * Resolve an issue where printing a special character fails
 
 ### v.1.5.3, June 6, 2016
-- Display the heading row of the CSV file
+- Display the header row of the CSV file
 - * Resolve an issue where the result path candidate is not displayed
 - * Resolve an issue where the result button is pressable when disabled
 
