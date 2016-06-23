@@ -35,7 +35,7 @@ Installer is now under development. In the meantime, please follow the steps bel
 - (Optional) Move the folder to C:\Program Files
 - (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
-When you use an updated version, you only have to copy and overwrite the files and folders with newer dates.
+If you already have an old version installed, you only have to copy and overwrite the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
@@ -54,7 +54,8 @@ If you have the Python environment installed, you can run the source code with `
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
 ### Tips
-- If you type or paste a path into the entry field and press the button afterwards, browsing starts from the path specified in the field
+- If you type or paste a path into the entry field and press the button afterwards, browsing starts from the path in the field
+- When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
 - Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - You can re-run the program without closing it
@@ -71,10 +72,10 @@ Two file types are supported:
 - .mqxliff
 - .mqxlz
 
-A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished
+A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished.
 
 ### CSV file formats
-The term items need to be separated by comma. The file needs to be encoded in UTF-8. All terms are considered as regex. Special characters ('(', ')', '[', ']', '.', '*', '?', '!' ,etc.) used in regex need to be **escaped** with a backslash.
+The term items need to be separated by comma. The file needs to be encoded in UTF-8. All terms are considered as regex, so all the special characters ('(', ')', '[', ']', '.', '\*', '?', '!' ,etc.) used in regex need to be **escaped** with a backslash.
 
 - Terms in the **first** column will be considered as the forbidden terms
 - You can use the other columns to provide detailed information e.g. the index number, the source term, and the correct target term
@@ -123,7 +124,7 @@ _extract folders are created when opening the .mqxlz files. Sometimes the progra
 ### &, >, and < are converted to special entities by memoQ
 
 - Avoid adding &, ;, etc.
-- Use &amp;, &gt;, and &lt; instead of &, >, and <
+- Use `&amp;`, `&gt;`, and `&lt;` instead of &, >, and <
 
 ### Some special characters in the CSV file cause an error
 
@@ -143,11 +144,11 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 ### UTF-8 CSV files are garbled when opened with Shift-JIS Excel
 If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
 
-- Change the extension from .csv to .txt. A dialog window pops up and allows you to select the encoding
+- Change the extension from .csv to .txt and open it with Excel. A dialog window pops up and allows you to select the encoding
 - Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
 - Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
 
-If you open and overwrite the UTF-8 CSV file with Excel using another encoding, the encoding is changed and this program cannot open it.
+If you open and overwrite the UTF-8 CSV file with Excel using another encoding, the encoding will be changed and this program will not be able to open it.
 
 ## Features to come
 ### Working on
@@ -167,6 +168,8 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
+- Automate the test
+- Measure speed
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
