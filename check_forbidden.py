@@ -11,8 +11,11 @@ print('Loading...')
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
-ext_bl = [('mqxlz / mqxliff', '*.mqxlz;*.mqxliff'), ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]
-ext_terms = [('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
+ext_bl = [
+    ('mqxlz / mqxliff', '*.mqxlz;*.mqxliff'),
+    ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]
+ext_terms = [
+    ('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
 ext_result = [('csv', '*.csv')]
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
@@ -41,7 +44,9 @@ ent_result = tkinter.Entry(width=85, textvariable=var_result)
 three_entries = [ent_bl, ent_terms, ent_result]
 
 for ent in three_entries:
-    ent.grid(row=three_entries.index(ent), column=2, sticky='w', columnspan=2, padx=5)
+    ent.grid(
+        row=three_entries.index(ent), column=2, columnspan=2,
+        sticky='w', padx=5)
 
 path_saved_bl = tkinter.StringVar(frame_main)
 path_saved_terms = tkinter.StringVar(frame_main)
@@ -52,15 +57,20 @@ for path in three_saved_paths:
     path.set('')
 
 btn_open_bl = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True,
-    command=lambda: cf_scripts.open_folder(var_bl), borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 btn_open_terms = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True,
-    command=lambda: cf_scripts.open_folder(var_terms), borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 btn_open_result = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True,
-    command=lambda: cf_scripts.open_folder(var_bl), borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 three_open_buttons = [btn_open_bl, btn_open_terms, btn_open_result]
+
+btn_open_bl.bind(
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_bl.get()))
+btn_open_terms.bind(
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_terms.get()))
+btn_open_result.bind(
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_result.get()))
+
 
 for btn in three_open_buttons:
     btn.grid(row=three_open_buttons.index(btn), column=4)
@@ -84,28 +94,34 @@ label_rates.grid(row=0, column=0, sticky='w')
 label_locked = tkinter.Label(frame_options, text='\tLocked status')
 label_locked.grid(row=0, column=1, sticky='w')
 
-match_rates = [('Check all segments', 'all', 6),
-                           (r'Exclude 101% matches', '101', 10),
-                           (r'Exclude 100% and 101%', '100', 10)]
+match_rates = [
+    ('Check all segments', 'all', 6),
+    (r'Exclude 101% matches', '101', 10),
+    (r'Exclude 100% and 101%', '100', 10)]
 var_rate = tkinter.StringVar()
 var_rate.set('all')
 rbs_rate = []
 
 for label, rate, ul in match_rates:
-    rb_rate = tkinter.Radiobutton(frame_options, text=label, variable=var_rate, value=rate, underline=ul)
+    rb_rate = tkinter.Radiobutton(
+        frame_options,
+        text=label, variable=var_rate, value=rate, underline=ul)
     rbs_rate.append(rb_rate)
 
 for rb in rbs_rate:
     rb.grid(row=(rbs_rate.index(rb) + 1), column=0, sticky='w', padx=10)
 
-locked_states = [('Include locked segments', 'all', 0),
-                              ('Exclude locked segments', 'locked', 0)]
+locked_states = [
+    ('Include locked segments', 'all', 0),
+    ('Exclude locked segments', 'locked', 0)]
 var_locked = tkinter.StringVar()
 var_locked.set('all')
 rbs_locked = []
 
 for label, state, ul in locked_states:
-    rb_locked = tkinter.Radiobutton(frame_options, text=label, variable=var_locked, value=state, underline=ul)
+    rb_locked = tkinter.Radiobutton(
+        frame_options,
+        text=label, variable=var_locked, value=state, underline=ul)
     rbs_locked.append(rb_locked)
 
 for rb in rbs_locked:
@@ -123,14 +139,16 @@ def choose_bl(self):
     path = var_bl.get()
     path_saved_bl.set(path)
     if path:
-        initial_dir = cf_scripts.dir_from_path(path)
+        initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
-    f_bl = tkinter.filedialog.askopenfilenames(filetypes=ext_bl, initialdir=initial_dir)
+    f_bl = tkinter.filedialog.askopenfilenames(
+        filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
     if path and not var_result.get():
         path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
-        var_result.set(cf_scripts.dir_from_path(path_1) + '/checked_result.csv')
+        var_result.set(
+            cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
     if not var_bl.get():
         var_bl.set(path_saved_bl.get())
     focus_off()
@@ -139,10 +157,11 @@ def choose_bl(self):
 def choose_terms(self):
     path_saved_terms.set(var_terms.get())
     if var_terms.get():
-        initial_dir = cf_scripts.dir_from_path(var_terms.get())
+        initial_dir = cf_scripts.dir_from_str_path(var_terms.get())
     else:
         initial_dir = None
-    f_terms = tkinter.filedialog.askopenfilename(filetypes=ext_terms, initialdir=initial_dir)
+    f_terms = tkinter.filedialog.askopenfilename(
+        filetypes=ext_terms, initialdir=initial_dir)
     var_terms.set(f_terms)
     if not var_terms.get():
         var_terms.set(path_saved_terms.get())
@@ -154,10 +173,12 @@ def choose_result(self):
         return
     path_saved_result.set(var_result.get())
     if not var_result.get():
-        initial_dir = cf_scripts.dir_from_path(var_bl.get())
+        initial_dir = cf_scripts.dir_from_str_path(var_bl.get())
     else:
-        initial_dir = cf_scripts.dir_from_path(var_result.get())
-    f_result = tkinter.filedialog.asksaveasfilename(filetypes=ext_result, initialdir=initial_dir, initialfile='checked_result.csv')
+        initial_dir = cf_scripts.dir_from_str_path(var_result.get())
+    f_result = tkinter.filedialog.asksaveasfilename(
+        filetypes=ext_result, initialdir=initial_dir,
+        initialfile='checked_result.csv')
     var_result.set(f_result)
     if not var_result.get():
         var_result.set(path_saved_result.get())
@@ -179,12 +200,15 @@ def toggle_method_click(self, widget):
             var_result.set(path_saved_result.get())
         elif not path_saved_result.get() and var_bl.get():
             path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
-            var_result.set(cf_scripts.dir_from_path(path_1) + '/checked_result.csv')
+            var_result.set(
+                cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
         else:
             var_result.set('')
         btn_result['state'] = 'normal'
 
-cb_method.bind('<ButtonRelease-1>', lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
+cb_method.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
 
 
 def toggle_method_sc(self, widget):
@@ -192,7 +216,7 @@ def toggle_method_sc(self, widget):
     cb_method.toggle()
 
 
-def enable_open_btn_if_filled(statement, btn):
+def enable_open_btn_if_statement(statement, btn):
     if statement:
         btn['text'] = '➔'
         btn['state'] = 'normal'
@@ -202,18 +226,20 @@ def enable_open_btn_if_filled(statement, btn):
 
 
 def enable_open_bl_if_filled(var, unknown, w):
-    enable_open_btn_if_filled(var_bl.get(), btn_open_bl)
+    enable_open_btn_if_statement(var_bl.get(), btn_open_bl)
 
 
 def enable_open_terms_if_filled(var, unknown, w):
-    enable_open_btn_if_filled(var_terms.get(), btn_open_terms)
+    enable_open_btn_if_statement(var_terms.get(), btn_open_terms)
 
 
 def enable_open_result_if_filled(var, unknown, w):
     statement = var_result.get() and var_result.get() != 'Command Prompt only.'
-    enable_open_btn_if_filled(statement, btn_open_result)
+    enable_open_btn_if_statement(statement, btn_open_result)
 
-three_open_funcs = [enable_open_bl_if_filled, enable_open_terms_if_filled, enable_open_result_if_filled]
+three_open_funcs = [
+    enable_open_bl_if_filled, enable_open_terms_if_filled,
+    enable_open_result_if_filled]
 
 for var, btn, func in zip(three_vars, three_open_buttons, three_open_funcs):
     btn.grid(row=three_open_buttons.index(btn), column=4)
@@ -241,13 +267,17 @@ def toggle_options(self, widget):
         widget['font'] = ('', 15)
         frame_options.grid_forget()
 
-btn_options.bind('<ButtonRelease-1>', lambda x: toggle_options('<ButtonRelease-1>', btn_options))
+btn_options.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_options('<ButtonRelease-1>', btn_options))
 
 
 def run(self):
     if btn_run['state'] == 'disabled':
         return
-    cf_scripts.check_forbidden_terms(frame_main, var_bl.get(), var_terms.get(), var_result.get(), var_method.get(), var_rate.get(), var_locked.get())
+    cf_scripts.check_forbidden_terms(
+        frame_main, var_bl.get(), var_terms.get(), var_result.get(),
+        var_method.get(), var_rate.get(), var_locked.get())
 
 btn_run.bind('<ButtonRelease-1>', run)
 

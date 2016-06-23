@@ -7,20 +7,22 @@ import csv
 import datetime
 import os
 import re
+import subprocess
+import sys
 from time import sleep
 import zipfile
 
 
-def dir_from_path(path):
-    if path:
-        path_no_slash = path.rstrip('/')
-        if '.' in path_no_slash.rsplit('/', 1)[-1]:
-            path_dir = path_no_slash.rsplit('/', 1)[0]
+def dir_from_str_path(str_path):
+    if str_path:
+        str_path_no_slash = str_path.rstrip('/')
+        if '.' in str_path_no_slash.rsplit('/', 1)[-1]:
+            str_path_dir = str_path_no_slash.rsplit('/', 1)[0]
         else:
-            path_dir = path_no_slash
+            str_path_dir = str_path_no_slash
     else:
-        path_dir = None
-    return path_dir
+        str_path_dir = None
+    return str_path_dir
 
 
 def dirname_from_fname(fname):
@@ -28,8 +30,8 @@ def dirname_from_fname(fname):
     return dir_name
 
 
-def fname_from_path(path):
-    f_name = path.rsplit('/', 1)[-1]
+def fname_from_str_path(str_path):
+    f_name = str_path.rsplit('/', 1)[-1]
     return f_name
 
 
@@ -66,7 +68,7 @@ def ls_from_list_str(x):
     return list_from_str
 
 
-def ls_from_tuple_str(x):
+def ls_from_tuple_str(tuple_str):
     r'''
     >>> ls_from_tuple_str(r'/Users/path/mqxliff.mqxliff {/Users/path/mqxlz.mqxlz}')
     ['/Users/path/mqxliff.mqxliff', '/Users/path/mqxlz.mqxlz']
@@ -74,23 +76,26 @@ def ls_from_tuple_str(x):
     >>> ls_from_tuple_str(r' C:/Users/path/mqxliff1.mqxliff {C:/Users/path/mqxliff2.mqxliff} {C:\Users\path\mqxlz1.mqxlz} {C:\Users\path\mqxlz2.mqxlz}')
     ['C:/Users/path/mqxliff1.mqxliff', 'C:/Users/path/mqxliff2.mqxliff', 'C:\\Users\\path\\mqxlz1.mqxlz', 'C:\\Users\\path\\mqxlz2.mqxlz']
     '''
-    x_split = x.replace('{', ',').strip('(),').split(',')
-    list_from_str = [i.strip(' {},"\'') for i in x_split]
+    tuple_str_split = tuple_str.replace('{', ',').strip('(),').split(',')
+    list_from_str = [i.strip(' {},"\'') for i in tuple_str_split]
     return list_from_str
 
 
 def mqxlz_dir_fname(fn):
     path_extract = dirname_from_fname(fn) + '_extract'
-    fn_actual = zipfile.ZipFile(fn).extract('document.mqxliff', path=path_extract)
+    fn_actual = zipfile.ZipFile(fn).extract(
+        'document.mqxliff', path=path_extract)
     return path_extract, fn_actual
 
 
-def open_folder(var):
-    path = var.get()
-    if path and path != 'Command Prompt only.':
-        path_1 = ls_from_tuple_str(path)[0]
-        path_dir = dir_from_path(path_1)
-        os.startfile(path_dir)
+def open_folder(tuple_path):
+    if tuple_path and tuple_path != 'Command Prompt only.':
+        str_path_1 = ls_from_tuple_str(tuple_path)[0]
+        str_path_dir = dir_from_str_path(str_path_1)
+        if sys.platform.startswith('win'):
+            os.startfile(str_path_dir)
+        else:
+            subprocess.call(['open', str_path_dir])
 
 
 def print_and_append(str_method, to_print, to_write, file_to_write_in):
@@ -107,9 +112,9 @@ def remove_tags(segment):
     return segment_clean
 
 
-def replace_back_slash(path):
-    path.replace('\\', '/')
-    return path
+def replace_back_slash(str_path):
+    str_path.replace('\\', '/')
+    return str_path
 
 
 def str_from_settings(str_rate, str_locked):
@@ -149,26 +154,31 @@ def try_rmdir(i):
             print('Please go to the bilingual file location and delete the _extract folder manually.')
 
 
-def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_rate, str_locked):
-    fn_bl_list = ls_from_tuple_str(str_bl)
+def check_forbidden_terms(
+        frame, tuple_str_bl, str_terms, str_result,
+        str_method, str_rate, str_locked):
+    fn_bl_list = ls_from_tuple_str(tuple_str_bl)
     fn_terms = replace_back_slash(str_terms)
     fn_result = replace_back_slash(str_result)
     f_terms = open(fn_terms, encoding='utf-8')
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
-    regex_pattern = re.compile('<target xml:space="preserve">.*?</target>', re.S)
+    regex_pattern = re.compile(
+        '<target xml:space="preserve">.*?</target>', re.S)
 
     print('-' * 70)
     date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
-    list_name = fname_from_path(fn_terms)
+    list_name = fname_from_str_path(fn_terms)
     settings = str_from_settings(str_rate, str_locked)
-    heading = f_terms.readline().rstrip('\n')
+    header = f_terms.readline().rstrip('\n')
     f_terms.seek(0)
-    print_and_append(str_method, date_time_version, [date_time_version], f_result_w)
-    print_and_append(str_method, list_name, [list_name], f_result_w)
-    print_and_append(str_method, settings, [settings], f_result_w)
-    print_and_append(str_method, 'Heading: [' + heading + ']', heading.split(','), f_result_w)
+    print_and_append(
+        str_method, 'Time and version:' + date_time_version,
+        [date_time_version], f_result_w)
+    print_and_append(str_method, 'Terms:' + list_name, [list_name], f_result_w)
+    print_and_append(str_method, 'Options:' + settings, [settings], f_result_w)
+    print_and_append(str_method, 'Header: [' + header + ']', header.split(','), f_result_w)
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
@@ -229,7 +239,7 @@ def check_forbidden_terms(frame, str_bl, str_terms, str_result, str_method, str_
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
-        print(fname_from_path(fn_result), ' was successfully created.')
+        print(fname_from_str_path(fn_result), ' was successfully created.')
 
     if list_found_rows and str_method == '1':
         print('The search was successfully finished.')
