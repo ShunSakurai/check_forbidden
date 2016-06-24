@@ -181,6 +181,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### Newest version
+- Make small design improvements and fix some bugs
+
 ### v1.5.10, June 23, 2016
 - Add buttons to open the folders from inside the program
 - Display the version number
@@ -266,7 +269,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 
 ### v1.1.0, March 31, 2016
 - Distribute the binaries
-- Made small design improvements
+- Make small design improvements
 - Create README_jpn.md
 
 ### v1.0.10, March 28, 2016

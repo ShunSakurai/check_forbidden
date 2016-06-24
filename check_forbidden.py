@@ -45,8 +45,7 @@ three_entries = [ent_bl, ent_terms, ent_result]
 
 for ent in three_entries:
     ent.grid(
-        row=three_entries.index(ent), column=2, columnspan=2,
-        sticky='w', padx=5)
+        row=three_entries.index(ent), column=2, columnspan=2, sticky='w')
 
 path_saved_bl = tkinter.StringVar(frame_main)
 path_saved_terms = tkinter.StringVar(frame_main)
@@ -57,11 +56,11 @@ for path in three_saved_paths:
     path.set('')
 
 btn_open_bl = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
 btn_open_terms = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
 btn_open_result = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
 three_open_buttons = [btn_open_bl, btn_open_terms, btn_open_result]
 
 btn_open_bl.bind(
@@ -136,7 +135,7 @@ for ent in three_entries:
 
 
 def choose_bl(self):
-    path = var_bl.get()
+    path = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
     path_saved_bl.set(path)
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
@@ -146,18 +145,18 @@ def choose_bl(self):
         filetypes=ext_bl, initialdir=initial_dir)
     var_bl.set(f_bl)
     if path and not var_result.get():
-        path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
         var_result.set(
-            cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
+            cf_scripts.dir_from_str_path(path) + '/checked_result.csv')
     if not var_bl.get():
         var_bl.set(path_saved_bl.get())
     focus_off()
 
 
 def choose_terms(self):
-    path_saved_terms.set(var_terms.get())
-    if var_terms.get():
-        initial_dir = cf_scripts.dir_from_str_path(var_terms.get())
+    path = var_terms.get()
+    path_saved_terms.set(path)
+    if path:
+        initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
     f_terms = tkinter.filedialog.askopenfilename(
@@ -171,11 +170,13 @@ def choose_terms(self):
 def choose_result(self):
     if btn_result['state'] == 'disabled':
         return
-    path_saved_result.set(var_result.get())
-    if not var_result.get():
-        initial_dir = cf_scripts.dir_from_str_path(var_bl.get())
+    path = var.result.get()
+    path_saved_result.set(path)
+    if not path:
+        initial_dir = cf_scripts.dir_from_str_path(
+            cf_scripts.ls_from_tuple_str(var_bl.get()))
     else:
-        initial_dir = cf_scripts.dir_from_str_path(var_result.get())
+        initial_dir = cf_scripts.dir_from_str_path(path)
     f_result = tkinter.filedialog.asksaveasfilename(
         filetypes=ext_result, initialdir=initial_dir,
         initialfile='checked_result.csv')
@@ -322,8 +323,8 @@ bind_show_guide(cb_method, guide_method)
 bind_show_guide(btn_options, guide_options)
 bind_show_guide(btn_run, guide_run)
 
-for i in range(6):
-    all_buttons[i].bind('<Leave>', hide_guide)
+for btn in all_buttons:
+    btn.bind('<Leave>', hide_guide)
 
 
 def sc_when_out_of_ent(func):

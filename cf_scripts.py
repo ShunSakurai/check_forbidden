@@ -178,7 +178,9 @@ def check_forbidden_terms(
         [date_time_version], f_result_w)
     print_and_append(str_method, 'Terms:' + list_name, [list_name], f_result_w)
     print_and_append(str_method, 'Options:' + settings, [settings], f_result_w)
-    print_and_append(str_method, 'Header: [' + header + ']', header.split(','), f_result_w)
+    print_and_append(
+        str_method, 'Header: [' + header + ']',
+        header.split(',') + ['Target'], f_result_w)
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
