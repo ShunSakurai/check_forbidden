@@ -47,13 +47,8 @@ for ent in three_entries:
     ent.grid(
         row=three_entries.index(ent), column=2, columnspan=2, sticky='w')
 
-path_saved_bl = tkinter.StringVar(frame_main)
-path_saved_terms = tkinter.StringVar(frame_main)
 path_saved_result = tkinter.StringVar(frame_main)
-three_saved_paths = [path_saved_bl, path_saved_terms, path_saved_result]
-
-for path in three_saved_paths:
-    path.set('')
+path_saved_result.set('')
 
 btn_open_bl = tkinter.Button(
     text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
@@ -136,34 +131,32 @@ for ent in three_entries:
 
 def choose_bl(self):
     path = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
-    path_saved_bl.set(path)
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
     f_bl = tkinter.filedialog.askopenfilenames(
         filetypes=ext_bl, initialdir=initial_dir)
-    var_bl.set(f_bl)
-    if path and not var_result.get():
+    if f_bl:
+        var_bl.set(f_bl)
+    if f_bl and not var_result.get():
         var_result.set(
-            cf_scripts.dir_from_str_path(path) + '/checked_result.csv')
-    if not var_bl.get():
-        var_bl.set(path_saved_bl.get())
+            cf_scripts.dir_from_str_path(
+                cf_scripts.ls_from_tuple_str(var_bl.get())[0])
+                + '/checked_result.csv')
     focus_off()
 
 
 def choose_terms(self):
     path = var_terms.get()
-    path_saved_terms.set(path)
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
     f_terms = tkinter.filedialog.askopenfilename(
         filetypes=ext_terms, initialdir=initial_dir)
-    var_terms.set(f_terms)
-    if not var_terms.get():
-        var_terms.set(path_saved_terms.get())
+    if f_terms:
+        var_terms.set(f_terms)
     focus_off()
 
 
@@ -171,18 +164,16 @@ def choose_result(self):
     if btn_result['state'] == 'disabled':
         return
     path = var.result.get()
-    path_saved_result.set(path)
-    if not path:
+    if path:
+        initial_dir = cf_scripts.dir_from_str_path(path)
+    else:
         initial_dir = cf_scripts.dir_from_str_path(
             cf_scripts.ls_from_tuple_str(var_bl.get()))
-    else:
-        initial_dir = cf_scripts.dir_from_str_path(path)
     f_result = tkinter.filedialog.asksaveasfilename(
         filetypes=ext_result, initialdir=initial_dir,
         initialfile='checked_result.csv')
-    var_result.set(f_result)
-    if not var_result.get():
-        var_result.set(path_saved_result.get())
+    if f_result:
+        var_result.set(f_result)
     focus_off()
 
 three_funcs = [choose_bl, choose_terms, choose_result]

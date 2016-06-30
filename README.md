@@ -128,6 +128,7 @@ _extract folders are created when opening the .mqxlz files. Sometimes the progra
 
 ### Some special characters in the CSV file cause an error
 
+- When a comma is included in the CSV file, it may be interpreted as the delimiter
 - When the following character is included in the CSV file, the program throws an error: 'μ'
 - The program can handle the following characters without a problem: '©', '®', '™'
 
