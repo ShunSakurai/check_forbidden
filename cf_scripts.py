@@ -38,14 +38,15 @@ def fname_from_str_path(str_path):
 def limit_range(raw, str_rate, str_locked):
     regex_unit = re.compile('<trans-unit id=".*?</trans-unit>', re.S)
     regex_header = re.compile('<trans-unit id=".*?>')
+    regex_id = re.compile('(?<=trans-unit id=")\d+(?=")')
     string_101 = 'mq:percent="101"'
     string_100 = 'mq:percent="100"'
     string_locked = 'mq:locked="locked"'
-    string_to_search = []
+    strings_to_search = []
     for unit_mo in regex_unit.finditer(raw):
         unit = unit_mo.group(0)
-        header_mo = regex_header.search(unit)
-        header = header_mo.group(0)
+        header = regex_header.search(unit).group(0)
+        seg_id = regex_id.search(header).group(0)
         if str_rate == '100' and string_100 in header:
             continue
         elif str_rate == '100' and string_101 in header:
@@ -55,8 +56,8 @@ def limit_range(raw, str_rate, str_locked):
         elif str_locked == 'locked' and string_locked in header:
             continue
         else:
-            string_to_search.append(unit)
-    return string_to_search
+            strings_to_search.append((seg_id, unit))
+    return strings_to_search
 
 
 def ls_from_list_str(x):
@@ -180,7 +181,7 @@ def check_forbidden_terms(
     print_and_append(str_method, 'Options:' + settings, [settings], f_result_w)
     print_and_append(
         str_method, 'Header: [' + header + ']',
-        header.split(',') + ['Target'], f_result_w)
+        header.split(',') + ['ID', 'Target'] , f_result_w)
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
@@ -194,8 +195,8 @@ def check_forbidden_terms(
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_r_raw = f_bl.read()
         f_bl_r_limit_list = limit_range(f_bl_r_raw, str_rate, str_locked)
-        f_bl_r_with_tag = [regex_pattern.findall(i)[0][29:-9] for i in f_bl_r_limit_list]
-        f_bl_r = [remove_tags(i) for i in f_bl_r_with_tag]
+        f_bl_r_with_tag = [(i[0], regex_pattern.findall(i[1])[0][29:-9]) for i in f_bl_r_limit_list]
+        f_bl_r = [(i[0], remove_tags(i[1])) for i in f_bl_r_with_tag]
         print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
 
         f_terms.seek(0)
@@ -207,11 +208,13 @@ def check_forbidden_terms(
                 pass
             if row[0] is None:
                 continue
-            for line in f_bl_r:
+            for seg_id, line in f_bl_r:
                 match = re.search(row[0], line)
                 if match:
-                    print_and_append(str_method, str(row), row + [line], f_result_w)
-                    try_printing(line)
+                    print_and_append(
+                        str_method, str(row),
+                        row + [seg_id, line], f_result_w)
+                    try_printing(seg_id + '\t' + line)
                     list_found_rows.append(row)
                 else:
                     continue

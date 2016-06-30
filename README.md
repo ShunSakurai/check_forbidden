@@ -129,6 +129,7 @@ _extract folders are created when opening the .mqxlz files. Sometimes the progra
 ### Some special characters in the CSV file cause an error
 
 - When a comma is included in the CSV file, it may be interpreted as the delimiter
+- When characters with accents are included in the CSV file, they can be used correctly for checking, but they are not printed correctly on Command Prompt
 - When the following character is included in the CSV file, the program throws an error: 'μ'
 - The program can handle the following characters without a problem: '©', '®', '™'
 
@@ -158,7 +159,6 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Prepare the installer
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
-- Display the memoQ segment ID in results
 - Create a tk pane for displaying and filtering the result
 
 ### Maybe later
@@ -182,7 +182,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.6.0, June 30, 2016
+- Display the memoQ segment ID in results
 - Make small design improvements and fix some bugs
 
 ### v1.5.10, June 23, 2016
