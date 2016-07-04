@@ -26,16 +26,13 @@ memoQバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に禁止され�
 
 このプログラムは、Pythonとtkinterを使用してコーディングし、[py2exe](http://www.py2exe.org/)を使用して.exe形式で配布するものです。
 
+アイコンは[アイコン ウィザード](http://freewareplace.web.fc2.com/)を、インストーラーは[Inno Setup](http://www.jrsoftware.org/isdl.php)を使用して作成しました。
+
 ## インストール
 現在、Windowsにのみ対応しています。プログラムファイルは[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)で入手できます。
-インストーラーは現在開発中です。当面は、次の手順を実行してください。
 
-- dist.zipをダウンロードし、解凍します
-- フォルダー名を「Check Forbidden」など、お好みの名前に変更します
-- (任意)フォルダーをC:\Program Filesに移動します
-- (任意).exeファイルへのショートカットを作成し、それをデスクトップ、ツール用フォルダー、C:\ProgramData\Microsoft\Windows\Start Menu\Programsなどに追加します(こうすると、Windowsスタートメニューからプログラムを実行できるようになります)
+インストールやアップデートは、インストーラーをダウンロードして実行するだけで行えます。
 
-すでに古いバージョンをインストールして使用している場合、日付が新しいファイルやフォルダーのみをコピーして上書きすることで使用できます。
 このプログラムが動作するには**フォルダーに含めたまま**にしておく必要があります。プログラム単体では動作しません。
 
 Python環境をインストールしている場合、`python(3) check_forbidden.py`または`import check_forbidden`でソースコードをMacなど任意のOSで実行できます。
@@ -156,10 +153,8 @@ UTF-8のCSVファイルを別のエンコーディングのExcelで開き、上�
 ### 開発中の機能
 - コードの[リーダブル](http://www.amazon.co.jp/dp/4873115655)化
 - まとめ結果を並び替えて整列
-- インストーラーを用意
 - 画面の大きさの自由変更
 - 「ファイルを開く」ダイアログの使いやすさを改善
-- 結果にmemoQのセグメントIDを表示
 - 結果の表示とフィルターのできるtk画面を作成
 
 ### 棚上げ中の機能
@@ -182,6 +177,9 @@ UTF-8のCSVファイルを別のエンコーディングのExcelで開き、上�
 ## 履歴
 文頭の「*」は、バグ修正を示します。
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
+
+### v1.6.1、2016年7月4日
+- インストーラーを作成
 
 ### v1.6.0、2016年6月30日
 - 結果にmemoQのセグメントIDを表示
