@@ -14,14 +14,17 @@ import zipfile
 
 
 def dir_from_str_path(str_path):
-    if str_path:
-        str_path_no_slash = str_path.rstrip('/')
-        if '.' in str_path_no_slash.rsplit('/', 1)[-1]:
-            str_path_dir = str_path_no_slash.rsplit('/', 1)[0]
-        else:
-            str_path_dir = str_path_no_slash
+    r'''
+    >>> dir_from_str_path('C:\\check_forbidden\\files\\Test.mqxlz')
+    'C:/check_forbidden/files'
+    '''
+    str_path = str_path.replace('\\', '/')
+    if str_path.endswith('/'):
+        str_path_dir = str_path.rstrip('/')
+    elif '.' in str_path.rsplit('/', 1)[-1]:
+        str_path_dir = str_path.rsplit('/', 1)[0]
     else:
-        str_path_dir = None
+        str_path_dir = str_path
     return str_path_dir
 
 
@@ -114,8 +117,7 @@ def remove_tags(segment):
 
 
 def replace_back_slash(str_path):
-    str_path.replace('\\', '/')
-    return str_path
+    return str_path.replace('\\', '/')
 
 
 def str_from_settings(str_rate, str_locked):
