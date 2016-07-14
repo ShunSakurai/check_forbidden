@@ -6,23 +6,23 @@ A tool for checking if forbidden terms are included in the target segments of me
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)
 
 ## Description
-[memoQ](https://www.memoq.com/) allows us to check forbidden source and target term pairs using the term base, and check forbidden terms using the QA settings.However, it takes time to add each forbidden term one by one, choosing the settings.
-Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files, by using a term list in CSV format.You can also use the regex (regular expressions).It helps you efficiently maintain the translation quality.
-(memoQ recently did a great [update](https://www.memoq.com/memoq-build-june) and now allows us to check only forbidden target terms regardless of the corresponding source terms.Hope they will support CSV import to QA settings soon, like we do for term base.)
+[memoQ](https://www.memoq.com/) allows us to check forbidden source and target term pairs using the term base, and check forbidden terms using the QA settings. However, it takes time to add each forbidden term one by one, choosing the settings.
+Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files, by using a term list in CSV format. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
+(memoQ recently did a great [update](https://www.memoq.com/memoq-build-june) and now allows us to check only forbidden target terms regardless of the corresponding source terms. Hope they will support CSV import to QA settings soon, like we do for term base.)
 
 For example, you can use this tool in the following situations:
 
 - The style guide does not allow you to use contractions such as "doesn't" and "can't" in the translation
 - The style guide does not allow you to use a whitespace between a half-width character and a full-width character
-- JP (Japanese):You can use "次の/次に", but you cannot use "以下の/以下に"
-- JP:You have to keep "例えば" in kanji, and you cannot use "たとえば"
+- JP (Japanese): You can use "次の/次に", but you cannot use "以下の/以下に"
+- JP: You have to keep "例えば" in kanji, and you cannot use "たとえば"
 
 All you have to prepare are:
 
 - memoQ bilingual .mqxlz or .mqxliff files
 - A CSV file or a text file containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file.Command Prompt is good for browsing the result and quickly checking what was detected.The CSV file is useful when you have many matches and when many non-printable characters are included in the bilingual file.The Summary result is useful when you are working on a "View.''
+This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is useful when you have many matches and when many non-printable characters are included in the bilingual file. The Summary result is useful when you are working on a "View.''
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
@@ -33,7 +33,7 @@ This tool is currently only available for Windows at [Releases](https://github.c
 
 All you have to do for installation and upgrading is to download and run the installer.
 
-This program needs to be **kept in the folder** to work.It does not work by itself.
+This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
@@ -43,7 +43,7 @@ If you have the Python environment installed, you can run the source code with `
 - You can open the program by double-clicking Check Forbidden.exe or its alias
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose a CSV file or a text file containing the list of forbidden terms
-- Choose the path and the name of the result file to be exported or disable exporting by selecting the check box.The default is the first bilingual file's path + "checked_result.csv"
+- Choose the path and the name of the result file to be exported or disable exporting by selecting the check box. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 - The result is displayed in the Command Prompt, and if any matches are found and exporting is enabled, they are also exported into the CSV file
 - Press "Enter" key or click "X" (close) button to exit the program
@@ -59,7 +59,7 @@ If you have the Python environment installed, you can run the source code with `
 - If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
 ### Options
-You can specify what kind of segments to include in the search range.To display the options pane, click on the gear ⚙ icon.To hide the pane, click on the triangle ▲ icon.
+You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▲ icon.
 
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
@@ -69,10 +69,10 @@ Two file types are supported:
 - .mqxliff
 - .mqxlz
 
-A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information.The program extracts the document.mqxliff to a folder and removes it when everything is finished.
+A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when everything is finished.
 
 ### CSV file formats
-The term items need to be separated by comma.The file needs to be encoded in UTF-8.All terms are considered as regex, so all the special characters ('(', ')', '[', ']', '.', '\*', '?', '!' ,etc.) used in regex need to be **escaped** with a backslash.
+The term items need to be separated by comma. The file needs to be encoded in UTF-8. All terms are considered as regex, so all the special characters ('(', ')', '[', ']', '.', '\*', '?', '!' ,etc.) used in regex need to be **escaped** with a backslash.
 
 - Terms in the **first** column will be considered as the forbidden terms
 - You can use the other columns to provide detailed information e.g. the index number, the source term, and the correct target term
@@ -89,7 +89,7 @@ The exported result CSV file is also encoded in UTF-8 with commas as the delimit
 - Currently memoQ's regex for tags (\tag) is not supported
 
 ### Keyboard shortcuts
-Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard.For other buttons without an underline, they can be invoked with the following keys:
+Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
 - Run!: with the space bar
 - Show / hide the options: with O
@@ -97,26 +97,26 @@ Buttons and radio buttons can be selected by pressing the underlined characters 
 
 The "Enter (Return)" key can be used to invoke the focused widget.
 
-The shortcut keys are disabled when the cursor is in the entry fields.That allows you to type directly in the fields.
+The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
 
 ## Answers to FAQ, and known issues and workarounds
 
 ### Word separation is not taken in account
-This program treats each segment just as a string.It does not distinguish each word.
+This program treats each segment just as a string. It does not distinguish each word.
 
 - "play" matches both "playing" and "display"
 
 ### Case sensitive
-This program is case-sensitive.If necessary, add terms to the CSV file in both upper and lower cases.
+This program is case-sensitive. If necessary, add terms to the CSV file in both upper and lower cases.
 
 ### Garbled display on Command Prompt
-Sometimes multi-byte characters on Windows Command Prompt seem garbled.To correct this, right click on the title bar, select "Properties / Font," and choose a larger font or another font.The quickest way to open the Properties may be to press Alt + Space and then P.
+Sometimes multi-byte characters on Windows Command Prompt seem garbled. To correct this, right click on the title bar, select "Properties / Font," and choose a larger font or another font. The quickest way to open the Properties may be to press Alt + Space and then P.
 
 ![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
 
 ### _extract folder is not deleted
 
-_extract folders are created when opening the .mqxlz files.Sometimes the program fails to delete them, when an error happens.In that case, please delete them by yourself.
+_extract folders are created when opening the .mqxlz files. Sometimes the program fails to delete them, when an error happens. In that case, please delete them by yourself.
 
 ### &, >, and < are converted to special entities by memoQ
 
@@ -138,13 +138,13 @@ Below are some best practices to avoid false positives.
 - When many false positives are found for 1 term, consider dividing the CSV file
 
 ### Summary results are not in order
-I use Python's "set" object to consolidate the results.This causes an issue where the Summary results are not displayed in the proper order.I am working on this issue.
+I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
 
 ### UTF-8 CSV files are garbled when opened with Shift-JIS Excel
-If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled.There are many remedies to this, but the simplest solutions are as follows:
+If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
 
-- Change the extension from .csv to .txt and open it with Excel.A dialog window pops up and allows you to select the encoding
-- Open the CSV files with Notepad.Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
+- Change the extension from .csv to .txt and open it with Excel. A dialog window pops up and allows you to select the encoding
+- Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
 - Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
 
 If you open and overwrite the UTF-8 CSV file with Excel using another encoding, the encoding will be changed and this program will not be able to open it.
@@ -169,8 +169,8 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Measure speed
 
 ### Features not coming
-- Add file by dragging.The drag and drop feature is hard to use in tkinter
-- Mark and ignore false positives.It is technically difficult
+- Add file by dragging. The drag and drop feature is hard to use in tkinter
+- Mark and ignore false positives. It is technically difficult
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
@@ -179,6 +179,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Reduce memory usage by loading the files iteratively
 - * Resolve an issue where replacing slashes does not work
 
 ### v1.6.1, July 4, 2016
@@ -251,7 +252,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 - Reduce the size of the dist folder
 - Enable choosing .mqxlz and .mqxliff files at the same time
 - Add a splash message
-- * Add a known issue:Avoid using single symbols used in tags and special characters
+- * Add a known issue: Avoid using single symbols used in tags and special characters
 
 ### v1.3.0, April 12, 2016
 - Change the options icon
@@ -269,7 +270,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 - Divide the Summary results in the CSV file
 - Reduce the number of files in the dist folder
 - Change button names and the default name of exported csv file
-- * Add a known issue:Change the font of command prompt to correct garbled multi-byte characters
+- * Add a known issue: Change the font of command prompt to correct garbled multi-byte characters
 
 ### v1.1.0, March 31, 2016
 - Distribute the binaries
@@ -298,7 +299,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 - Come up with the idea
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get.Any [feedback](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) and contribution is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) and contribution is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 

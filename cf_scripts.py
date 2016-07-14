@@ -38,29 +38,22 @@ def fname_from_str_path(str_path):
     return f_name
 
 
-def limit_range(raw, str_rate, str_locked):
-    regex_unit = re.compile('<trans-unit id=".*?</trans-unit>', re.S)
-    regex_header = re.compile('<trans-unit id=".*?>')
+def limit_header_range(header, str_rate, str_locked):
     regex_id = re.compile('(?<=trans-unit id=")\d+(?=")')
     string_101 = 'mq:percent="101"'
     string_100 = 'mq:percent="100"'
     string_locked = 'mq:locked="locked"'
-    strings_to_search = []
-    for unit_mo in regex_unit.finditer(raw):
-        unit = unit_mo.group(0)
-        header = regex_header.search(unit).group(0)
-        seg_id = regex_id.search(header).group(0)
-        if str_rate == '100' and string_100 in header:
-            continue
-        elif str_rate == '100' and string_101 in header:
-            continue
-        elif str_rate == '101' and string_101 in header:
-            continue
-        elif str_locked == 'locked' and string_locked in header:
-            continue
-        else:
-            strings_to_search.append((seg_id, unit))
-    return strings_to_search
+    seg_id = regex_id.search(header).group(0)
+    if str_rate == '100' and string_100 in header:
+        return seg_id, False
+    elif str_rate == '100' and string_101 in header:
+        return seg_id, False
+    elif str_rate == '101' and string_101 in header:
+        return seg_id, False
+    elif str_locked == 'locked' and string_locked in header:
+        return seg_id, False
+    else:
+        return seg_id, True
 
 
 def ls_from_list_str(x):
@@ -111,7 +104,7 @@ def print_and_append(str_method, to_print, to_write, file_to_write_in):
 
 
 def remove_tags(segment):
-    regex_tag = re.compile('<.*?>.*?</.*?>', re.S)
+    regex_tag = re.compile('<[^/].*?>.*?</.*?>', re.S)
     segment_clean = regex_tag.sub('', segment)
     return segment_clean
 
@@ -168,7 +161,7 @@ def check_forbidden_terms(
     list_mqxlz_dir = []
     list_found_rows = []
     regex_pattern = re.compile(
-        '<target xml:space="preserve">.*?</target>', re.S)
+        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
 
     print('-' * 70)
     date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
@@ -187,6 +180,7 @@ def check_forbidden_terms(
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
+        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
         if fn_bl[-5:] == 'mqxlz':
             list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
             fn_bl_actual = mqxlz_dir_fname(fn_bl)[1]
@@ -195,22 +189,30 @@ def check_forbidden_terms(
 
         fn_bl_actual = replace_back_slash(fn_bl_actual)
         f_bl = open(fn_bl_actual, encoding='utf-8')
-        f_bl_r_raw = f_bl.read()
-        f_bl_r_limit_list = limit_range(f_bl_r_raw, str_rate, str_locked)
-        f_bl_r_with_tag = [(i[0], regex_pattern.findall(i[1])[0][29:-9]) for i in f_bl_r_limit_list]
-        f_bl_r = [(i[0], remove_tags(i[1])) for i in f_bl_r_with_tag]
-        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
+        f_bl_line_range_list = []
+        for f_bl_line in f_bl:
+            if f_bl_line.startswith('<trans-unit id="'):
+                seg_id, is_range = limit_header_range(f_bl_line, str_rate, str_locked)
+            elif f_bl_line.startswith('<target xml:space="preserve">'):
+                if is_range:
+                    while not '</target>' in f_bl_line:
+                        f_bl_line += next(f_bl)
+                    f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
+                    f_bl_line_clean = remove_tags(f_bl_line_with_tag)
+                    f_bl_line_range_list.append((seg_id, f_bl_line_clean))
+            else:
+                continue
 
         f_terms.seek(0)
-        f_terms_r = csv.reader(f_terms)
-        for row in f_terms_r:
+        f_terms_read = csv.reader(f_terms)
+        for row in f_terms_read:
             if not row:
                 continue
             else:
                 pass
             if row[0] is None:
                 continue
-            for seg_id, line in f_bl_r:
+            for seg_id, line in f_bl_line_range_list:
                 match = re.search(row[0], line)
                 if match:
                     print_and_append(
