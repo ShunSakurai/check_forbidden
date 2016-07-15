@@ -18,6 +18,8 @@ def dir_from_str_path(str_path):
     >>> dir_from_str_path('C:\\check_forbidden\\files\\Test.mqxlz')
     'C:/check_forbidden/files'
     '''
+    if not isinstance(str_path, str):
+        return ''
     str_path = str_path.replace('\\', '/')
     if str_path.endswith('/'):
         str_path_dir = str_path.rstrip('/')
@@ -156,7 +158,6 @@ def check_forbidden_terms(
     fn_bl_list = ls_from_tuple_str(tuple_str_bl)
     fn_terms = replace_back_slash(str_terms)
     fn_result = replace_back_slash(str_result)
-    f_terms = open(fn_terms, encoding='utf-8')
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
@@ -167,8 +168,9 @@ def check_forbidden_terms(
     date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
     list_name = fname_from_str_path(fn_terms)
     settings = str_from_settings(str_rate, str_locked)
+    f_terms = open(fn_terms, encoding='utf-8')
     header = f_terms.readline().rstrip('\n')
-    f_terms.seek(0)
+    f_terms.close()
     print_and_append(
         str_method, 'Time and version:' + date_time_version,
         [date_time_version], f_result_w)
@@ -195,7 +197,7 @@ def check_forbidden_terms(
                 seg_id, is_range = limit_header_range(f_bl_line, str_rate, str_locked)
             elif f_bl_line.startswith('<target xml:space="preserve">'):
                 if is_range:
-                    while not '</target>' in f_bl_line:
+                    while '</target>' not in f_bl_line:
                         f_bl_line += next(f_bl)
                     f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
                     f_bl_line_clean = remove_tags(f_bl_line_with_tag)
@@ -203,15 +205,13 @@ def check_forbidden_terms(
             else:
                 continue
 
-        f_terms.seek(0)
+        f_terms = open(fn_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
         for row in f_terms_read:
-            if not row:
+            if not row or row[0] is None:
                 continue
             else:
                 pass
-            if row[0] is None:
-                continue
             for seg_id, line in f_bl_line_range_list:
                 match = re.search(row[0], line)
                 if match:
@@ -229,7 +229,7 @@ def check_forbidden_terms(
     f_terms.close()
 
     if list_found_rows:
-        print_and_append(str_method, 'Summary', ['\nSummary'], f_result_w)
+        print_and_append(str_method, 'Summary', [[''], ['Summary']], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)

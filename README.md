@@ -51,10 +51,9 @@ If you have the Python environment installed, you can run the source code with `
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
 ### Tips
-- If you type or paste a path into the entry field and press the button afterwards, browsing starts from the path in the field
+- If you type or paste a path into the entry field and press the button to choose the file(s) afterwards, browsing starts from the path in the field
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
-- Once the term is found in one file, the program stops searching for that term and starts searching for the next term in the file
 - You can re-run the program without closing it
 - If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
@@ -94,6 +93,7 @@ Buttons and radio buttons can be selected by pressing the underlined characters 
 - Run!: with the space bar
 - Show / hide the options: with O
 - Turn the check box on /off: with C
+- Open the folder: no shortcut key
 
 The "Enter (Return)" key can be used to invoke the focused widget.
 
@@ -138,7 +138,7 @@ Below are some best practices to avoid false positives.
 - When many false positives are found for 1 term, consider dividing the CSV file
 
 ### Summary results are not in order
-I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. I am working on this issue.
+I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. This issue will be addressed in the future.
 
 ### UTF-8 CSV files are garbled when opened with Shift-JIS Excel
 If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
@@ -156,6 +156,7 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Create a tk pane for displaying and filtering the result
+- Make segment ID visible when the target segment is on-printable
 
 ### Maybe later
 - Add an ability to choose multiple bilingual files from different folders
@@ -179,6 +180,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Make readability improvements and fix some bugs
 - Reduce memory usage by loading the files iteratively
 - * Resolve an issue where replacing slashes does not work
 

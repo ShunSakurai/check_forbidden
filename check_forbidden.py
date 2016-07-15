@@ -163,7 +163,7 @@ def choose_terms(self):
 def choose_result(self):
     if btn_result['state'] == 'disabled':
         return
-    path = var.result.get()
+    path = var_result.get()
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
@@ -288,7 +288,7 @@ for var in three_vars:
 guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
-guide_open = 'Open the folder'
+guide_open = 'Open the folder.'
 guide_method = 'Select this check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide options.'
 guide_run = 'Enabled when all the three fields are filled.'
@@ -318,7 +318,7 @@ for btn in all_buttons:
     btn.bind('<Leave>', hide_guide)
 
 
-def sc_when_out_of_ent(func):
+def sc_only_when_out_of_ent(func):
     if type(frame_main.focus_get()) == tkinter.Entry:
         pass
     else:
@@ -326,7 +326,7 @@ def sc_when_out_of_ent(func):
 
 
 def bind_keys(key, func):
-    root.bind(key, lambda x: sc_when_out_of_ent(func))
+    root.bind(key, lambda x: sc_only_when_out_of_ent(func))
 
 bind_keys('<space>', run)
 bind_keys('o', lambda x: toggle_options('o', btn_options))
@@ -341,10 +341,10 @@ bind_keys('i', lambda x: rbs_locked[0].select())
 bind_keys('e', lambda x: rbs_locked[1].select())
 
 
-def return_to_click(self):
+def press_return_key_to_click(self):
     frame_main.focus_get().event_generate('<ButtonRelease-1>')
 
-root.bind('<Return>', return_to_click)
+root.bind('<Return>', press_return_key_to_click)
 
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
