@@ -252,15 +252,18 @@ def check_forbidden_terms(
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
-        print(fname_from_str_path(fn_result), 'was successfully created.')
+        print(
+            fname_from_str_path(fn_result), 'was successfully created.\n',
+            '\r' + str(len(list_found_rows)), 'matches.')
 
     if list_found_rows and str_method == '1':
-        print('The search was successfully finished.')
+        print(
+            'The search was successfully finished.\n',
+            '\r' + str(len(list_found_rows)), 'matches.')
 
     elapsed = time.time() - start
     print(
-        'Search time:',
-        elapsed,
+        '\r' + str(elapsed)[:10],
         'seconds.\n\n',
         '\rClick [x] on the tk window or press [Enter] on this screen to exit.')
     try:

@@ -156,7 +156,6 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Make the window re-sizable
 - Make the "Open files" dialog more useful
 - Create a tk pane for displaying and filtering the result
-- Display the number of found matches
 
 ### Maybe later
 - Add an ability to choose multiple bilingual files from different folders
@@ -179,6 +178,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Display the number of found matches
 - Make segment ID visible when the target segment is non-printable
 
 ### v1.6.5, July 19, 2016
