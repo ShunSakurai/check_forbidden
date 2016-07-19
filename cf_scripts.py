@@ -176,12 +176,12 @@ def check_forbidden_terms(
     header = f_terms.readline().rstrip('\n')
     f_terms.close()
     print_and_append(
-        str_method, 'Time and version:' + date_time_version,
+        str_method, 'Time and version: ' + date_time_version,
         [date_time_version], f_result_w)
-    print_and_append(str_method, 'Terms:' + list_name, [list_name], f_result_w)
-    print_and_append(str_method, 'Options:' + settings, [settings], f_result_w)
+    print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
+    print_and_append(str_method, 'Options: ' + settings, [settings], f_result_w)
     print_and_append(
-        str_method, 'Header: [' + header + ']',
+        str_method, 'Header: [' + header + '] + Segment Number',
         header.split(',') + ['ID', 'Target'] , f_result_w)
     print('-' * 70)
 
@@ -220,9 +220,9 @@ def check_forbidden_terms(
                 match = re.search(row[0], line)
                 if match:
                     print_and_append(
-                        str_method, str(row),
+                        str_method, str(row) + '\t' + seg_id,
                         row + [seg_id, line], f_result_w)
-                    try_printing(seg_id + '\t' + line)
+                    try_printing(line)
                     list_found_rows.append(row)
                 else:
                     continue
