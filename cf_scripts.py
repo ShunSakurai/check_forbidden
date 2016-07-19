@@ -9,7 +9,7 @@ import os
 import re
 import subprocess
 import sys
-from time import sleep
+import time
 import zipfile
 
 
@@ -62,6 +62,9 @@ def ls_from_list_str(x):
     r'''
     >>> ls_from_list_str("['Index', 'Source', 'Target (NG)', 'Target (OK)']")
     ['Index', 'Source', 'Target (NG)', 'Target (OK)']
+
+    >>> ls_from_list_str('Mere string')
+    ['Mere string']
     '''
     list_from_str = [i.strip('\'') for i in x.strip('[]').split(', ')]
     return list_from_str
@@ -146,7 +149,7 @@ def try_rmdir(i):
         os.rmdir(i)
     except:
         try:
-            sleep(0.01)
+            time.sleep(0.01)
             os.rmdir(i)
         except:
             print('Please go to the bilingual file location and delete the _extract folder manually.')
@@ -155,6 +158,7 @@ def try_rmdir(i):
 def check_forbidden_terms(
         frame, tuple_str_bl, str_terms, str_result,
         str_method, str_rate, str_locked):
+    start = time.time()
     fn_bl_list = ls_from_tuple_str(tuple_str_bl)
     fn_terms = replace_back_slash(str_terms)
     fn_result = replace_back_slash(str_result)
@@ -248,12 +252,17 @@ def check_forbidden_terms(
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
-        print(fname_from_str_path(fn_result), ' was successfully created.')
+        print(fname_from_str_path(fn_result), 'was successfully created.')
 
     if list_found_rows and str_method == '1':
         print('The search was successfully finished.')
 
-    print('Click [x] on the tk window or press [Enter] on this screen to exit.')
+    elapsed = time.time() - start
+    print(
+        'Search time:',
+        elapsed,
+        'seconds.\n\n',
+        '\rClick [x] on the tk window or press [Enter] on this screen to exit.')
     try:
         input('\n')
     except:

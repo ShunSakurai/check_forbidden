@@ -167,7 +167,6 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
 - Automate the test
-- Measure speed
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
@@ -179,7 +178,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.6.5, July 19, 2016
+- Measure speed
 - Make readability improvements and fix some bugs
 - Reduce memory usage by loading the files iteratively
 - * Resolve an issue where replacing slashes does not work

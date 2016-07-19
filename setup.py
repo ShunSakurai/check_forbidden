@@ -15,7 +15,7 @@ import os
 import re
 import subprocess
 import sys
-from time import sleep
+import time
 import zipfile
 import doctest
 '''
@@ -25,7 +25,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.6.4',
+    'version': '1.6.5',
 }
 
 dict_options = {
