@@ -177,7 +177,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.6.7, July 27, 2016
 - Display the number of found matches
 - Make segment ID visible when the target segment is non-printable
 

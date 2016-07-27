@@ -177,7 +177,7 @@ UTF-8のCSVファイルを別のエンコーディングのExcelで開き、上�
 文頭の「*」は、バグ修正を示します。
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
 
-### 最新版
+### v1.6.7、2016年7月27日
 -  検出された一致の数を表示
 - 訳文セグメントが印字できない場合にもセグメントIDを表示
 

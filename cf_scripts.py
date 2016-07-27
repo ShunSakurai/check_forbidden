@@ -186,6 +186,7 @@ def check_forbidden_terms(
     print('-' * 70)
 
     for fn_bl in fn_bl_list:
+        f_result_w.append([''])
         print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
         if fn_bl[-5:] == 'mqxlz':
             list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
@@ -233,7 +234,8 @@ def check_forbidden_terms(
     f_terms.close()
 
     if list_found_rows:
-        print_and_append(str_method, 'Summary', [[''], ['Summary']], f_result_w)
+        f_result_w.append([''])
+        print_and_append(str_method, 'Summary', ['Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
