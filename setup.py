@@ -48,3 +48,4 @@ if __name__ == "__main__":
     )
 
     shutil.rmtree('__pycache__')
+    print('.exe file v' + dict_console['version'], 'created.')

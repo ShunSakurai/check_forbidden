@@ -37,6 +37,20 @@ This program needs to be **kept in the folder** to work. It does not work by its
 
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
+## Build
+To convert the Python code to .exe file, and to create an installer, follow steps below.
+
+Requirements and procedures for the .exe file:
+
+- [py2exe](http://www.py2exe.org/)
+- Python 3.4 (py2exe is not compatible with Python 3.5 as far as I know)
+- Run `py -3.4 setup.py py2exe` on a Windows machine
+
+Requirements and procedures for the installer:
+
+- [Inno Setup](http://www.jrsoftware.org/isdl.php)
+- Open setup_installer.iss with Inno Setup Compiler and click Build > Compile
+
 ## Usage
 
 ### Overview

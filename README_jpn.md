@@ -37,6 +37,20 @@ memoQバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に、禁止さ�
 
 Python環境をインストールしている場合、`python(3) check_forbidden.py`または`import check_forbidden`でソースコードをMacなど任意のOSで実行できます。
 
+## ビルド
+Pythonコードを.exeファイルに変換し、インストーラーを作成するには、次の手順に従います。
+
+.exeファイルの要件と手順:
+
+- [py2exe](http://www.py2exe.org/)
+- Python 3.4(私の知る限り、py2exeはPython 3.5に対応していません)
+- Windowsマシン上で`py -3.4 setup.py py2exe`を実行します
+
+インストーラーの要件と手順:Requirements and procedures for the installer:
+
+- [Inno Setup](http://www.jrsoftware.org/isdl.php)
+- setup_installer.issをInno Setup Compilerで開き、Build(ビルド)>Compile(コンパイル)をクリックします。
+
 ## 使用方法
 
 ### 概要
