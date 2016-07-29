@@ -92,7 +92,7 @@ The term items need to be separated by comma. The file needs to be encoded in UT
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
-The exported result CSV file is also encoded in UTF-8 with commas as the delimiters.
+The exported result CSV file is encoded in UTF-8 with BOM (Python utf-8-sig) with commas as the delimiters. Be careful about the encoding when opening the file with some programs.
 
 ### Regular expressions
 - Add [0-9A-Za-z]\s[^!-~] and [^!-~]\s[0-9A-Za-z] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
@@ -150,15 +150,6 @@ Below are some best practices to avoid false positives.
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. This issue will be addressed in the future.
 
-### UTF-8 CSV files are garbled when opened with Shift-JIS Excel
-If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
-
-- Change the extension from .csv to .txt and open it with Excel. A dialog window pops up and allows you to select the encoding
-- Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
-- Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
-
-If you open and overwrite the UTF-8 CSV file with Excel using another encoding, the encoding will be changed and this program will not be able to open it.
-
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
@@ -188,7 +179,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.6.8, July 29, 2016
+- Add BOM to the result file to prevent garbled display on Excel
 - Semiautomate the set-up process with shutil module
 
 ### v1.6.7, July 27, 2016

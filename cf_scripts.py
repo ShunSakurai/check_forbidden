@@ -250,7 +250,7 @@ def check_forbidden_terms(
             try_rmdir(i)
 
     if list_found_rows and str_method == '0':
-        f_result = open(fn_result, 'a', encoding='utf-8')
+        f_result = open(fn_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
