@@ -1,9 +1,5 @@
 '''
 cd dropbox/codes/check_forbidden
-
-rmdir /s __pycache__
-rmdir /s dist
-
 py -3.4 setup.py py2exe
 
 Libraries used:
@@ -19,6 +15,8 @@ import time
 import zipfile
 import doctest
 '''
+import os
+import shutil
 
 dict_console = {
     'author': 'Shun Sakurai',
@@ -38,6 +36,9 @@ dict_options = {
 }
 
 if __name__ == "__main__":
+    if os.path.exists('dist'):
+        shutil.rmtree('dist')
+
     from distutils.core import setup
     import py2exe
 
@@ -45,3 +46,5 @@ if __name__ == "__main__":
         console=[dict_console],
         options={'py2exe': dict_options}
     )
+
+    shutil.rmtree('__pycache__')

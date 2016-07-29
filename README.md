@@ -81,7 +81,6 @@ The term items need to be separated by comma. The file needs to be encoded in UT
 The exported result CSV file is also encoded in UTF-8 with commas as the delimiters.
 
 ### Regular expressions
-
 - Add [0-9A-Za-z]\s[^!-~] and [^!-~]\s[0-9A-Za-z] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
 - Add \\)\S to search for a bracket without whitespace around it
 - More examples to be added
@@ -115,16 +114,13 @@ Sometimes multi-byte characters on Windows Command Prompt seem garbled. To corre
 ![Garbled](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_garbled.png)
 
 ### _extract folder is not deleted
-
 _extract folders are created when opening the .mqxlz files. Sometimes the program fails to delete them, when an error happens. In that case, please delete them by yourself.
 
 ### &, >, and < are converted to special entities by memoQ
-
 - Avoid adding &, ;, etc.
 - Use `&amp;`, `&gt;`, and `&lt;` instead of &, >, and <
 
 ### Some special characters in the CSV file cause an error
-
 - When a comma is included in the CSV file, it may be interpreted as the delimiter
 - When characters with accents are included in the CSV file, they can be used correctly for checking, but they are not printed correctly on Command Prompt
 - When the following character is included in the CSV file, the program throws an error: 'μ'
@@ -160,22 +156,26 @@ If you open and overwrite the UTF-8 CSV file with Excel using another encoding, 
 ### Maybe later
 - Add an ability to choose multiple bilingual files from different folders
 - Get rid of { brackets } in the bilingual file field
-- Add settings to specify the row of forbidden terms
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
 - Automate the test
+- Display the shortcut key when hovering over that UI
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
 - Mark and ignore false positives. It is technically difficult
+- Add settings to specify the row of forbidden terms
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- Semiautomate the set-up process with shutil module
 
 ### v1.6.7, July 27, 2016
 - Display the number of found matches
