@@ -42,8 +42,8 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 
 .exeファイルの要件と手順:
 
-- [py2exe](http://www.py2exe.org/)
 - Python 3.4(私の知る限り、py2exeはPython 3.5に対応していません)
+- [py2exe](http://www.py2exe.org/)
 - Windowsマシン上で`py -3.4 setup.py py2exe`を実行します
 
 インストーラーの要件と手順:Requirements and procedures for the installer:
@@ -166,7 +166,6 @@ Pythonの集合型オブジェクトを使用して結果をまとめていま�
 - [Microsoftスタイルガイド](https://www.microsoft.com/Language/ja-JP/StyleGuides.aspx)の禁止語リストを例として作成
 - 外部プログラムからの呼び出しに対応
 - テストを自動化
--  UIにカーソルを合わせた際にショートカットキーを表示
 
 ### 追加予定のない機能
 - ドラッグでファイルを追加。tkinterでドラッグアンドドロップ機能を使用するのは難しいため
@@ -178,6 +177,9 @@ Pythonの集合型オブジェクトを使用して結果をまとめていま�
 ## 履歴
 文頭の「*」は、バグ修正を示します。
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
+
+### 最新版
+-  UI要素にカーソルを合わせた際にショートカットキーを表示
 
 ### v1.6.8、2016年7月29日
 - 結果ファイルにBOMを付けることで、Excelによる文字化け表示を防止

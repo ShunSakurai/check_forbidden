@@ -38,12 +38,12 @@ This program needs to be **kept in the folder** to work. It does not work by its
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
 ## Build
-To convert the Python code to .exe file, and to create an installer, follow steps below.
+To convert the Python code to an .exe file, and to create an installer, follow steps below.
 
 Requirements and procedures for the .exe file:
 
-- [py2exe](http://www.py2exe.org/)
 - Python 3.4 (py2exe is not compatible with Python 3.5 as far as I know)
+- [py2exe](http://www.py2exe.org/)
 - Run `py -3.4 setup.py py2exe` on a Windows machine
 
 Requirements and procedures for the installer:
@@ -166,7 +166,6 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
 - Automate the test
-- Display the shortcut key when hovering over that UI
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
@@ -178,6 +177,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- Display the shortcut key when hovering over that UI element
 
 ### v1.6.8, July 29, 2016
 - Add BOM to the result file to prevent garbled display on Excel

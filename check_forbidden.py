@@ -289,30 +289,37 @@ guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_open = 'Open the folder.'
-guide_method = 'Select this check box if you don\'t export the CSV file.'
-guide_options = 'Show or hide options.'
+guide_method = 'Select this Check box if you don\'t export the CSV file.'
+guide_options = 'Show or hide Options.'
 guide_run = 'Enabled when all the three fields are filled.'
 
+ul_no = -1
+ul_method = 12
+ul_options = 13
+ul_run = 7
 
-def show_guide(self, guide):
+
+def show_guide(self, guide, underline):
     label_guide['text'] = guide
+    label_guide['underline'] = underline
 
 
 def hide_guide(self):
     label_guide['text'] = ''
+    label_guide['underline'] = ul_no
 
 
-def bind_show_guide(btn, guide):
-    btn.bind('<Enter>', lambda x: show_guide('<Enter>', guide))
+def bind_show_guide(btn, guide, underline):
+    btn.bind('<Enter>', lambda x: show_guide('<Enter>', guide, underline))
 
-bind_show_guide(btn_bl, guide_bl)
-bind_show_guide(btn_terms, guide_terms)
-bind_show_guide(btn_result, guide_result)
+bind_show_guide(btn_bl, guide_bl, ul_no)
+bind_show_guide(btn_terms, guide_terms, ul_no)
+bind_show_guide(btn_result, guide_result, ul_no)
 for btn in three_open_buttons:
-    bind_show_guide(btn, guide_open)
-bind_show_guide(cb_method, guide_method)
-bind_show_guide(btn_options, guide_options)
-bind_show_guide(btn_run, guide_run)
+    bind_show_guide(btn, guide_open, ul_no)
+bind_show_guide(cb_method, guide_method, ul_method)
+bind_show_guide(btn_options, guide_options, ul_options)
+bind_show_guide(btn_run, guide_run, ul_run)
 
 for btn in all_buttons:
     btn.bind('<Leave>', hide_guide)
