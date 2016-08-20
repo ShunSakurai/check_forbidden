@@ -133,6 +133,7 @@ _extract folders are created when opening the .mqxlz files. Sometimes the progra
 ### &, >, and < are converted to special entities by memoQ
 - Avoid adding &, ;, etc.
 - Use `&amp;`, `&gt;`, and `&lt;` instead of &, >, and <
+- If < is used in look behind (?<=) in regular expression, that is OK
 
 ### Some special characters in the CSV file cause an error
 - When a comma is included in the CSV file, it may be interpreted as the delimiter
@@ -171,6 +172,7 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
 - Mark and ignore false positives. It is technically difficult
 - Add settings to specify the row of forbidden terms
+- Warn if non-escaped characters are included in the term list. `&lt;` and < cannot be distinguished
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
@@ -179,6 +181,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Exclude the blank segment <target xml:space="preserve"></target>
 - Display the shortcut key when hovering over that UI element
 
 ### v1.6.8, July 29, 2016

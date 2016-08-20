@@ -205,8 +205,9 @@ def check_forbidden_terms(
                     while '</target>' not in f_bl_line:
                         f_bl_line += next(f_bl)
                     f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
-                    f_bl_line_clean = remove_tags(f_bl_line_with_tag)
-                    f_bl_line_range_list.append((seg_id, f_bl_line_clean))
+                    if f_bl_line_with_tag:
+                        f_bl_line_clean = remove_tags(f_bl_line_with_tag)
+                        f_bl_line_range_list.append((seg_id, f_bl_line_clean))
             else:
                 continue
 

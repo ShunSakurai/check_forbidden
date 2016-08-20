@@ -23,14 +23,14 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.6.9',
+    'version': '1.6.10',
 }
 
 dict_options = {
     'bundle_files': 2,
     'compressed': True,
     'excludes': [
-        '_bz2', '_hashlib', '_frozen_importlib', '_lzma', '_ssl'  'argparse',
+        '_bz2', '_hashlib', '_frozen_importlib', '_lzma', '_ssl', 'argparse',
         'calendar', 'difflib', 'doctest' 'inspect', 'locale', 'optparse',
         'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline']
 }
