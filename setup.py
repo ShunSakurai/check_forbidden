@@ -7,6 +7,7 @@ import tkinter
 import tkinter.filedialog
 import csv
 import datetime
+import importlib
 import os
 import re
 import subprocess
@@ -23,7 +24,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.6.10',
+    'version': '1.7.0',
 }
 
 dict_options = {

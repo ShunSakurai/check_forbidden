@@ -5,6 +5,7 @@ py cf_scripts.py
 import setup
 import csv
 import datetime
+import importlib
 import os
 import re
 import subprocess
@@ -109,23 +110,27 @@ def print_and_append(str_method, to_print, to_write, file_to_write_in):
 
 
 def print_and_append_metadata(
-    f_result_w, fpath_terms, str_method, str_rate, str_locked
+    f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
 ):
     print('-' * 70)
     date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
-    list_name = fname_from_str_path(fpath_terms)
-    settings = str_from_settings(str_rate, str_locked)
-    f_terms = open(fpath_terms, encoding='utf-8')
-    header = f_terms.readline().rstrip('\n')
-    f_terms.close()
     print_and_append(
         str_method, 'Time and version: ' + date_time_version,
         [date_time_version], f_result_w)
-    print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
+    list_name = fname_from_str_path(fpath_terms)
+    if str_function == '0':
+        f_terms = open(fpath_terms, encoding='utf-8')
+        header = f_terms.readline().rstrip('\n')
+        f_terms.close()
+        print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
+    else:
+        print_and_append(str_method, 'Function: ' + list_name, [list_name], f_result_w)
+    settings = str_from_settings(str_rate, str_locked)
     print_and_append(str_method, 'Options: ' + settings, [settings], f_result_w)
-    print_and_append(
-        str_method, 'Header: [' + header + '] + Segment Number',
-        header.split(',') + ['ID', 'Target'] , f_result_w)
+    if str_function == '0':
+        print_and_append(
+            str_method, 'Header: [' + header + '] + Segment Number',
+            header.split(',') + ['ID', 'Target'] , f_result_w)
     print('-' * 70)
 
 
@@ -186,7 +191,7 @@ def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):
 
 def check_forbidden_terms(
         frame, tuple_str_bl, str_terms, str_result,
-        str_method, str_rate, str_locked):
+        str_function, str_method, str_rate, str_locked):
     start = time.time()
     fn_bl_list = ls_from_tuple_str(tuple_str_bl)
     fpath_terms = replace_back_slash(str_terms)
@@ -198,7 +203,7 @@ def check_forbidden_terms(
         '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
 
     print_and_append_metadata(
-        f_result_w, fpath_terms, str_method, str_rate, str_locked
+        f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
     )
 
     for fn_bl in fn_bl_list:
@@ -223,35 +228,46 @@ def check_forbidden_terms(
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
-        for row in f_terms_read:
-            if not row or row[0] is None:
-                continue
-            else:
-                pass
-            for seg_id, line in f_bl_line_range_list:
-                match = re.search(row[0], line)
-                if match:
-                    print_and_append(
-                        str_method, str(row) + '\t' + seg_id,
-                        row + [seg_id, line], f_result_w)
-                    try_printing(line)
-                    list_found_rows.append(row)
-                else:
+        if str_function == '0':
+            for row in f_terms_read:
+                if not row or row[0] is None:
                     continue
-
+                else:
+                    pass
+                for seg_id, line in f_bl_line_range_list:
+                    match = re.search(row[0], line)
+                    if match:
+                        print_and_append(
+                            str_method, str(row) + '\t' + seg_id,
+                            row + [seg_id, line], f_result_w)
+                        try_printing(line)
+                        list_found_rows.append(row)
+                    else:
+                        continue
+        else:
+            mdir, mfile = fpath_terms.rsplit('/', 1)
+            mname = mfile.rsplit('.', 1)[0]
+            sys.path.append(mdir)
+            external_script = importlib.import_module(mname)
+            for (seg_id, target) in f_bl_line_range_list:
+                result = external_script.function(seg_id, target)
+                if result:
+                    for ls in result:
+                        print_and_append(str_method, ls, ls, f_result_w)
+                        list_found_rows.append(ls)
         print('\n')
         f_bl.close()
 
     f_terms.close()
 
-    if list_found_rows:
+    if list_found_rows and str_function == '0':
         f_result_w.append([''])
         print_and_append(str_method, 'Summary', ['Summary'], f_result_w)
         list_reduced = list({str(i) for i in list_found_rows})
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
         print_and_append(str_method, '', [''], f_result_w)
-    else:
+    elif str_function == '0':
         print('No forbidden term was found!')
 
     # Delete the directories before exporting the results, which sometimes
@@ -270,13 +286,14 @@ def check_forbidden_terms(
         print(fname_from_str_path(fpath_result), 'was successfully created.')
     elif list_found_rows and str_method == '1':
         print('The search was successfully finished.')
-    if list_found_rows:
+    if list_found_rows and str_function == '0':
         print(str(len(list_found_rows)), 'matches.')
 
     elapsed = time.time() - start
     print(
         str(elapsed)[:10], 'seconds.\n\n',
-        '\rClick [x] on the tk window or press [Enter] on this screen to exit.')
+        '\rClick [x] on the tk window or press [Enter] on this screen to exit.'
+    )
     try:
         input('\n')
     except:

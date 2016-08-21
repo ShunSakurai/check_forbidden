@@ -16,6 +16,7 @@ ext_bl = [
     ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff')]
 ext_terms = [
     ('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
+ext_function = [('Python', '*.py')]
 ext_result = [('csv', '*.csv')]
 
 btn_bl = tkinter.Button(text='Billingual', underline=0)
@@ -24,8 +25,13 @@ btn_result = tkinter.Button(text='Result', underline=0, state='disabled')
 three_buttons = [btn_bl, btn_terms, btn_result]
 
 btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
-btn_terms.grid(row=1, column=0, columnspan=2, sticky='w', padx=5)
+btn_terms.grid(row=1, column=0, columnspan=1, sticky='w', padx=5)
 btn_result.grid(row=2, column=0, columnspan=1, sticky='w', padx=5)
+
+var_function = tkinter.StringVar()
+cb_function = tkinter.Checkbutton(variable=var_function)
+cb_function.deselect()
+cb_function.grid(row=1, column=1, sticky='e')
 
 var_method = tkinter.StringVar()
 cb_method = tkinter.Checkbutton(variable=var_method)
@@ -47,6 +53,10 @@ for ent in three_entries:
     ent.grid(
         row=three_entries.index(ent), column=2, columnspan=2, sticky='w')
 
+path_saved_terms = tkinter.StringVar(frame_main)
+path_saved_terms.set('')
+path_saved_function = tkinter.StringVar(frame_main)
+path_saved_function.set('')
 path_saved_result = tkinter.StringVar(frame_main)
 path_saved_result.set('')
 
@@ -78,7 +88,8 @@ btn_options.grid(row=3, column=3, sticky='e', padx=80)
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
-all_buttons = three_buttons + three_open_buttons + [cb_method, btn_options, btn_run]
+all_buttons = three_buttons + three_open_buttons + [
+    cb_function, cb_method, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
 frame_options.grid(row=4, column=2, sticky='w')
@@ -153,8 +164,13 @@ def choose_terms(self):
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
+
+    if var_function.get() == '1':
+        extensions = ext_function
+    else:
+        extensions = ext_terms
     f_terms = tkinter.filedialog.askopenfilename(
-        filetypes=ext_terms, initialdir=initial_dir)
+        filetypes=extensions, initialdir=initial_dir)
     if f_terms:
         var_terms.set(f_terms)
     focus_off()
@@ -182,6 +198,23 @@ for i in range(3):
     three_buttons[i].bind('<ButtonRelease-1>', three_funcs[i])
 
 
+def toggle_function_click(self, widget):
+    if var_function.get() == '0':
+        btn_terms['text'], btn_terms['underline'] = 'Funct.', 4
+        path_saved_terms.set(var_terms.get())
+        if path_saved_function.get():
+            var_terms.set(path_saved_function.get())
+        else:
+            var_terms.set('')
+    elif var_function.get() == '1':
+        btn_terms['text'], btn_terms['underline'] = 'Terms', 0
+        path_saved_function.set(var_terms.get())
+        if path_saved_terms.get():
+            var_terms.set(path_saved_terms.get())
+        else:
+            var_terms.set('')
+
+
 def toggle_method_click(self, widget):
     if var_method.get() == '0':
         path_saved_result.set(var_result.get())
@@ -198,12 +231,20 @@ def toggle_method_click(self, widget):
             var_result.set('')
         btn_result['state'] = 'normal'
 
+cb_function.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_function_click('<ButtonRelease-1>', cb_function))
 cb_method.bind(
     '<ButtonRelease-1>',
     lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
 
 
-def toggle_method_sc(self, widget):
+def toggle_function_sck(self, widget):
+    toggle_function_click('<ButtonRelease-1>', widget)
+    cb_function.toggle()
+
+
+def toggle_method_sck(self, widget):
     toggle_method_click('<ButtonRelease-1>', widget)
     cb_method.toggle()
 
@@ -269,7 +310,7 @@ def run(self):
         return
     cf_scripts.check_forbidden_terms(
         frame_main, var_bl.get(), var_terms.get(), var_result.get(),
-        var_method.get(), var_rate.get(), var_locked.get())
+        var_function.get(), var_method.get(), var_rate.get(), var_locked.get())
 
 btn_run.bind('<ButtonRelease-1>', run)
 
@@ -289,11 +330,13 @@ guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_open = 'Open the folder.'
+guide_function = 'Import function(str_target) which returns a string or None'
 guide_method = 'Select this Check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
 guide_run = 'Enabled when all the three fields are filled.'
 
 ul_no = -1
+ul_function = 7
 ul_method = 12
 ul_options = 13
 ul_run = 7
@@ -317,6 +360,7 @@ bind_show_guide(btn_terms, guide_terms, ul_no)
 bind_show_guide(btn_result, guide_result, ul_no)
 for btn in three_open_buttons:
     bind_show_guide(btn, guide_open, ul_no)
+bind_show_guide(cb_function, guide_function, ul_function)
 bind_show_guide(cb_method, guide_method, ul_method)
 bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_run, guide_run, ul_run)
@@ -340,7 +384,8 @@ bind_keys('o', lambda x: toggle_options('o', btn_options))
 bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
-bind_keys('c', lambda x: toggle_method_sc('c', cb_method))
+bind_keys('f', lambda x: toggle_function_sck('f', cb_function))
+bind_keys('c', lambda x: toggle_method_sck('c', cb_method))
 bind_keys('a', lambda x: rbs_rate[0].select())
 bind_keys('1', lambda x: rbs_rate[1].select())
 bind_keys('0', lambda x: rbs_rate[2].select())

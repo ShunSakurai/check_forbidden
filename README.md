@@ -7,7 +7,7 @@ A tool for checking if forbidden terms are included in the target segments of me
 
 ## Description
 [memoQ](https://www.memoq.com/) allows us to check forbidden source and target term pairs using the term base, and check forbidden terms using the QA settings. However, it takes time to add each forbidden term one by one, choosing the settings.
-Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files, by using a term list in CSV format. You can also use the regex (regular expressions). It helps you efficiently maintain the translation quality.
+Using this tool, you can quickly narrow down and spot the forbidden terms used in memoQ bilingual files, by using a term list in CSV format. You can use the regular expressions (regex). You can also call a function from an external Python script against the target segments. It helps you efficiently maintain the translation quality.
 (memoQ recently did a great [update](https://www.memoq.com/memoq-build-june) and now allows us to check only forbidden target terms regardless of the corresponding source terms. Hope they will support CSV import to QA settings soon, like we do for term base.)
 
 For example, you can use this tool in the following situations:
@@ -100,12 +100,32 @@ The exported result CSV file is encoded in UTF-8 with BOM (Python utf-8-sig) wit
 - More examples to be added
 - Currently memoQ's regex for tags (\tag) is not supported
 
+### Call external functions
+When the function check box is selected, you can call a function from an external Python script.
+
+- Call a function named 'function' in an external Python script, which takes segment ID (integer) and the target segment (string)
+- The function should return a list of lists for each segment, each inner list representing one line in the result display both on Command Prompt and in the CSV file
+
+Code example:
+calculate_width.py
+```
+import re
+pattern_half_width = re.compile(r'[ -~]')
+
+def function(seg_id, target):
+    length_half = len(re.findall(pattern_half_width, target))
+    length_full = len(target) - length_half
+    length_total = length_half + length_full * 2
+    return [[seg_id, target, length_full, length_half, length_total]]
+```
+
 ### Keyboard shortcuts
 Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
 - Run!: with the space bar
 - Show / hide the options: with O
-- Turn the check box on /off: with C
+- Turn the export method check box on /off: with C
+- Turn the function check box on /off: with F
 - Open the folder: no shortcut key
 
 The "Enter (Return)" key can be used to invoke the focused widget.
@@ -180,7 +200,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.7.0, August 21, 2016
+- Call external Python function against the target segment
 - Exclude the blank segment <target xml:space="preserve"></target>
 - Display the shortcut key when hovering over that UI element
 

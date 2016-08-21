@@ -23,6 +23,11 @@
 - cases
 - word separation
 
+## Function
+- filedialog
+- UI
+- Result
+
 ## Result
 - Result file is exported correctly
 - Select result style
@@ -43,7 +48,7 @@
 ## UI
 - SC keys
 - Show and hide label
-- Move focus with tags
+- Move focus with tab key
 
 ## Install
 - Version No.
