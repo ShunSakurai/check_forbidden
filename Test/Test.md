@@ -34,13 +34,13 @@
 - Btn to Ent
 - Ent to Btn
 - Btn to Cancel
-- SC disable
+- Saved path
+- SC disabled when an entry field is focused
 
 ## Options
 - 3 x 2 = 6 patterns
 
 ## UI
-- △Disable SC keys for options when the pane is hidden
 - SC keys
 - Show and hide label
 - Move focus with tags

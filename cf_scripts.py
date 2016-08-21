@@ -108,6 +108,27 @@ def print_and_append(str_method, to_print, to_write, file_to_write_in):
         pass
 
 
+def print_and_append_metadata(
+    f_result_w, fpath_terms, str_method, str_rate, str_locked
+):
+    print('-' * 70)
+    date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
+    list_name = fname_from_str_path(fpath_terms)
+    settings = str_from_settings(str_rate, str_locked)
+    f_terms = open(fpath_terms, encoding='utf-8')
+    header = f_terms.readline().rstrip('\n')
+    f_terms.close()
+    print_and_append(
+        str_method, 'Time and version: ' + date_time_version,
+        [date_time_version], f_result_w)
+    print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
+    print_and_append(str_method, 'Options: ' + settings, [settings], f_result_w)
+    print_and_append(
+        str_method, 'Header: [' + header + '] + Segment Number',
+        header.split(',') + ['ID', 'Target'] , f_result_w)
+    print('-' * 70)
+
+
 def remove_tags(segment):
     regex_tag = re.compile('<[^/].*?>.*?</.*?>', re.S)
     segment_clean = regex_tag.sub('', segment)
@@ -155,46 +176,35 @@ def try_rmdir(i):
             print('Please go to the bilingual file location and delete the _extract folder manually.')
 
 
+def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):
+    if fn_bl[-5:] == 'mqxlz':
+        list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
+        return mqxlz_dir_fname(fn_bl)[1]
+    else:
+        return fn_bl
+
+
 def check_forbidden_terms(
         frame, tuple_str_bl, str_terms, str_result,
         str_method, str_rate, str_locked):
     start = time.time()
     fn_bl_list = ls_from_tuple_str(tuple_str_bl)
-    fn_terms = replace_back_slash(str_terms)
-    fn_result = replace_back_slash(str_result)
+    fpath_terms = replace_back_slash(str_terms)
+    fpath_result = replace_back_slash(str_result)
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
     regex_pattern = re.compile(
         '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
 
-    print('-' * 70)
-    date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
-    list_name = fname_from_str_path(fn_terms)
-    settings = str_from_settings(str_rate, str_locked)
-    f_terms = open(fn_terms, encoding='utf-8')
-    header = f_terms.readline().rstrip('\n')
-    f_terms.close()
-    print_and_append(
-        str_method, 'Time and version: ' + date_time_version,
-        [date_time_version], f_result_w)
-    print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
-    print_and_append(str_method, 'Options: ' + settings, [settings], f_result_w)
-    print_and_append(
-        str_method, 'Header: [' + header + '] + Segment Number',
-        header.split(',') + ['ID', 'Target'] , f_result_w)
-    print('-' * 70)
+    print_and_append_metadata(
+        f_result_w, fpath_terms, str_method, str_rate, str_locked
+    )
 
     for fn_bl in fn_bl_list:
         f_result_w.append([''])
         print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
-        if fn_bl[-5:] == 'mqxlz':
-            list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
-            fn_bl_actual = mqxlz_dir_fname(fn_bl)[1]
-        else:
-            fn_bl_actual = fn_bl
-
-        fn_bl_actual = replace_back_slash(fn_bl_actual)
+        fn_bl_actual = replace_back_slash(unzip_if_mqxlz(fn_bl, list_mqxlz_dir))
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_line_range_list = []
         for f_bl_line in f_bl:
@@ -211,7 +221,7 @@ def check_forbidden_terms(
             else:
                 continue
 
-        f_terms = open(fn_terms, encoding='utf-8')
+        f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
         for row in f_terms_read:
             if not row or row[0] is None:
@@ -244,6 +254,8 @@ def check_forbidden_terms(
     else:
         print('No forbidden term was found!')
 
+    # Delete the directories before exporting the results, which sometimes
+    # causes an error to terminate the program
     if list_mqxlz_dir:
         for i in list_mqxlz_dir:
             os.remove(i + r'/document.mqxliff')
@@ -251,23 +263,19 @@ def check_forbidden_terms(
             try_rmdir(i)
 
     if list_found_rows and str_method == '0':
-        f_result = open(fn_result, 'a', encoding='utf-8-sig')
+        f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
-        print(
-            fname_from_str_path(fn_result), 'was successfully created.\n',
-            '\r' + str(len(list_found_rows)), 'matches.')
-
-    if list_found_rows and str_method == '1':
-        print(
-            'The search was successfully finished.\n',
-            '\r' + str(len(list_found_rows)), 'matches.')
+        print(fname_from_str_path(fpath_result), 'was successfully created.')
+    elif list_found_rows and str_method == '1':
+        print('The search was successfully finished.')
+    if list_found_rows:
+        print(str(len(list_found_rows)), 'matches.')
 
     elapsed = time.time() - start
     print(
-        '\r' + str(elapsed)[:10],
-        'seconds.\n\n',
+        str(elapsed)[:10], 'seconds.\n\n',
         '\rClick [x] on the tk window or press [Enter] on this screen to exit.')
     try:
         input('\n')
