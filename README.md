@@ -97,7 +97,6 @@ The exported result CSV file is encoded in UTF-8 with BOM (Python utf-8-sig) wit
 ### Regular expressions
 - Add [0-9A-Za-z]\s[^!-~] and [^!-~]\s[0-9A-Za-z] to search for whitespace inserted between ASCII half-width characters and other characters including full-width characters
 - Add \\)\S to search for a bracket without whitespace around it
-- More examples to be added
 - Currently memoQ's regex for tags (\tag) is not supported
 
 ### Call external functions
@@ -199,6 +198,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- * Resolve an issue where historical units are included
 
 ### v1.7.0, August 21, 2016
 - Call external Python function against the target segment
