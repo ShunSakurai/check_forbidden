@@ -16,15 +16,13 @@ import time
 import zipfile
 import doctest
 '''
-import os
-import shutil
 
 dict_console = {
     'author': 'Shun Sakurai',
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.7.0',
+    'version': '1.7.1',
 }
 
 dict_options = {
@@ -37,6 +35,9 @@ dict_options = {
 }
 
 if __name__ == "__main__":
+    import os
+    import shutil
+
     if os.path.exists('dist'):
         shutil.rmtree('dist')
 

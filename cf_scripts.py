@@ -212,10 +212,15 @@ def check_forbidden_terms(
         fn_bl_actual = replace_back_slash(unzip_if_mqxlz(fn_bl, list_mqxlz_dir))
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_line_range_list = []
+        not_historical = True
         for f_bl_line in f_bl:
-            if f_bl_line.startswith('<trans-unit id="'):
+            if '<mq:historical-unit ' in f_bl_line:
+                not_historical = False
+            elif '</mq:historical-unit>' in f_bl_line:
+                not_historical = True
+            elif f_bl_line.startswith('<trans-unit id="') and not_historical:
                 seg_id, is_range = limit_header_range(f_bl_line, str_rate, str_locked)
-            elif f_bl_line.startswith('<target xml:space="preserve">'):
+            elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
                 if is_range:
                     while '</target>' not in f_bl_line:
                         f_bl_line += next(f_bl)
