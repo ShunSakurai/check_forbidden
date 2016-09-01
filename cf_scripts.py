@@ -7,11 +7,49 @@ import csv
 import datetime
 import importlib
 import os
+import os.path
 import re
 import subprocess
 import sys
 import time
+import urllib.request as ur
+import webbrowser
 import zipfile
+
+
+def download_update(str_newest_version, url_installer):
+    print('Downloading the newest version', str_newest_version)
+    print('Your version is', setup.dict_console['version'])
+    download_folder = os.path.expanduser("~")+'/downloads/'
+    download_path = download_folder + url_installer.group(2)
+    d = ur.urlopen('https://github.com/' + url_installer.group(0))
+    with open(download_path, 'wb') as f:
+        f.write(d.read())
+    print('Starting the installer.')
+    if sys.platform.startswith('win'):
+        os.startfile(download_path)
+    else:
+        subprocess.call(['open', download_path])
+    return
+
+
+def check_updates(download_function=download_update):
+    print('-' * 70)
+    url_releases = 'https://github.com/ShunSakurai/check_forbidden/releases'
+    try:
+        str_release_page = str(ur.urlopen(url_releases).read())
+    except:
+        print('Check Forbidden could not connect to', url_releases)
+        return
+    pattern_version = re.compile(r'(?<=<span class="css-truncate-target">v)[0-9.]+(?=</span>)')
+    pattern_installer = re.compile(r'/ShunSakurai/check_forbidden/releases/download/v([0-9.]+)/(check_forbidden_installer_\1.0.exe)')
+    str_newest_version = pattern_version.search(str_release_page).group(0)
+    url_installer = pattern_installer.search(str_release_page)
+    if installed_version_is_newer(setup.dict_console['version'], str_newest_version):
+        print('You are using the newest version:', setup.dict_console['version'])
+        return
+    else:
+        download_function(str_newest_version, url_installer)
 
 
 def dir_from_str_path(str_path):
@@ -39,6 +77,17 @@ def dirname_from_fname(fname):
 def fname_from_str_path(str_path):
     f_name = str_path.rsplit('/', 1)[-1]
     return f_name
+
+
+def installed_version_is_newer(str_installed, str_online):
+    list_installed = str_installed.split('.')
+    list_online = str_online.split('.')
+    for i in range(3):
+        if list_installed[i] < list_online[i]:
+            return False
+        else:
+            pass
+    return True
 
 
 def limit_header_range(header, str_rate, str_locked):
@@ -99,6 +148,11 @@ def open_folder(tuple_path):
             os.startfile(str_path_dir)
         else:
             subprocess.call(['open', str_path_dir])
+
+
+def open_readme():
+    webbrowser.open_new_tab(
+        'https://github.com/ShunSakurai/check_forbidden/blob/master/README.md')
 
 
 def print_and_append(str_method, to_print, to_write, file_to_write_in):
