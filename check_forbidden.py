@@ -3,6 +3,8 @@ cd dropbox/codes/check_forbidden
 py -B check_forbidden.py
 '''
 import cf_scripts
+import setup
+import datetime
 import tkinter
 import tkinter.filedialog
 
@@ -79,6 +81,7 @@ btn_open_result.bind(
 for btn in three_open_buttons:
     btn.grid(row=three_open_buttons.index(btn), column=4)
 
+
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=2, sticky='w')
 
@@ -92,7 +95,6 @@ all_buttons = three_buttons + three_open_buttons + [
     cb_function, cb_method, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
-frame_options.grid(row=4, column=2, sticky='w')
 
 label_rates = tkinter.Label(frame_options, text='\tMatch rates')
 label_rates.grid(row=0, column=0, sticky='w')
@@ -131,6 +133,22 @@ for label, state, ul in locked_states:
 
 for rb in rbs_locked:
     rb.grid(row=(rbs_locked.index(rb) + 1), column=1, sticky='w', padx=10)
+
+label_info = tkinter.Label(
+    frame_options, text=''.join([
+        '\tVersion ', setup.dict_console['version'],
+        ', \r\t©2016-', str(datetime.date.today().year),
+        ' ', setup.dict_console['author']
+    ]), justify='left')
+btn_readme = tkinter.Button(
+    frame_options, text='Read readme',
+    command=cf_scripts.open_readme, underline=9)
+btn_update = tkinter.Button(
+    frame_options, text='Check for updates',
+    command=cf_scripts.check_updates, underline=10)
+label_info.grid(row=0, column=2, sticky='w')
+btn_readme.grid(row=1, column=2, sticky='w', padx=55)
+btn_update.grid(row=2, column=2, sticky='w', padx=55)
 
 
 def focus_off():
@@ -294,7 +312,9 @@ def toggle_options(self, widget):
     if widget['text'] == '⚙':
         widget['text'] = '▲'
         widget['font'] = ('', 12)
-        frame_options.grid(row=4, column=2, sticky='w')
+        frame_options.grid(
+            row=4, column=0, columnspan=4, sticky='w', padx=30
+        )
     elif widget['text'] == '▲':
         widget['text'] = '⚙'
         widget['font'] = ('', 15)
@@ -386,6 +406,8 @@ bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
 bind_keys('f', lambda x: toggle_function_sck('f', cb_function))
 bind_keys('c', lambda x: toggle_method_sck('c', cb_method))
+bind_keys('m', lambda x: cf_scripts.open_readme())
+bind_keys('u', lambda x: cf_scripts.check_updates())
 bind_keys('a', lambda x: rbs_rate[0].select())
 bind_keys('1', lambda x: rbs_rate[1].select())
 bind_keys('0', lambda x: rbs_rate[2].select())
