@@ -218,14 +218,14 @@ for i in range(3):
 
 def toggle_function_click(self, widget):
     if var_function.get() == '0':
-        btn_terms['text'], btn_terms['underline'] = 'Funct.', 4
+        btn_terms.config(text='Funct.', underline=4)
         path_saved_terms.set(var_terms.get())
         if path_saved_function.get():
             var_terms.set(path_saved_function.get())
         else:
             var_terms.set('')
     elif var_function.get() == '1':
-        btn_terms['text'], btn_terms['underline'] = 'Terms', 0
+        btn_terms.config(text='Terms', underline=0)
         path_saved_function.set(var_terms.get())
         if path_saved_terms.get():
             var_terms.set(path_saved_terms.get())
@@ -269,11 +269,9 @@ def toggle_method_sck(self, widget):
 
 def enable_open_btn_if_statement(statement, btn):
     if statement:
-        btn['text'] = '➔'
-        btn['state'] = 'normal'
+        btn.config(text='➔', state='normal')
     else:
-        btn['text'] = '⇨'
-        btn['state'] = 'disabled'
+        btn.config(text='⇨', state='disabled')
 
 
 def enable_open_bl_if_filled(var, unknown, w):
@@ -310,14 +308,12 @@ for rb in rbs_locked:
 
 def toggle_options(self, widget):
     if widget['text'] == '⚙':
-        widget['text'] = '▲'
-        widget['font'] = ('', 12)
+        widget.config(text='▲', font=('', 12))
         frame_options.grid(
             row=4, column=0, columnspan=4, sticky='w', padx=30
         )
     elif widget['text'] == '▲':
-        widget['text'] = '⚙'
-        widget['font'] = ('', 15)
+        widget.config(text='⚙', font=('', 15))
         frame_options.grid_forget()
 
 btn_options.bind(
@@ -337,11 +333,9 @@ btn_run.bind('<ButtonRelease-1>', run)
 
 def enable_run_if_filled(var, unknown, w):
     if var_bl.get() and var_terms.get() and var_result.get():
-        btn_run['state'] = 'normal'
-        btn_run['text'] = 'Run!'
+        btn_run.config(state='normal', text='Run!')
     else:
-        btn_run['state'] = 'disabled'
-        btn_run['text'] = 'Run'
+        btn_run.config(state='disabled', text='Run')
 
 for var in three_vars:
     var.trace('w', enable_run_if_filled)
@@ -363,13 +357,11 @@ ul_run = 7
 
 
 def show_guide(self, guide, underline):
-    label_guide['text'] = guide
-    label_guide['underline'] = underline
+    label_guide.config(text=guide, underline=underline)
 
 
 def hide_guide(self):
-    label_guide['text'] = ''
-    label_guide['underline'] = ul_no
+    label_guide.config(text='', underline=ul_no)
 
 
 def bind_show_guide(btn, guide, underline):

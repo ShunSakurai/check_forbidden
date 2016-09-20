@@ -216,12 +216,15 @@ def str_from_settings(str_rate, str_locked):
 def try_printing(to_print):
     try:
         print(to_print)
-    except:
+    except UnicodeError:
         special_char = re.compile(r'[^\w\s -~]| ')
         try:
             print(special_char.sub(' ', to_print))
         except:
             print('**Some special characters could not be printed.**')
+    except:
+        print('**Some special characters could not be printed.**')
+        print(sys.exc_info()[1], '\n', sys.exc_info()[0])
 
 
 def try_rmdir(i):

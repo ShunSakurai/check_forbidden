@@ -179,7 +179,6 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Create a tk pane for displaying and filtering the result
 
 ### Maybe later
-- Add an ability to choose multiple bilingual files from different folders
 - Get rid of { brackets } in the bilingual file field
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
@@ -192,12 +191,16 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Mark and ignore false positives. It is technically difficult
 - Add settings to specify the row of forbidden terms
 - Warn if non-escaped characters are included in the term list. `&lt;` and < cannot be distinguished
+- Add an ability to choose multiple bilingual files from different folders. Not very important
 
 Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99BajlghI1nePsyD62jRMGpbZdaHxdnO7Qps8Y-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- Make readability improvements
 
 ### v1.7.2, September 1, 2016
 - Check for and download updates online
