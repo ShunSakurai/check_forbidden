@@ -200,6 +200,7 @@ Pythonの集合型オブジェクトを使用して結果をまとめていま�
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
 
 ### 最新版
+- クロス翻訳されたセグメントをサポート
 - 読みやすさを改善
 
 ### v1.7.2、2016年9月1日

@@ -200,6 +200,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Support X-translated segments
 - Make readability improvements
 
 ### v1.7.2, September 1, 2016
