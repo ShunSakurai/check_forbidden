@@ -184,7 +184,6 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
-- Automate the test
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
@@ -200,6 +199,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### Newest version
+- Semi-automate the test
 - Support X-translated segments
 - Make readability improvements
 

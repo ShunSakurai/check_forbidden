@@ -184,7 +184,6 @@ Pythonの集合型オブジェクトを使用して結果をまとめていま�
 - memoQ以外のファイルへの対応
 - [Microsoftスタイルガイド](https://www.microsoft.com/Language/ja-JP/StyleGuides.aspx)の禁止語リストを例として作成
 - 外部プログラムからの呼び出しに対応
-- テストを自動化
 
 ### 追加予定のない機能
 - ドラッグでファイルを追加。tkinterでドラッグアンドドロップ機能を使用するのは難しいため
@@ -200,6 +199,7 @@ Pythonの集合型オブジェクトを使用して結果をまとめていま�
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
 
 ### 最新版
+- テストを半自動化
 - クロス翻訳されたセグメントをサポート
 - 読みやすさを改善
 
