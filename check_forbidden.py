@@ -177,17 +177,16 @@ def choose_bl(self):
 
 
 def choose_terms(self):
-    path = var_terms.get()
+    path = cf_scripts.ls_from_tuple_str(var_terms.get())[0]
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
-
     if var_function.get() == '1':
         extensions = ext_function
     else:
         extensions = ext_terms
-    f_terms = tkinter.filedialog.askopenfilename(
+    f_terms = tkinter.filedialog.askopenfilenames(
         filetypes=extensions, initialdir=initial_dir)
     if f_terms:
         var_terms.set(f_terms)

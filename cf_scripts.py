@@ -1,6 +1,6 @@
 '''
 cd dropbox/codes/check_forbidden
-py cf_scripts.py
+py -B cf_scripts.py
 '''
 import setup
 import csv
@@ -135,13 +135,6 @@ def ls_from_tuple_str(tuple_str):
     return list_from_str
 
 
-def mqxlz_dir_fname(fn):
-    path_extract = dirname_from_fname(fn) + '_extract'
-    fn_actual = zipfile.ZipFile(fn).extract(
-        'document.mqxliff', path=path_extract)
-    return path_extract, fn_actual
-
-
 def open_folder(tuple_path):
     if tuple_path and tuple_path != 'Command Prompt only.':
         str_path_1 = ls_from_tuple_str(tuple_path)[0]
@@ -242,30 +235,26 @@ def try_rmdir(i):
 
 def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):
     if fn_bl[-5:] == 'mqxlz':
-        list_mqxlz_dir.append(mqxlz_dir_fname(fn_bl)[0])
-        return mqxlz_dir_fname(fn_bl)[1]
+        path_extract = dirname_from_fname(fn_bl) + '_extract'
+        fn_actual = zipfile.ZipFile(fn_bl).extract(
+            'document.mqxliff', path=path_extract)
+        list_mqxlz_dir.append(path_extract)
+        return fn_actual
     else:
         return fn_bl
 
 
-def check_forbidden_terms(
-        frame, tuple_str_bl, str_terms, str_result,
-        str_function, str_method, str_rate, str_locked):
-    start = time.time()
-    fn_bl_list = ls_from_tuple_str(tuple_str_bl)
-    fpath_terms = replace_back_slash(str_terms)
-    fpath_result = replace_back_slash(str_result)
+def check_for_each_term(
+    list_fpath_bl, fpath_terms, fpath_result,
+    str_function, str_method, str_rate, str_locked, regex_pattern
+):
     f_result_w = []
     list_mqxlz_dir = []
     list_found_rows = []
-    regex_pattern = re.compile(
-        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
-
     print_and_append_metadata(
         f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
     )
-
-    for fn_bl in fn_bl_list:
+    for fn_bl in list_fpath_bl:
         f_result_w.append([''])
         print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
         fn_bl_actual = replace_back_slash(unzip_if_mqxlz(fn_bl, list_mqxlz_dir))
@@ -352,6 +341,24 @@ def check_forbidden_terms(
         print('The search was successfully finished.')
     if list_found_rows and str_function == '0':
         print(str(len(list_found_rows)), 'matches.')
+
+
+def check_forbidden_terms(
+    frame, tuple_str_bl, tuple_str_terms, str_result,
+    str_function, str_method, str_rate, str_locked
+):
+    start = time.time()
+    list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
+    list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
+    fpath_result = replace_back_slash(str_result)
+    regex_pattern = re.compile(
+        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
+
+    for fpath_terms in list_fpath_terms:
+        check_for_each_term(
+            list_fpath_bl, fpath_terms, fpath_result,
+            str_function, str_method, str_rate, str_locked, regex_pattern
+        )
 
     elapsed = time.time() - start
     print(
