@@ -9,7 +9,6 @@ import tkinter
 import tkinter.filedialog
 
 print('Loading...')
-
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
@@ -414,4 +413,5 @@ root.bind('<Return>', press_return_key_to_click)
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
 frame_options.grid_forget()
+print('tk window is ready to use.')
 frame_main.mainloop()

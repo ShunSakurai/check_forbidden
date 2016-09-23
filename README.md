@@ -170,6 +170,10 @@ Below are some best practices to avoid false positives.
 ### Summary results are not in order
 I use Python's "set" object to consolidate the results. This causes an issue where the Summary results are not displayed in the proper order. This issue will be addressed in the future.
 
+### Things to do when searching takes too long time
+- Consider using Exclude 100%/101% matches options
+- Consider creating a view for multiple documents (files)
+
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
@@ -197,6 +201,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### v1.8.1, September 23, 2016
+- Make usability improvements
 
 ### v1.8.0, September 21, 2016
 - Support multiple term list files
