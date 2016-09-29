@@ -17,23 +17,27 @@ import webbrowser
 import zipfile
 
 
-def download_update(str_newest_version, url_installer):
-    print('Downloading the newest version', str_newest_version)
-    print('Your version is', setup.dict_console['version'])
-    download_folder = os.path.expanduser("~")+'/downloads/'
-    download_path = download_folder + url_installer.group(2)
-    d = ur.urlopen('https://github.com/' + url_installer.group(0))
-    with open(download_path, 'wb') as f:
-        f.write(d.read())
-    print('Starting the installer.')
+def apply_update(download_path):
+    print('Starting the installer...')
+    print('You may have to close the current process to continue.')
     if sys.platform.startswith('win'):
         os.startfile(download_path)
     else:
         subprocess.call(['open', download_path])
-    return
 
 
-def check_updates(download_function=download_update):
+def download_installer(str_newest_version, url_installer):
+    print('Downloading the newest version:', str_newest_version)
+    print('Your version is', setup.dict_console['version'])
+    download_folder = os.path.expanduser("~") + '/downloads/'
+    download_path = download_folder + url_installer.group(2)
+    d = ur.urlopen('https://github.com/' + url_installer.group(0))
+    with open(download_path, 'wb') as f:
+        f.write(d.read())
+    return download_path
+
+
+def check_updates(download_function=download_installer):
     print('-' * 70)
     url_releases = 'https://github.com/ShunSakurai/check_forbidden/releases'
     try:
@@ -47,9 +51,14 @@ def check_updates(download_function=download_update):
     url_installer = pattern_installer.search(str_release_page)
     if installed_version_is_newer(setup.dict_console['version'], str_newest_version):
         print('You are using the newest version:', setup.dict_console['version'])
-        return
     else:
-        download_function(str_newest_version, url_installer)
+        download_path = download_function(str_newest_version, url_installer)
+        apply_update(download_path)
+        print('Preparing to delete the installer...')
+        try_removing_if_not_in_use(
+            download_path, 'The installer was successfully deleted.',
+            'Please go to the downloads folder and delete the installer manually.'
+        )
 
 
 def dir_from_str_path(str_path):
@@ -233,6 +242,23 @@ def try_rmdir(i):
             os.rmdir(i)
         except:
             print('Please go to the bilingual file location and delete the _extract folder manually.')
+
+
+def try_removing_if_not_in_use(path_file, message_success, message_fail):
+    if not sys.platform.startswith('win'):
+        print(message_fail)
+        return
+    try:
+        while True:
+            try:
+                time.sleep(5)
+                os.remove(path_file)
+                print(message_success)
+                break
+            except:
+                time.sleep(5)
+    except:
+        print(message_fail)
 
 
 def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):

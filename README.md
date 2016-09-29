@@ -202,7 +202,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.8.3, September 29, 2016
+- Delete the installer after applying the update (works on CLI only)
 - * Resolve an issue where the versions are not compared correctly
 
 ### v1.8.1, September 23, 2016
