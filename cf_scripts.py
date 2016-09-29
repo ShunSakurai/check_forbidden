@@ -83,8 +83,10 @@ def installed_version_is_newer(str_installed, str_online):
     list_installed = str_installed.split('.')
     list_online = str_online.split('.')
     for i in range(3):
-        if list_installed[i] < list_online[i]:
+        if int(list_installed[i]) < int(list_online[i]):
             return False
+        elif int(list_installed[i]) > int(list_online[i]):
+            return True
         else:
             pass
     return True

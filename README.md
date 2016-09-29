@@ -56,7 +56,7 @@ Requirements and procedures for the installer:
 ### Overview
 - You can open the program by double-clicking Check Forbidden.exe or its alias
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
-- Choose a CSV file or a text file containing the list of forbidden terms
+- Choose CSV or text file(s) containing the list of forbidden terms
 - Choose the path and the name of the result file to be exported or disable exporting by selecting the check box. The default is the first bilingual file's path + "checked_result.csv"
 - Click "Run!"
 - The result is displayed in the Command Prompt, and if any matches are found and exporting is enabled, they are also exported into the CSV file
@@ -201,6 +201,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
+
+### Newest version
+- * Resolve an issue where the versions are not compared correctly
 
 ### v1.8.1, September 23, 2016
 - Make usability improvements
