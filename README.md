@@ -203,6 +203,7 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
 ### v1.8.4, October 23, 2016
+- Add MIT license
 - Avoid using comma in the exported CSV file
 
 ### v1.8.3, September 29, 2016
@@ -363,6 +364,9 @@ This is just a personal project and I do not really know what kind of contributi
 Dear colleague translators and PMs, please help me brush up my English on this page.
 
 ## License
+### Usage
 You can use it for free.
-
 © 2016 Shun Sakurai
+
+###MIT License
+The code is protected under MIT License. Please see license.md for details.
