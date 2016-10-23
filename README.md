@@ -202,6 +202,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### v1.8.4, October 23, 2016
+- Avoid using comma in the exported CSV file
+
 ### v1.8.3, September 29, 2016
 - Delete the installer after applying the update (works on CLI only)
 - * Resolve an issue where the versions are not compared correctly

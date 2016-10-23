@@ -215,7 +215,7 @@ def str_from_settings(str_rate, str_locked):
         setting_locked = 'Include locked segments'
     else:
         setting_locked = 'Exclude locked segments'
-    settings = setting_rate + ', ' + setting_locked
+    settings = setting_rate + '; ' + setting_locked
     return settings
 
 
