@@ -103,6 +103,7 @@ def installed_version_is_newer(str_installed, str_online):
 
 def limit_header_range(header, str_rate, str_locked):
     regex_id = re.compile('(?<=trans-unit id=")\d+(?=")')
+    string_102 = 'mq:percent="102"'
     string_101 = 'mq:percent="101"'
     string_100 = 'mq:percent="100"'
     string_locked = 'mq:locked="locked"'
@@ -113,7 +114,7 @@ def limit_header_range(header, str_rate, str_locked):
         return seg_id, False
     elif str_rate == '101' and string_101 in header:
         return seg_id, False
-    elif str_rate == '102' and string_101 in header:
+    elif str_rate == '101' and string_102 in header:
         return seg_id, False
     elif str_locked == 'locked' and string_locked in header:
         return seg_id, False

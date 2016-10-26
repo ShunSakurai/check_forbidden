@@ -25,7 +25,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.8.4',
+    'version': '1.8.5',
 }
 
 dict_options = {

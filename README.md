@@ -202,6 +202,9 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
+### v1.8.5, October 26, 2016
+- * Resolve an issue where X-translated segments were not supported
+
 ### v1.8.4, October 23, 2016
 - Add MIT license
 - Avoid using comma in the exported CSV file
