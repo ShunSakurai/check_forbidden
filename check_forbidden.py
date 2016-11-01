@@ -8,7 +8,7 @@ import datetime
 import tkinter
 import tkinter.filedialog
 
-print('Loading...')
+print('Loading v', setup.dict_console['version'], '...')
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
