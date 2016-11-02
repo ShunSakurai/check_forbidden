@@ -6,6 +6,7 @@ import setup
 import csv
 import datetime
 import importlib
+import locale
 import os
 import os.path
 import re
@@ -24,6 +25,14 @@ def apply_update(download_path):
         os.startfile(download_path)
     else:
         subprocess.call(['open', download_path])
+
+
+def convert_non_encodable(char):
+    encoding_for_output = locale.getpreferredencoding()
+    if char.encode(encoding_for_output, errors='ignore'):
+        return char
+    else:
+        return '*'
 
 
 def download_installer(str_newest_version, url_installer):
@@ -224,13 +233,13 @@ def try_printing(to_print):
     try:
         print(to_print)
     except UnicodeError:
-        special_char = re.compile(r'[^\w\s -~]| ')
+        to_print_encodable = ''.join([convert_non_encodable(i) for i in to_print])
         try:
-            print(special_char.sub(' ', to_print))
+            print(to_print_encodable)
         except:
-            print('**Some special characters could not be printed.**')
+            print('**Error occurred in printing characters.**')
     except:
-        print('**Some special characters could not be printed.**')
+        print('**Error occurred in printing characters.**')
         print(sys.exc_info()[1], '\n', sys.exc_info()[0])
 
 

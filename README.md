@@ -202,7 +202,8 @@ Please [let me know](https://app.asana.com/-/share?s=132227284282305-bvBtn99Bajl
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
 
-### Newest version
+### v1.8.7, November 2, 2016
+- Print as many non-special characters as possible
 - Display the version information at the start of the program
 
 ### v1.8.5, October 26, 2016
