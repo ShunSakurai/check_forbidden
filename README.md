@@ -176,10 +176,11 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 
 ## Features to come
 ### Working on
+- Save last used settings
+- Save term lists and their paths as favorites
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Sort the Summary results
 - Make the window re-sizable
-- Make the "Open files" dialog more useful
 - Create a tk pane for displaying and filtering the result
 
 ### Maybe later
@@ -188,6 +189,7 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
+- Make the "Open files" dialog more useful
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter

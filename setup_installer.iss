@@ -17,7 +17,7 @@ AppSupportURL=https://github.com/ShunSakurai/check_forbidden
 AppUpdatesURL=https://github.com/ShunSakurai/check_forbidden
 DefaultDirName={pf}\Check Forbidden
 DefaultGroupName=Check Forbidden
-;InfoAfterFile"Z:\Dropbox\Codes\check_forbidden\README.md
+;InfoAfterFile"README.md
 OutputBaseFilename=check_forbidden_installer_{#ProgramVersion}
 Compression=lzma
 SolidCompression=yes
@@ -30,12 +30,12 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\Check Forbidden.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Dropbox\Codes\check_forbidden\dist\tcl\*"; DestDir: "{app}\tcl"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\Check Forbidden.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\tcl\*"; DestDir: "{app}\tcl"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
