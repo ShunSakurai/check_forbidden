@@ -182,6 +182,7 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Sort the Summary results
 - Make the window re-sizable
 - Create a tk pane for displaying and filtering the result
+- Specify the range of segment IDs to search
 
 ### Maybe later
 - Get rid of { brackets } in the bilingual file field
@@ -190,6 +191,7 @@ I use Python's "set" object to consolidate the results. This causes an issue whe
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
 - Make the "Open files" dialog more useful
+- Open the CSV files from inside the program
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
