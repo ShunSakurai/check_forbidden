@@ -8,7 +8,9 @@ import datetime
 import tkinter
 import tkinter.filedialog
 
-print('Loading v', setup.dict_console['version'], '...')
+print('Loading v', setup.dict_console['version'], '...', sep='')
+
+# Constants
 root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
@@ -20,6 +22,9 @@ ext_terms = [
 ext_function = [('Python', '*.py')]
 ext_result = [('csv', '*.csv')]
 
+ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
+
+# Widgets and functions
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
 btn_result = tkinter.Button(text='Result', underline=0, state='disabled')
@@ -42,7 +47,7 @@ cb_method.grid(row=2, column=1, sticky='e')
 var_bl = tkinter.StringVar(frame_main)
 var_terms = tkinter.StringVar(frame_main)
 var_result = tkinter.StringVar(frame_main)
-var_result.set('Command Prompt only.')
+var_result.set(ph_cp_only)
 three_vars = [var_bl, var_terms, var_result]
 
 ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
@@ -234,7 +239,7 @@ def toggle_function_click(self, widget):
 def toggle_method_click(self, widget):
     if var_method.get() == '0':
         path_saved_result.set(var_result.get())
-        var_result.set('Command Prompt only.')
+        var_result.set(ph_cp_only)
         btn_result['state'] = 'disabled'
     elif var_method.get() == '1':
         if path_saved_result.get():
@@ -281,7 +286,7 @@ def enable_open_terms_if_filled(var, unknown, w):
 
 
 def enable_open_result_if_filled(var, unknown, w):
-    statement = var_result.get() and var_result.get() != 'Command Prompt only.'
+    statement = var_result.get() and var_result.get() != ph_cp_only
     enable_open_btn_if_statement(statement, btn_open_result)
 
 three_open_funcs = [
@@ -342,7 +347,7 @@ guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_open = 'Open the folder.'
-guide_function = 'Import function(str_target) which returns a string or None'
+guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_method = 'Select this Check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
 guide_run = 'Enabled when all the three fields are filled.'
@@ -410,6 +415,7 @@ def press_return_key_to_click(self):
 
 root.bind('<Return>', press_return_key_to_click)
 
+# Initiating the program
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
 frame_options.grid_forget()

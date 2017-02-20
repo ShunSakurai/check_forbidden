@@ -288,7 +288,7 @@ def check_for_each_term(
 ):
     f_result_w = []
     list_mqxlz_dir = []
-    list_found_rows = []
+    list_matched_rows = []
     print_and_append_metadata(
         f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
     )
@@ -332,7 +332,7 @@ def check_for_each_term(
                             str_method, str(row) + '\t' + seg_id,
                             row + [seg_id, line], f_result_w)
                         try_printing(line)
-                        list_found_rows.append(row)
+                        list_matched_rows.append(row)
                     else:
                         continue
         else:
@@ -345,16 +345,19 @@ def check_for_each_term(
                 if result:
                     for ls in result:
                         print_and_append(str_method, ls, ls, f_result_w)
-                        list_found_rows.append(ls)
+                        list_matched_rows.append(ls)
         print('\n')
         f_bl.close()
 
     f_terms.close()
 
-    if list_found_rows and str_function == '0':
+    if list_matched_rows and str_function == '0':
         f_result_w.append([''])
         print_and_append(str_method, 'Summary', ['Summary'], f_result_w)
-        list_reduced = list({str(i) for i in list_found_rows})
+        list_reduced = []
+        for i in range(len(list_matched_rows)):
+            if str(list_matched_rows[i]) not in list_reduced:
+                list_reduced.append(str(list_matched_rows[i]))
         for i in list_reduced:
             print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
         print_and_append(str_method, '', [''], f_result_w)
@@ -369,16 +372,16 @@ def check_for_each_term(
         for i in list_mqxlz_dir:
             try_rmdir(i)
 
-    if list_found_rows and str_method == '0':
+    if list_matched_rows and str_method == '0':
         f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
         print(fname_from_str_path(fpath_result), 'was successfully created.')
-    elif list_found_rows and str_method == '1':
+    elif list_matched_rows and str_method == '1':
         print('The search was successfully finished.')
-    if list_found_rows and str_function == '0':
-        print(str(len(list_found_rows)), 'matches.')
+    if list_matched_rows and str_function == '0':
+        print(str(len(list_matched_rows)), 'matches.')
 
 
 def check_forbidden_terms(
