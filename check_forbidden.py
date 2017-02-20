@@ -158,6 +158,7 @@ btn_update.grid(row=2, column=2, sticky='w', padx=55)
 def focus_off():
     label_guide.focus_set()
 
+
 for ent in three_entries:
     ent.bind('<Leave>', lambda x: focus_off())
 
@@ -213,6 +214,7 @@ def choose_result(self):
         var_result.set(f_result)
     focus_off()
 
+
 three_funcs = [choose_bl, choose_terms, choose_result]
 
 for i in range(3):
@@ -252,6 +254,7 @@ def toggle_method_click(self, widget):
             var_result.set('')
         btn_result['state'] = 'normal'
 
+
 cb_function.bind(
     '<ButtonRelease-1>',
     lambda x: toggle_function_click('<ButtonRelease-1>', cb_function))
@@ -289,6 +292,7 @@ def enable_open_result_if_filled(var, unknown, w):
     statement = var_result.get() and var_result.get() != ph_cp_only
     enable_open_btn_if_statement(statement, btn_open_result)
 
+
 three_open_funcs = [
     enable_open_bl_if_filled, enable_open_terms_if_filled,
     enable_open_result_if_filled]
@@ -301,6 +305,7 @@ for var, btn, func in zip(three_vars, three_open_buttons, three_open_funcs):
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
+
 
 for rb in rbs_rate:
     rb.bind('<ButtonRelease-1>', select_and_focus)
@@ -319,17 +324,30 @@ def toggle_options(self, widget):
         widget.config(text='⚙', font=('', 15))
         frame_options.grid_forget()
 
+
 btn_options.bind(
     '<ButtonRelease-1>',
     lambda x: toggle_options('<ButtonRelease-1>', btn_options))
 
 
+def get_options():
+    dict_options = {
+        'str_function': var_function.get(),
+        'str_method': var_method.get(),
+        'str_rate': var_rate.get(),
+        'str_locked': var_locked.get()
+    }
+    return dict_options
+
+
 def run(self):
     if btn_run['state'] == 'disabled':
         return
+    dict_options = get_options()
     cf_scripts.check_forbidden_terms(
-        frame_main, var_bl.get(), var_terms.get(), var_result.get(),
-        var_function.get(), var_method.get(), var_rate.get(), var_locked.get())
+        var_bl.get(), var_terms.get(), var_result.get(), dict_options)
+    cf_scripts.ask_quit(frame_main)
+
 
 btn_run.bind('<ButtonRelease-1>', run)
 
@@ -339,6 +357,7 @@ def enable_run_if_filled(var, unknown, w):
         btn_run.config(state='normal', text='Run!')
     else:
         btn_run.config(state='disabled', text='Run')
+
 
 for var in three_vars:
     var.trace('w', enable_run_if_filled)
@@ -370,6 +389,7 @@ def hide_guide(self):
 def bind_show_guide(btn, guide, underline):
     btn.bind('<Enter>', lambda x: show_guide('<Enter>', guide, underline))
 
+
 bind_show_guide(btn_bl, guide_bl, ul_no)
 bind_show_guide(btn_terms, guide_terms, ul_no)
 bind_show_guide(btn_result, guide_result, ul_no)
@@ -394,6 +414,7 @@ def sc_only_when_out_of_ent(func):
 def bind_keys(key, func):
     root.bind(key, lambda x: sc_only_when_out_of_ent(func))
 
+
 bind_keys('<space>', run)
 bind_keys('o', lambda x: toggle_options('o', btn_options))
 bind_keys('b', choose_bl)
@@ -412,6 +433,7 @@ bind_keys('e', lambda x: rbs_locked[1].select())
 
 def press_return_key_to_click(self):
     frame_main.focus_get().event_generate('<ButtonRelease-1>')
+
 
 root.bind('<Return>', press_return_key_to_click)
 

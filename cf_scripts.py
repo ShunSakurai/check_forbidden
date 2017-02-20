@@ -110,22 +110,22 @@ def installed_version_is_newer(str_installed, str_online):
     return True
 
 
-def limit_header_range(header, str_rate, str_locked):
+def limit_header_range(header, dict_options):
     regex_id = re.compile('(?<=trans-unit id=")\d+(?=")')
     string_102 = 'mq:percent="102"'
     string_101 = 'mq:percent="101"'
     string_100 = 'mq:percent="100"'
     string_locked = 'mq:locked="locked"'
     seg_id = regex_id.search(header).group(0)
-    if str_rate == '100' and string_100 in header:
+    if dict_options['str_rate'] == '100' and string_100 in header:
         return seg_id, False
-    elif str_rate == '100' and string_101 in header:
+    elif dict_options['str_rate'] == '100' and string_101 in header:
         return seg_id, False
-    elif str_rate == '101' and string_101 in header:
+    elif dict_options['str_rate'] == '101' and string_101 in header:
         return seg_id, False
-    elif str_rate == '101' and string_102 in header:
+    elif dict_options['str_rate'] == '101' and string_102 in header:
         return seg_id, False
-    elif str_locked == 'locked' and string_locked in header:
+    elif dict_options['str_locked'] == 'locked' and string_locked in header:
         return seg_id, False
     else:
         return seg_id, True
@@ -171,36 +171,34 @@ def open_readme():
         'https://github.com/ShunSakurai/check_forbidden/blob/master/README.md')
 
 
-def print_and_append(str_method, to_print, to_write, file_to_write_in):
+def print_and_append(to_print, to_write, file_to_write_in, dict_options):
     try_printing(to_print)
-    if str_method == '0':
+    if dict_options['str_method'] == '0':
         file_to_write_in.append(to_write)
     else:
         pass
 
 
-def print_and_append_metadata(
-    f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
-):
+def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
     print('-' * 70)
     date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
     print_and_append(
-        str_method, 'Time and version: ' + date_time_version,
-        [date_time_version], f_result_w)
+        'Time and version: ' + date_time_version,
+        [date_time_version], f_result_w, dict_options)
     list_name = fname_from_str_path(fpath_terms)
-    if str_function == '0':
+    if dict_options['str_function'] == '0':
         f_terms = open(fpath_terms, encoding='utf-8')
         header = f_terms.readline().rstrip('\n')
         f_terms.close()
-        print_and_append(str_method, 'Terms: ' + list_name, [list_name], f_result_w)
+        print_and_append('Terms: ' + list_name, [list_name], f_result_w, dict_options)
     else:
-        print_and_append(str_method, 'Function: ' + list_name, [list_name], f_result_w)
-    settings = str_from_settings(str_rate, str_locked)
-    print_and_append(str_method, 'Options: ' + settings, [settings], f_result_w)
-    if str_function == '0':
+        print_and_append('Function: ' + list_name, [list_name], f_result_w, dict_options)
+    settings = str_from_settings(dict_options)
+    print_and_append('Options: ' + settings, [settings], f_result_w, dict_options)
+    if dict_options['str_function'] == '0':
         print_and_append(
-            str_method, 'Header: [' + header + '] + Segment Number',
-            header.split(',') + ['ID', 'Target'] , f_result_w)
+            'Header: [' + header + '] + Segment Number',
+            header.split(',') + ['ID', 'Target'] , f_result_w, dict_options)
     print('-' * 70)
 
 
@@ -214,14 +212,14 @@ def replace_back_slash(str_path):
     return str_path.replace('\\', '/')
 
 
-def str_from_settings(str_rate, str_locked):
-    if str_rate == 'all':
+def str_from_settings(dict_options):
+    if dict_options['str_rate'] == 'all':
         setting_rate = 'Check all match rates'
-    elif str_rate == '101':
+    elif dict_options['str_rate'] == '101':
         setting_rate = r'Exclude 101% matches'
-    elif str_rate == '100':
+    elif dict_options['str_rate'] == '100':
         setting_rate = r'Exclude 100% / 101%'
-    if str_locked == 'all':
+    if dict_options['str_locked'] == 'all':
         setting_locked = 'Include locked segments'
     else:
         setting_locked = 'Exclude locked segments'
@@ -282,19 +280,16 @@ def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):
         return fn_bl
 
 
-def check_for_each_term(
-    list_fpath_bl, fpath_terms, fpath_result,
-    str_function, str_method, str_rate, str_locked, regex_pattern
-):
+def check_for_each_term(list_fpath_bl, fpath_terms, fpath_result, dict_options):
     f_result_w = []
     list_mqxlz_dir = []
     list_matched_rows = []
-    print_and_append_metadata(
-        f_result_w, fpath_terms, str_function, str_method, str_rate, str_locked
-    )
+    print_and_append_metadata(f_result_w, fpath_terms, dict_options)
+    regex_pattern = re.compile(
+        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
     for fn_bl in list_fpath_bl:
         f_result_w.append([''])
-        print_and_append(str_method, fn_bl, [fn_bl], f_result_w)
+        print_and_append(fn_bl, [fn_bl], f_result_w, dict_options)
         fn_bl_actual = replace_back_slash(unzip_if_mqxlz(fn_bl, list_mqxlz_dir))
         f_bl = open(fn_bl_actual, encoding='utf-8')
         f_bl_line_range_list = []
@@ -305,7 +300,7 @@ def check_for_each_term(
             elif '</mq:historical-unit>' in f_bl_line:
                 not_historical = True
             elif f_bl_line.startswith('<trans-unit id="') and not_historical:
-                seg_id, is_range = limit_header_range(f_bl_line, str_rate, str_locked)
+                seg_id, is_range = limit_header_range(f_bl_line, dict_options)
             elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
                 if is_range:
                     while '</target>' not in f_bl_line:
@@ -319,7 +314,7 @@ def check_for_each_term(
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
-        if str_function == '0':
+        if dict_options['str_function'] == '0':
             for row in f_terms_read:
                 if not row or row[0] is None:
                     continue
@@ -329,8 +324,8 @@ def check_for_each_term(
                     match = re.search(row[0], line)
                     if match:
                         print_and_append(
-                            str_method, str(row) + '\t' + seg_id,
-                            row + [seg_id, line], f_result_w)
+                            str(row) + '\t' + seg_id,
+                            row + [seg_id, line], f_result_w, dict_options)
                         try_printing(line)
                         list_matched_rows.append(row)
                     else:
@@ -344,24 +339,24 @@ def check_for_each_term(
                 result = external_script.function(seg_id, target)
                 if result:
                     for ls in result:
-                        print_and_append(str_method, ls, ls, f_result_w)
+                        print_and_append(ls, ls, f_result_w, dict_options)
                         list_matched_rows.append(ls)
         print('\n')
         f_bl.close()
 
     f_terms.close()
 
-    if list_matched_rows and str_function == '0':
+    if list_matched_rows and dict_options['str_function'] == '0':
         f_result_w.append([''])
-        print_and_append(str_method, 'Summary', ['Summary'], f_result_w)
+        print_and_append('Summary', ['Summary'], f_result_w, dict_options)
         list_reduced = []
         for i in range(len(list_matched_rows)):
             if str(list_matched_rows[i]) not in list_reduced:
                 list_reduced.append(str(list_matched_rows[i]))
         for i in list_reduced:
-            print_and_append(str_method, i, ls_from_list_str(i), f_result_w)
-        print_and_append(str_method, '', [''], f_result_w)
-    elif str_function == '0':
+            print_and_append(i, ls_from_list_str(i), f_result_w, dict_options)
+        print_and_append('', [''], f_result_w, dict_options)
+    elif dict_options['str_function'] == '0':
         print('No forbidden term was found!')
 
     # Delete the directories before exporting the results, which sometimes
@@ -372,46 +367,46 @@ def check_for_each_term(
         for i in list_mqxlz_dir:
             try_rmdir(i)
 
-    if list_matched_rows and str_method == '0':
+    if list_matched_rows and dict_options['str_method'] == '0':
         f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
         print(fname_from_str_path(fpath_result), 'was successfully created.')
-    elif list_matched_rows and str_method == '1':
+    elif list_matched_rows and dict_options['str_method'] == '1':
         print('The search was successfully finished.')
-    if list_matched_rows and str_function == '0':
+    if list_matched_rows and dict_options['str_function'] == '0':
         print(str(len(list_matched_rows)), 'matches.')
 
 
-def check_forbidden_terms(
-    frame, tuple_str_bl, tuple_str_terms, str_result,
-    str_function, str_method, str_rate, str_locked
-):
+def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_options):
+    # For testing
+    dict_options = dict_options or {
+        'str_function': '0', 'str_method': '1',
+        'str_rate': 'all', 'str_locked': 'all'
+    }
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
     list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
     fpath_result = replace_back_slash(str_result)
-    regex_pattern = re.compile(
-        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
 
     for fpath_terms in list_fpath_terms:
         check_for_each_term(
-            list_fpath_bl, fpath_terms, fpath_result,
-            str_function, str_method, str_rate, str_locked, regex_pattern
+            list_fpath_bl, fpath_terms, fpath_result, dict_options
         )
 
     elapsed = time.time() - start
-    print(
-        str(elapsed)[:10], 'seconds.\n\n',
-        '\rClick [x] on the tk window or press [Enter] on this screen to exit.'
-    )
+    print(str(elapsed)[:10], 'seconds.\n\n')
+
+
+def ask_quit(frame):
+    print('Click [x] on the tk window or press [Enter] on this screen to exit.')
     try:
         input('\n')
     except:
         pass
-
     frame.quit()
+
 
 if __name__ == "__main__":
     import doctest
