@@ -27,6 +27,13 @@ def apply_update(download_path):
         subprocess.call(['open', download_path])
 
 
+def cleanup_if_mqxlz(fn_bl):
+    if fn_bl[-5:] == 'mqxlz':
+        path_extract = dirname_from_fname(fn_bl) + '_extract'
+        os.remove(path_extract + '/document.mqxliff')
+        try_rmdir(path_extract)
+
+
 def convert_non_encodable(char):
     encoding_for_output = locale.getpreferredencoding()
     if char.encode(encoding_for_output, errors='ignore'):
@@ -269,29 +276,26 @@ def try_removing_if_not_in_use(path_file, message_success, message_fail):
         print(message_fail)
 
 
-def unzip_if_mqxlz(fn_bl, list_mqxlz_dir):
+def unzip_if_mqxlz(fn_bl):
     if fn_bl[-5:] == 'mqxlz':
         path_extract = dirname_from_fname(fn_bl) + '_extract'
         fn_actual = zipfile.ZipFile(fn_bl).extract(
             'document.mqxliff', path=path_extract)
-        list_mqxlz_dir.append(path_extract)
         return fn_actual
     else:
         return fn_bl
 
 
-def check_for_each_term(list_fpath_bl, fpath_terms, fpath_result, dict_options):
+def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_options):
     f_result_w = []
-    list_mqxlz_dir = []
     list_matched_rows = []
     print_and_append_metadata(f_result_w, fpath_terms, dict_options)
     regex_pattern = re.compile(
         '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
-    for fn_bl in list_fpath_bl:
+    for fn_bl_tuple in list_fn_bl_tuple:
         f_result_w.append([''])
-        print_and_append(fn_bl, [fn_bl], f_result_w, dict_options)
-        fn_bl_actual = replace_back_slash(unzip_if_mqxlz(fn_bl, list_mqxlz_dir))
-        f_bl = open(fn_bl_actual, encoding='utf-8')
+        print_and_append(fn_bl_tuple[0], [fn_bl_tuple[0]], f_result_w, dict_options)
+        f_bl = open(fn_bl_tuple[1], encoding='utf-8')
         f_bl_line_range_list = []
         not_historical = True
         for f_bl_line in f_bl:
@@ -323,10 +327,9 @@ def check_for_each_term(list_fpath_bl, fpath_terms, fpath_result, dict_options):
                 for seg_id, line in f_bl_line_range_list:
                     match = re.search(row[0], line)
                     if match:
-                        print_and_append(
-                            str(row) + '\t' + seg_id,
-                            row + [seg_id, line], f_result_w, dict_options)
-                        try_printing(line)
+                        print_and_append(str(row), row + [seg_id, line], f_result_w, dict_options)
+                        print(seg_id)
+                        try_printing(line + '\n')
                         list_matched_rows.append(row)
                     else:
                         continue
@@ -359,14 +362,6 @@ def check_for_each_term(list_fpath_bl, fpath_terms, fpath_result, dict_options):
     elif dict_options['str_function'] == '0':
         print('No forbidden term was found!')
 
-    # Delete the directories before exporting the results, which sometimes
-    # causes an error to terminate the program
-    if list_mqxlz_dir:
-        for i in list_mqxlz_dir:
-            os.remove(i + r'/document.mqxliff')
-        for i in list_mqxlz_dir:
-            try_rmdir(i)
-
     if list_matched_rows and dict_options['str_method'] == '0':
         f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
@@ -390,10 +385,18 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
     list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
     fpath_result = replace_back_slash(str_result)
 
+    list_fn_bl_tuple = []
+    for fn_bl in list_fpath_bl:
+        fn_actual = replace_back_slash(unzip_if_mqxlz(fn_bl))
+        list_fn_bl_tuple.append((fn_bl, fn_actual))
+
     for fpath_terms in list_fpath_terms:
         check_for_each_term(
-            list_fpath_bl, fpath_terms, fpath_result, dict_options
+            list_fn_bl_tuple, fpath_terms, fpath_result, dict_options
         )
+
+    for fn_bl in list_fpath_bl:
+        cleanup_if_mqxlz(fn_bl)
 
     elapsed = time.time() - start
     print(str(elapsed)[:10], 'seconds.\n\n')
