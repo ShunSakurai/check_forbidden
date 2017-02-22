@@ -138,11 +138,16 @@ for label, state, ul in locked_states:
 for rb in rbs_locked:
     rb.grid(row=(rbs_locked.index(rb) + 1), column=1, sticky='w', padx=10)
 
-label_info = tkinter.Label(
+label_about = tkinter.Label(frame_options, text='\t\tAbout')
+label_about.grid(row=0, column=2, sticky='w')
+
+label_version = tkinter.Label(
     frame_options, text=''.join([
-        '\tVersion ', setup.dict_console['version'],
-        ', \r\t©2016-', str(datetime.date.today().year),
-        ' ', setup.dict_console['author']
+        '\tVersion ', setup.dict_console['version']
+    ]), justify='left')
+label_author = tkinter.Label(
+    frame_options, text=''.join([
+        '\t©2016-', str(datetime.date.today().year), ' ', setup.dict_console['author']
     ]), justify='left')
 btn_readme = tkinter.Button(
     frame_options, text='Read readme',
@@ -150,9 +155,21 @@ btn_readme = tkinter.Button(
 btn_update = tkinter.Button(
     frame_options, text='Check for updates',
     command=cf_scripts.check_updates, underline=10)
-label_info.grid(row=0, column=2, sticky='w')
-btn_readme.grid(row=1, column=2, sticky='w', padx=55)
-btn_update.grid(row=2, column=2, sticky='w', padx=55)
+label_version.grid(row=1, column=2, sticky='w')
+label_author.grid(row=2, column=2, sticky='w')
+btn_readme.grid(row=3, column=2, sticky='w', padx=55)
+btn_update.grid(row=4, column=2, sticky='w', padx=55)
+
+
+label_settings = tkinter.Label(frame_options, text='\tOther settings')
+label_settings.grid(row=4, column=0, sticky='w')
+
+var_open = tkinter.StringVar()
+cb_open = tkinter.Checkbutton(
+    frame_options, text='Open CSV after export',
+    underline=3, variable=var_open)
+cb_open.select()
+cb_open.grid(row=5, column=0, sticky='w')
 
 
 def focus_off():
@@ -335,7 +352,8 @@ def get_options():
         'str_function': var_function.get(),
         'str_method': var_method.get(),
         'str_rate': var_rate.get(),
-        'str_locked': var_locked.get()
+        'str_locked': var_locked.get(),
+        'str_open': var_open.get()
     }
     return dict_options
 
@@ -429,6 +447,7 @@ bind_keys('1', lambda x: rbs_rate[1].select())
 bind_keys('0', lambda x: rbs_rate[2].select())
 bind_keys('i', lambda x: rbs_locked[0].select())
 bind_keys('e', lambda x: rbs_locked[1].select())
+bind_keys('n', lambda x: cb_open.toggle())
 
 
 def press_return_key_to_click(self):

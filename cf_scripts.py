@@ -163,6 +163,14 @@ def ls_from_tuple_str(tuple_str):
     return list_from_str
 
 
+def open_file(str_file_path):
+    print('Opening the file...')
+    if sys.platform.startswith('win'):
+        os.startfile(str_file_path)
+    else:
+        subprocess.call(['open', str_file_path])
+
+
 def open_folder(tuple_path):
     if tuple_path and tuple_path != 'Command Prompt only.':
         str_path_1 = ls_from_tuple_str(tuple_path)[0]
@@ -378,7 +386,8 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
     # For testing
     dict_options = dict_options or {
         'str_function': '0', 'str_method': '1',
-        'str_rate': 'all', 'str_locked': 'all'
+        'str_rate': 'all', 'str_locked': 'all',
+        'str_open': '1'
     }
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
@@ -400,6 +409,9 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
 
     elapsed = time.time() - start
     print(str(elapsed)[:10], 'seconds.\n\n')
+
+    if dict_options['str_method'] == '0' and dict_options['str_open'] == '1':
+        open_file(str_result)
 
 
 def ask_quit(frame):
