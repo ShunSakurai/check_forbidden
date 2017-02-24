@@ -5,6 +5,8 @@ py -B check_forbidden.py
 import cf_scripts
 import setup
 import datetime
+import os
+import pickle
 import tkinter
 import tkinter.filedialog
 
@@ -23,6 +25,7 @@ ext_function = [('Python', '*.py')]
 ext_result = [('csv', '*.csv')]
 
 ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
+fn_options = 'cf_options.p'
 
 # Widgets and functions
 btn_bl = tkinter.Button(text='Billingual', underline=0)
@@ -95,7 +98,7 @@ btn_options.grid(row=3, column=3, sticky='e', padx=80)
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
-all_buttons = three_buttons + three_open_buttons + [
+all_guided_buttons = three_buttons + three_open_buttons + [
     cb_function, cb_method, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
@@ -171,6 +174,19 @@ cb_open = tkinter.Checkbutton(
 cb_open.select()
 cb_open.grid(row=5, column=0, sticky='w')
 
+var_load = tkinter.StringVar()
+cb_load = tkinter.Checkbutton(
+    frame_options, text='Save last used settings',
+    underline=0, variable=var_load)
+cb_load.deselect()
+cb_load.grid(row=6, column=0, sticky='w')
+
+btn_default = tkinter.Button(
+    frame_options, text='Restore default settings', underline=8,
+    takefocus=True
+)
+btn_default.grid(row=7, column=0, sticky='w')
+
 
 def focus_off():
     label_guide.focus_set()
@@ -238,38 +254,54 @@ for i in range(3):
     three_buttons[i].bind('<ButtonRelease-1>', three_funcs[i])
 
 
+def turn_off_function():
+    btn_terms.config(text='Terms', underline=0)
+    path_saved_function.set(var_terms.get())
+    if path_saved_terms.get():
+        var_terms.set(path_saved_terms.get())
+    else:
+        var_terms.set('')
+
+
+def turn_on_function():
+    btn_terms.config(text='Funct.', underline=4)
+    path_saved_terms.set(var_terms.get())
+    if path_saved_function.get():
+        var_terms.set(path_saved_function.get())
+    else:
+        var_terms.set('')
+
+
 def toggle_function_click(self, widget):
     if var_function.get() == '0':
-        btn_terms.config(text='Funct.', underline=4)
-        path_saved_terms.set(var_terms.get())
-        if path_saved_function.get():
-            var_terms.set(path_saved_function.get())
-        else:
-            var_terms.set('')
+        turn_on_function()
     elif var_function.get() == '1':
-        btn_terms.config(text='Terms', underline=0)
-        path_saved_function.set(var_terms.get())
-        if path_saved_terms.get():
-            var_terms.set(path_saved_terms.get())
-        else:
-            var_terms.set('')
+        turn_off_function()
+
+
+def turn_on_method():
+    path_saved_result.set(var_result.get())
+    var_result.set(ph_cp_only)
+    btn_result['state'] = 'disabled'
+
+
+def turn_off_method():
+    if path_saved_result.get():
+        var_result.set(path_saved_result.get())
+    elif not path_saved_result.get() and var_bl.get():
+        path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
+        var_result.set(
+            cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
+    else:
+        var_result.set('')
+    btn_result['state'] = 'normal'
 
 
 def toggle_method_click(self, widget):
-    if var_method.get() == '0':
-        path_saved_result.set(var_result.get())
-        var_result.set(ph_cp_only)
-        btn_result['state'] = 'disabled'
-    elif var_method.get() == '1':
-        if path_saved_result.get():
-            var_result.set(path_saved_result.get())
-        elif not path_saved_result.get() and var_bl.get():
-            path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
-            var_result.set(
-                cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
-        else:
-            var_result.set('')
-        btn_result['state'] = 'normal'
+    if var_method.get() == '1':
+        turn_off_method()
+    elif var_method.get() == '0':
+        turn_on_method()
 
 
 cb_function.bind(
@@ -331,15 +363,23 @@ for rb in rbs_locked:
     rb.bind('<ButtonRelease-1>', select_and_focus)
 
 
-def toggle_options(self, widget):
-    if widget['text'] == '⚙':
-        widget.config(text='▲', font=('', 12))
-        frame_options.grid(
-            row=4, column=0, columnspan=4, sticky='w', padx=30
-        )
-    elif widget['text'] == '▲':
+def turn_on_options(widget):
+    widget.config(text='▲', font=('', 12))
+    frame_options.grid(
+        row=4, column=0, columnspan=4, sticky='w', padx=30
+    )
+
+
+def turn_off_options(widget):
         widget.config(text='⚙', font=('', 15))
         frame_options.grid_forget()
+
+
+def toggle_options(self, widget):
+    if widget['text'] == '⚙':
+        turn_on_options(widget)
+    elif widget['text'] == '▲':
+        turn_off_options(widget)
 
 
 btn_options.bind(
@@ -353,9 +393,54 @@ def get_options():
         'str_method': var_method.get(),
         'str_rate': var_rate.get(),
         'str_locked': var_locked.get(),
-        'str_open': var_open.get()
+        'str_open': var_open.get(),
+        'str_load': var_load.get()
     }
     return dict_options
+
+
+def restore_default(self):
+    var_function.set('0')
+    var_method.set('1')
+    var_rate.set('all')
+    var_locked.set('all')
+    var_open.set('1')
+    var_load.set('0')
+
+
+btn_default.bind('<ButtonRelease-1>', restore_default)
+
+
+def load_options():
+    if not os.path.exists(fn_options):
+        print('Saved options are not loaded.')
+        return
+
+    f_loaded_options = open(fn_options, 'rb')
+    dict_loaded_options = pickle.load(f_loaded_options)
+    f_loaded_options.close()
+
+    if dict_loaded_options['str_load'] != '1':
+        print('Saved options are not loaded.')
+        return
+    else:
+        turn_on_options(btn_options)
+        var_function.set(dict_loaded_options['str_function'])
+        var_method.set(dict_loaded_options['str_method'])
+        var_rate.set(dict_loaded_options['str_rate'])
+        var_locked.set(dict_loaded_options['str_locked'])
+        var_open.set(dict_loaded_options['str_open'])
+        var_load.set(dict_loaded_options['str_load'])
+        if var_method.get() == '0':
+            turn_off_method()
+        print('Saved options are loaded.')
+
+
+def save_options():
+    dict_options = get_options()
+    f_to_save_options = open(fn_options, 'wb')
+    pickle.dump(dict_options, f_to_save_options)
+    f_to_save_options.close()
 
 
 def run(self):
@@ -387,10 +472,10 @@ guide_open = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_method = 'Select this Check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
-guide_run = 'Enabled when all the three fields are filled.'
+guide_run = 'Enabled when all the three fields are filled. (space bar)'
 
 ul_no = -1
-ul_function = 7
+ul_function = 0
 ul_method = 12
 ul_options = 13
 ul_run = 7
@@ -418,7 +503,7 @@ bind_show_guide(cb_method, guide_method, ul_method)
 bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_run, guide_run, ul_run)
 
-for btn in all_buttons:
+for btn in all_guided_buttons:
     btn.bind('<Leave>', hide_guide)
 
 
@@ -448,6 +533,8 @@ bind_keys('0', lambda x: rbs_rate[2].select())
 bind_keys('i', lambda x: rbs_locked[0].select())
 bind_keys('e', lambda x: rbs_locked[1].select())
 bind_keys('n', lambda x: cb_open.toggle())
+bind_keys('s', lambda x: cb_load.toggle())
+bind_keys('d', restore_default)
 
 
 def press_return_key_to_click(self):
@@ -456,9 +543,17 @@ def press_return_key_to_click(self):
 
 root.bind('<Return>', press_return_key_to_click)
 
+
+def close_callback():
+    save_options()
+    root.destroy()
+
+
 # Initiating the program
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
 frame_options.grid_forget()
+load_options()
 print('tk window is ready to use.')
+root.protocol('WM_DELETE_WINDOW', close_callback)
 frame_main.mainloop()

@@ -387,7 +387,7 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
     dict_options = dict_options or {
         'str_function': '0', 'str_method': '1',
         'str_rate': 'all', 'str_locked': 'all',
-        'str_open': '1'
+        'str_open': '1', 'str_load': '0'
     }
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)

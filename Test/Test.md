@@ -53,3 +53,11 @@
 ## Install
 - Version No.
 
+## Close the program
+- Enter, [X], before and after running the program
+- Load saved settings
+
+## Useful string for debugging
+`
+cmd /k "Check Forbidden.exe"
+`

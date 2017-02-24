@@ -10,6 +10,7 @@ import datetime
 import importlib
 import os
 import os.path
+import pickle
 import re
 import subprocess
 import sys
@@ -25,7 +26,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '1.8.7',
+    'version': '1.9.0',
 }
 
 dict_options = {
@@ -33,7 +34,7 @@ dict_options = {
     'compressed': True,
     'excludes': [
         '_bz2', '_frozen_importlib', '_lzma', 'argparse',
-        'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline']
+        'pdb', 'pydoc', 'pyexpat', 'pyreadline']
 }
 
 if __name__ == "__main__":
