@@ -70,6 +70,8 @@ Requirements and procedures for the installer:
 ### Options
 You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▲ icon.
 
+You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\<UserName>\AppData\Local\VirtualStore\Program Files\Check Forbidden" (checked on Windows 7).
+
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
 ### memoQ file types

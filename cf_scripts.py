@@ -328,7 +328,7 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
         f_terms_read = csv.reader(f_terms)
         if dict_options['str_function'] == '0':
             for row in f_terms_read:
-                if not row or row[0] is None:
+                if not row or not row[0]:
                     continue
                 else:
                     pass

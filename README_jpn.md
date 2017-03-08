@@ -70,6 +70,8 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 ### オプション
 検索の対象とするセグメントの種類を指定できます。オプション画面を表示するには、歯車⚙アイコンをクリックします。画面を隠すには、三角▲アイコンをクリックします。
 
+最後に使用したオプションを保存するかどうかを指定できます。"C:\Users\<UserName>\AppData\Local\VirtualStore\Program Files\Check Forbidden"に"cf_options.p"というファイルが作成されます(Windows 7にて確認)。
+
 ![オプション](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
 ### memoQファイルの種類
