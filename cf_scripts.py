@@ -21,6 +21,7 @@ import zipfile
 def apply_update(download_path):
     print('Starting the installer...')
     print('You may have to close the current process to continue.')
+    print('After installation, please manually delete the installer in Downloads folder.')
     if sys.platform.startswith('win'):
         os.startfile(download_path)
     else:
@@ -70,11 +71,6 @@ def check_updates(download_function=download_installer):
     else:
         download_path = download_function(str_newest_version, url_installer)
         apply_update(download_path)
-        print('Preparing to delete the installer...')
-        try_removing_if_not_in_use(
-            download_path, 'The installer was successfully deleted.',
-            'Please go to the downloads folder and delete the installer manually.'
-        )
 
 
 def dir_from_str_path(str_path):
@@ -265,23 +261,6 @@ def try_rmdir(i):
             os.rmdir(i)
         except:
             print('Please go to the bilingual file location and delete the _extract folder manually.')
-
-
-def try_removing_if_not_in_use(path_file, message_success, message_fail):
-    if not sys.platform.startswith('win'):
-        print(message_fail)
-        return
-    try:
-        while True:
-            try:
-                time.sleep(5)
-                os.remove(path_file)
-                print(message_success)
-                break
-            except:
-                time.sleep(5)
-    except:
-        print(message_fail)
 
 
 def unzip_if_mqxlz(fn_bl):
