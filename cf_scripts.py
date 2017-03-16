@@ -134,6 +134,31 @@ def limit_header_range(header, dict_options):
         return seg_id, True
 
 
+def load_mqxliff(fn_bl_tuple, regex_pattern, dict_options):
+    f_bl = open(fn_bl_tuple[1], encoding='utf-8')
+    f_bl_line_range_list = []
+    not_historical = True
+    for f_bl_line in f_bl:
+        if '<mq:historical-unit ' in f_bl_line:
+            not_historical = False
+        elif '</mq:historical-unit>' in f_bl_line:
+            not_historical = True
+        elif f_bl_line.startswith('<trans-unit id="') and not_historical:
+            seg_id, is_range = limit_header_range(f_bl_line, dict_options)
+        elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
+            if is_range:
+                while '</target>' not in f_bl_line:
+                    f_bl_line += next(f_bl)
+                f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
+                if f_bl_line_with_tag:
+                    f_bl_line_clean = remove_tags(f_bl_line_with_tag)
+                    f_bl_line_range_list.append((seg_id, f_bl_line_clean))
+        else:
+            continue
+    f_bl.close()
+    return f_bl_line_range_list
+
+
 def ls_from_list_str(x):
     r'''
     >>> ls_from_list_str("['Index', 'Source', 'Target (NG)', 'Target (OK)']")
@@ -281,27 +306,8 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
         '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
     for fn_bl_tuple in list_fn_bl_tuple:
         f_result_w.append([''])
-        print_and_append(fn_bl_tuple[0], [fn_bl_tuple[0]], f_result_w, dict_options)
-        f_bl = open(fn_bl_tuple[1], encoding='utf-8')
-        f_bl_line_range_list = []
-        not_historical = True
-        for f_bl_line in f_bl:
-            if '<mq:historical-unit ' in f_bl_line:
-                not_historical = False
-            elif '</mq:historical-unit>' in f_bl_line:
-                not_historical = True
-            elif f_bl_line.startswith('<trans-unit id="') and not_historical:
-                seg_id, is_range = limit_header_range(f_bl_line, dict_options)
-            elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
-                if is_range:
-                    while '</target>' not in f_bl_line:
-                        f_bl_line += next(f_bl)
-                    f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
-                    if f_bl_line_with_tag:
-                        f_bl_line_clean = remove_tags(f_bl_line_with_tag)
-                        f_bl_line_range_list.append((seg_id, f_bl_line_clean))
-            else:
-                continue
+        print_and_append(fn_bl_tuple[0] + '\n', [fn_bl_tuple[0]], f_result_w, dict_options)
+        f_bl_line_range_list = load_mqxliff(fn_bl_tuple, regex_pattern, dict_options)
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
@@ -315,7 +321,10 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
                     match = re.search(row[0], line)
                     if match:
                         print_and_append(str(row), row + [seg_id, line], f_result_w, dict_options)
-                        print(seg_id)
+                        s, e = match.start(), match.end()
+                        try_printing(''.join([
+                            str(seg_id), '\t', line[s - 5:s], '...', line[s:e], '...', line[e:e + 5]
+                        ]))
                         try_printing(line + '\n')
                         list_matched_rows.append(row)
                     else:
@@ -332,7 +341,6 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
                         print_and_append(ls, ls, f_result_w, dict_options)
                         list_matched_rows.append(ls)
         print('\n')
-        f_bl.close()
 
     f_terms.close()
 
