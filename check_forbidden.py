@@ -37,25 +37,25 @@ btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
 btn_terms.grid(row=1, column=0, columnspan=1, sticky='w', padx=5)
 btn_result.grid(row=2, column=0, columnspan=1, sticky='w', padx=5)
 
-var_function = tkinter.StringVar()
-cb_function = tkinter.Checkbutton(variable=var_function)
+var_int_function = tkinter.IntVar()
+cb_function = tkinter.Checkbutton(variable=var_int_function)
 cb_function.deselect()
 cb_function.grid(row=1, column=1, sticky='e')
 
-var_method = tkinter.StringVar()
-cb_method = tkinter.Checkbutton(variable=var_method)
-cb_method.select()
-cb_method.grid(row=2, column=1, sticky='e')
+var_int_export = tkinter.IntVar()
+cb_export = tkinter.Checkbutton(variable=var_int_export)
+cb_export.select()
+cb_export.grid(row=2, column=1, sticky='e')
 
-var_bl = tkinter.StringVar(frame_main)
-var_terms = tkinter.StringVar(frame_main)
-var_result = tkinter.StringVar(frame_main)
-var_result.set(ph_cp_only)
-three_vars = [var_bl, var_terms, var_result]
+var_str_bl = tkinter.StringVar(frame_main)
+var_str_terms = tkinter.StringVar(frame_main)
+var_str_result = tkinter.StringVar(frame_main)
+var_str_result.set(ph_cp_only)
+three_vars = [var_str_bl, var_str_terms, var_str_result]
 
-ent_bl = tkinter.Entry(width=85, textvariable=var_bl)
-ent_terms = tkinter.Entry(width=85, textvariable=var_terms)
-ent_result = tkinter.Entry(width=85, textvariable=var_result)
+ent_bl = tkinter.Entry(width=85, textvariable=var_str_bl)
+ent_terms = tkinter.Entry(width=85, textvariable=var_str_terms)
+ent_result = tkinter.Entry(width=85, textvariable=var_str_result)
 three_entries = [ent_bl, ent_terms, ent_result]
 
 for ent in three_entries:
@@ -78,11 +78,11 @@ btn_open_result = tkinter.Button(
 three_open_buttons = [btn_open_bl, btn_open_terms, btn_open_result]
 
 btn_open_bl.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_bl.get()))
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_bl.get()))
 btn_open_terms.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_terms.get()))
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_terms.get()))
 btn_open_result.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_result.get()))
+    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_result.get()))
 
 
 for btn in three_open_buttons:
@@ -99,7 +99,7 @@ btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
 all_guided_buttons = three_buttons + three_open_buttons + [
-    cb_function, cb_method, btn_options, btn_run]
+    cb_function, cb_export, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
 
@@ -112,14 +112,14 @@ match_rates = [
     ('Check all segments', 'all', 6),
     (r'Exclude 101% matches', '101', 10),
     (r'Exclude 100% and 101%', '100', 10)]
-var_rate = tkinter.StringVar()
-var_rate.set('all')
+var_str_rate = tkinter.StringVar()
+var_str_rate.set('all')
 rbs_rate = []
 
 for label, rate, ul in match_rates:
     rb_rate = tkinter.Radiobutton(
         frame_options,
-        text=label, variable=var_rate, value=rate, underline=ul)
+        text=label, variable=var_str_rate, value=rate, underline=ul)
     rbs_rate.append(rb_rate)
 
 for rb in rbs_rate:
@@ -128,14 +128,14 @@ for rb in rbs_rate:
 locked_states = [
     ('Include locked segments', 'all', 0),
     ('Exclude locked segments', 'locked', 0)]
-var_locked = tkinter.StringVar()
-var_locked.set('all')
+var_str_locked = tkinter.StringVar()
+var_str_locked.set('all')
 rbs_locked = []
 
 for label, state, ul in locked_states:
     rb_locked = tkinter.Radiobutton(
         frame_options,
-        text=label, variable=var_locked, value=state, underline=ul)
+        text=label, variable=var_str_locked, value=state, underline=ul)
     rbs_locked.append(rb_locked)
 
 for rb in rbs_locked:
@@ -163,23 +163,22 @@ label_author.grid(row=2, column=2, sticky='w')
 btn_readme.grid(row=3, column=2, sticky='w', padx=55)
 btn_update.grid(row=4, column=2, sticky='w', padx=55)
 
-
 label_settings = tkinter.Label(frame_options, text='\tOther settings')
 label_settings.grid(row=4, column=0, sticky='w')
 
-var_open = tkinter.StringVar()
+var_int_open = tkinter.IntVar()
 cb_open = tkinter.Checkbutton(
     frame_options, text='Open CSV after export',
-    underline=3, variable=var_open)
+    underline=3, variable=var_int_open)
 cb_open.select()
 cb_open.grid(row=5, column=0, sticky='w')
 
-var_load = tkinter.StringVar()
-cb_load = tkinter.Checkbutton(
+var_int_save = tkinter.IntVar()
+cb_save = tkinter.Checkbutton(
     frame_options, text='Save last used settings',
-    underline=0, variable=var_load)
-cb_load.deselect()
-cb_load.grid(row=6, column=0, sticky='w')
+    underline=0, variable=var_int_save)
+cb_save.deselect()
+cb_save.grid(row=6, column=0, sticky='w')
 
 btn_default = tkinter.Button(
     frame_options, text='Restore default settings', underline=8,
@@ -197,7 +196,7 @@ for ent in three_entries:
 
 
 def choose_bl(self):
-    path = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
+    path = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
@@ -205,46 +204,46 @@ def choose_bl(self):
     f_bl = tkinter.filedialog.askopenfilenames(
         filetypes=ext_bl, initialdir=initial_dir)
     if f_bl:
-        var_bl.set(f_bl)
-    if f_bl and not var_result.get():
-        var_result.set(
+        var_str_bl.set(f_bl)
+    if f_bl and not var_str_result.get():
+        var_str_result.set(
             cf_scripts.dir_from_str_path(
-                cf_scripts.ls_from_tuple_str(var_bl.get())[0])
+                cf_scripts.ls_from_tuple_str(var_str_bl.get())[0])
                 + '/checked_result.csv')
     focus_off()
 
 
 def choose_terms(self):
-    path = cf_scripts.ls_from_tuple_str(var_terms.get())[0]
+    path = cf_scripts.ls_from_tuple_str(var_str_terms.get())[0]
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
-    if var_function.get() == '1':
+    if var_int_function.get():
         extensions = ext_function
     else:
         extensions = ext_terms
     f_terms = tkinter.filedialog.askopenfilenames(
         filetypes=extensions, initialdir=initial_dir)
     if f_terms:
-        var_terms.set(f_terms)
+        var_str_terms.set(f_terms)
     focus_off()
 
 
 def choose_result(self):
     if btn_result['state'] == 'disabled':
         return
-    path = var_result.get()
+    path = var_str_result.get()
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = cf_scripts.dir_from_str_path(
-            cf_scripts.ls_from_tuple_str(var_bl.get()))
+            cf_scripts.ls_from_tuple_str(var_str_bl.get()))
     f_result = tkinter.filedialog.asksaveasfilename(
         filetypes=ext_result, initialdir=initial_dir,
         initialfile='checked_result.csv')
     if f_result:
-        var_result.set(f_result)
+        var_str_result.set(f_result)
     focus_off()
 
 
@@ -256,60 +255,60 @@ for i in range(3):
 
 def turn_off_function():
     btn_terms.config(text='Terms', underline=0)
-    path_saved_function.set(var_terms.get())
+    path_saved_function.set(var_str_terms.get())
     if path_saved_terms.get():
-        var_terms.set(path_saved_terms.get())
+        var_str_terms.set(path_saved_terms.get())
     else:
-        var_terms.set('')
+        var_str_terms.set('')
 
 
 def turn_on_function():
     btn_terms.config(text='Funct.', underline=4)
-    path_saved_terms.set(var_terms.get())
+    path_saved_terms.set(var_str_terms.get())
     if path_saved_function.get():
-        var_terms.set(path_saved_function.get())
+        var_str_terms.set(path_saved_function.get())
     else:
-        var_terms.set('')
+        var_str_terms.set('')
 
 
 def toggle_function_click(self, widget):
-    if var_function.get() == '0':
+    if not var_int_function.get():
         turn_on_function()
-    elif var_function.get() == '1':
+    elif var_int_function.get():
         turn_off_function()
 
 
-def turn_on_method():
-    path_saved_result.set(var_result.get())
-    var_result.set(ph_cp_only)
+def turn_on_export():
+    path_saved_result.set(var_str_result.get())
+    var_str_result.set(ph_cp_only)
     btn_result['state'] = 'disabled'
 
 
-def turn_off_method():
+def turn_off_export():
     if path_saved_result.get():
-        var_result.set(path_saved_result.get())
-    elif not path_saved_result.get() and var_bl.get():
-        path_1 = cf_scripts.ls_from_tuple_str(var_bl.get())[0]
-        var_result.set(
+        var_str_result.set(path_saved_result.get())
+    elif not path_saved_result.get() and var_str_bl.get():
+        path_1 = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
+        var_str_result.set(
             cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
     else:
-        var_result.set('')
+        var_str_result.set('')
     btn_result['state'] = 'normal'
 
 
-def toggle_method_click(self, widget):
-    if var_method.get() == '1':
-        turn_off_method()
-    elif var_method.get() == '0':
-        turn_on_method()
+def toggle_export_click(self, widget):
+    if var_int_export.get():
+        turn_off_export()
+    elif not var_int_export.get():
+        turn_on_export()
 
 
 cb_function.bind(
     '<ButtonRelease-1>',
     lambda x: toggle_function_click('<ButtonRelease-1>', cb_function))
-cb_method.bind(
+cb_export.bind(
     '<ButtonRelease-1>',
-    lambda x: toggle_method_click('<ButtonRelease-1>', cb_method))
+    lambda x: toggle_export_click('<ButtonRelease-1>', cb_export))
 
 
 def toggle_function_sck(self, widget):
@@ -317,9 +316,9 @@ def toggle_function_sck(self, widget):
     cb_function.toggle()
 
 
-def toggle_method_sck(self, widget):
-    toggle_method_click('<ButtonRelease-1>', widget)
-    cb_method.toggle()
+def toggle_export_sck(self, widget):
+    toggle_export_click('<ButtonRelease-1>', widget)
+    cb_export.toggle()
 
 
 def enable_open_btn_if_statement(statement, btn):
@@ -330,15 +329,15 @@ def enable_open_btn_if_statement(statement, btn):
 
 
 def enable_open_bl_if_filled(var, unknown, w):
-    enable_open_btn_if_statement(var_bl.get(), btn_open_bl)
+    enable_open_btn_if_statement(var_str_bl.get(), btn_open_bl)
 
 
 def enable_open_terms_if_filled(var, unknown, w):
-    enable_open_btn_if_statement(var_terms.get(), btn_open_terms)
+    enable_open_btn_if_statement(var_str_terms.get(), btn_open_terms)
 
 
 def enable_open_result_if_filled(var, unknown, w):
-    statement = var_result.get() and var_result.get() != ph_cp_only
+    statement = var_str_result.get() and var_str_result.get() != ph_cp_only
     enable_open_btn_if_statement(statement, btn_open_result)
 
 
@@ -389,50 +388,57 @@ btn_options.bind(
 
 def get_options():
     dict_options = {
-        'str_function': var_function.get(),
-        'str_method': var_method.get(),
-        'str_rate': var_rate.get(),
-        'str_locked': var_locked.get(),
-        'str_open': var_open.get(),
-        'str_load': var_load.get()
+        'int_function': var_int_function.get(),
+        'int_export': var_int_export.get(),
+        'str_rate': var_str_rate.get(),
+        'str_locked': var_str_locked.get(),
+        'int_open': var_int_open.get(),
+        'int_save': var_int_save.get()
     }
     return dict_options
 
 
 def restore_default(self):
-    var_function.set('0')
-    var_method.set('1')
-    var_rate.set('all')
-    var_locked.set('all')
-    var_open.set('1')
-    var_load.set('0')
+    var_int_function.set(0)
+    var_int_export.set(1)
+    var_str_rate.set('all')
+    var_str_locked.set('all')
+    var_int_open.set(1)
+    var_int_save.set(0)
 
 
 btn_default.bind('<ButtonRelease-1>', restore_default)
 
 
+def set_if_in_dict(dicionary, key, var):
+    loaded = cf_scripts.return_if_in_dict(dicionary, key)
+    if loaded:
+        var.set(loaded)
+
+
 def load_options():
+    message_not_loaded = 'Saved options are not loaded.'
     if not os.path.exists(fn_options):
-        print('Saved options are not loaded.')
+        print(message_not_loaded)
         return
 
     f_loaded_options = open(fn_options, 'rb')
-    dict_loaded_options = pickle.load(f_loaded_options)
+    dict_loaded = pickle.load(f_loaded_options)
     f_loaded_options.close()
 
-    if dict_loaded_options['str_load'] != '1':
-        print('Saved options are not loaded.')
+    if not cf_scripts.return_if_in_dict(dict_loaded, 'int_save'):
+        print(message_not_loaded)
         return
     else:
         turn_on_options(btn_options)
-        var_function.set(dict_loaded_options['str_function'])
-        var_method.set(dict_loaded_options['str_method'])
-        var_rate.set(dict_loaded_options['str_rate'])
-        var_locked.set(dict_loaded_options['str_locked'])
-        var_open.set(dict_loaded_options['str_open'])
-        var_load.set(dict_loaded_options['str_load'])
-        if var_method.get() == '0':
-            turn_off_method()
+        set_if_in_dict(dict_loaded, 'int_function', var_int_function)
+        set_if_in_dict(dict_loaded, 'int_export', var_int_export)
+        set_if_in_dict(dict_loaded, 'str_rate', var_str_rate)
+        set_if_in_dict(dict_loaded, 'str_locked', var_str_locked)
+        set_if_in_dict(dict_loaded, 'int_open', var_int_open)
+        set_if_in_dict(dict_loaded, 'int_save', var_int_save)
+        if not var_int_export.get():
+            turn_off_export()
         print('Saved options are loaded.')
 
 
@@ -448,7 +454,7 @@ def run(self):
         return
     dict_options = get_options()
     cf_scripts.check_forbidden_terms(
-        var_bl.get(), var_terms.get(), var_result.get(), dict_options)
+        var_str_bl.get(), var_str_terms.get(), var_str_result.get(), dict_options)
     cf_scripts.ask_quit(frame_main)
 
 
@@ -456,7 +462,7 @@ btn_run.bind('<ButtonRelease-1>', run)
 
 
 def enable_run_if_filled(var, unknown, w):
-    if var_bl.get() and var_terms.get() and var_result.get():
+    if var_str_bl.get() and var_str_terms.get() and var_str_result.get():
         btn_run.config(state='normal', text='Run!')
     else:
         btn_run.config(state='disabled', text='Run')
@@ -470,13 +476,13 @@ guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_open = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
-guide_method = 'Select this Check box if you don\'t export the CSV file.'
+guide_export = 'Select this Check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
 guide_run = 'Enabled when all the three fields are filled. (space bar)'
 
 ul_no = -1
 ul_function = 0
-ul_method = 12
+ul_export = 12
 ul_options = 13
 ul_run = 7
 
@@ -499,7 +505,7 @@ bind_show_guide(btn_result, guide_result, ul_no)
 for btn in three_open_buttons:
     bind_show_guide(btn, guide_open, ul_no)
 bind_show_guide(cb_function, guide_function, ul_function)
-bind_show_guide(cb_method, guide_method, ul_method)
+bind_show_guide(cb_export, guide_export, ul_export)
 bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_run, guide_run, ul_run)
 
@@ -524,7 +530,7 @@ bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
 bind_keys('f', lambda x: toggle_function_sck('f', cb_function))
-bind_keys('c', lambda x: toggle_method_sck('c', cb_method))
+bind_keys('c', lambda x: toggle_export_sck('c', cb_export))
 bind_keys('m', lambda x: cf_scripts.open_readme())
 bind_keys('u', lambda x: cf_scripts.check_updates())
 bind_keys('a', lambda x: rbs_rate[0].select())
@@ -533,7 +539,7 @@ bind_keys('0', lambda x: rbs_rate[2].select())
 bind_keys('i', lambda x: rbs_locked[0].select())
 bind_keys('e', lambda x: rbs_locked[1].select())
 bind_keys('n', lambda x: cb_open.toggle())
-bind_keys('s', lambda x: cb_load.toggle())
+bind_keys('s', lambda x: cb_save.toggle())
 bind_keys('d', restore_default)
 
 

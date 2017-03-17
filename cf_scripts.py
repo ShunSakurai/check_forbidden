@@ -1,6 +1,9 @@
 '''
 cd dropbox/codes/check_forbidden
 py -B cf_scripts.py
+
+This file contains helper functions, which are
+basically without any side effects to UIs and Variables
 '''
 import setup
 import csv
@@ -209,7 +212,7 @@ def open_readme():
 
 def print_and_append(to_print, to_write, file_to_write_in, dict_options):
     try_printing(to_print)
-    if dict_options['str_method'] == '0':
+    if not dict_options['int_export']:
         file_to_write_in.append(to_write)
     else:
         pass
@@ -222,7 +225,7 @@ def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
         'Time and version: ' + date_time_version,
         [date_time_version], f_result_w, dict_options)
     list_name = fname_from_str_path(fpath_terms)
-    if dict_options['str_function'] == '0':
+    if not dict_options['int_function']:
         f_terms = open(fpath_terms, encoding='utf-8')
         header = f_terms.readline().rstrip('\n')
         f_terms.close()
@@ -231,7 +234,7 @@ def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
         print_and_append('Function: ' + list_name, [list_name], f_result_w, dict_options)
     settings = str_from_settings(dict_options)
     print_and_append('Options: ' + settings, [settings], f_result_w, dict_options)
-    if dict_options['str_function'] == '0':
+    if dict_options['int_function']:
         print_and_append(
             'Header: [' + header + '] + Segment Number',
             header.split(',') + ['ID', 'Target'] , f_result_w, dict_options)
@@ -246,6 +249,13 @@ def remove_tags(segment):
 
 def replace_back_slash(str_path):
     return str_path.replace('\\', '/')
+
+
+def return_if_in_dict(dicionary, key):
+    if key in dicionary:
+        return dicionary[key]
+    else:
+        return
 
 
 def str_from_settings(dict_options):
@@ -311,7 +321,7 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
-        if dict_options['str_function'] == '0':
+        if not dict_options['int_function']:
             for row in f_terms_read:
                 if not row or not row[0]:
                     continue
@@ -344,7 +354,7 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
 
     f_terms.close()
 
-    if list_matched_rows and dict_options['str_function'] == '0':
+    if list_matched_rows and not dict_options['int_function']:
         f_result_w.append([''])
         print_and_append('Summary', ['Summary'], f_result_w, dict_options)
         list_reduced = []
@@ -354,27 +364,27 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
         for i in list_reduced:
             print_and_append(i, ls_from_list_str(i), f_result_w, dict_options)
         print_and_append('', [''], f_result_w, dict_options)
-    elif dict_options['str_function'] == '0':
+    elif not dict_options['int_function']:
         print('No forbidden term was found!')
 
-    if list_matched_rows and dict_options['str_method'] == '0':
+    if list_matched_rows and not dict_options['int_export']:
         f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
         print(fname_from_str_path(fpath_result), 'was successfully created.')
-    elif list_matched_rows and dict_options['str_method'] == '1':
+    elif list_matched_rows and dict_options['int_export']:
         print('The search was successfully finished.')
-    if list_matched_rows and dict_options['str_function'] == '0':
+    if list_matched_rows and not dict_options['int_function']:
         print(str(len(list_matched_rows)), 'matches.')
 
 
 def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_options):
     # For testing
     dict_options = dict_options or {
-        'str_function': '0', 'str_method': '1',
+        'int_function': 0, 'int_export': 1,
         'str_rate': 'all', 'str_locked': 'all',
-        'str_open': '1', 'str_load': '0'
+        'int_open': 1, 'int_save': 0
     }
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
@@ -397,7 +407,7 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
     elapsed = time.time() - start
     print(str(elapsed)[:10], 'seconds.\n\n')
 
-    if dict_options['str_method'] == '0' and dict_options['str_open'] == '1':
+    if not dict_options['int_export'] and dict_options['int_open']:
         open_file(str_result)
 
 
