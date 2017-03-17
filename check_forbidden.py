@@ -27,7 +27,7 @@ ext_result = [('csv', '*.csv')]
 ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
 fn_options = 'cf_options.p'
 
-# Widgets and functions
+# Widgets
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
 btn_result = tkinter.Button(text='Result', underline=0, state='disabled')
@@ -69,24 +69,16 @@ path_saved_function.set('')
 path_saved_result = tkinter.StringVar(frame_main)
 path_saved_result.set('')
 
-btn_open_bl = tkinter.Button(
+btn_folder_bl = tkinter.Button(
     text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
-btn_open_terms = tkinter.Button(
+btn_folder_terms = tkinter.Button(
     text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
-btn_open_result = tkinter.Button(
+btn_folder_result = tkinter.Button(
     text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
-three_open_buttons = [btn_open_bl, btn_open_terms, btn_open_result]
+three_folder_buttons = [btn_folder_bl, btn_folder_terms, btn_folder_result]
 
-btn_open_bl.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_bl.get()))
-btn_open_terms.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_terms.get()))
-btn_open_result.bind(
-    '<ButtonRelease-1>', lambda x: cf_scripts.open_folder(var_str_result.get()))
-
-
-for btn in three_open_buttons:
-    btn.grid(row=three_open_buttons.index(btn), column=4)
+for btn in three_folder_buttons:
+    btn.grid(row=three_folder_buttons.index(btn), column=4)
 
 
 label_guide = tkinter.Label(text='')
@@ -98,7 +90,7 @@ btn_options.grid(row=3, column=3, sticky='e', padx=80)
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
-all_guided_buttons = three_buttons + three_open_buttons + [
+all_guided_ui = three_buttons + three_folder_buttons + [
     cb_function, cb_export, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
@@ -187,12 +179,9 @@ btn_default = tkinter.Button(
 btn_default.grid(row=7, column=0, sticky='w')
 
 
+# Functions
 def focus_off():
     label_guide.focus_set()
-
-
-for ent in three_entries:
-    ent.bind('<Leave>', lambda x: focus_off())
 
 
 def choose_bl(self):
@@ -247,12 +236,6 @@ def choose_result(self):
     focus_off()
 
 
-three_funcs = [choose_bl, choose_terms, choose_result]
-
-for i in range(3):
-    three_buttons[i].bind('<ButtonRelease-1>', three_funcs[i])
-
-
 def turn_off_function():
     btn_terms.config(text='Terms', underline=0)
     path_saved_function.set(var_str_terms.get())
@@ -271,11 +254,13 @@ def turn_on_function():
         var_str_terms.set('')
 
 
-def toggle_function_click(self, widget):
+def toggle_cb_function(self):
     if not var_int_function.get():
         turn_on_function()
     elif var_int_function.get():
         turn_off_function()
+    if not dict_cb_hover['function']:
+        cb_function.toggle()
 
 
 def turn_on_export():
@@ -296,70 +281,47 @@ def turn_off_export():
     btn_result['state'] = 'normal'
 
 
-def toggle_export_click(self, widget):
+def toggle_cb_export(self):
     if var_int_export.get():
         turn_off_export()
     elif not var_int_export.get():
         turn_on_export()
+    if not dict_cb_hover['export']:
+        cb_export.toggle()
 
 
-cb_function.bind(
-    '<ButtonRelease-1>',
-    lambda x: toggle_function_click('<ButtonRelease-1>', cb_function))
-cb_export.bind(
-    '<ButtonRelease-1>',
-    lambda x: toggle_export_click('<ButtonRelease-1>', cb_export))
-
-
-def toggle_function_sck(self, widget):
-    toggle_function_click('<ButtonRelease-1>', widget)
-    cb_function.toggle()
-
-
-def toggle_export_sck(self, widget):
-    toggle_export_click('<ButtonRelease-1>', widget)
-    cb_export.toggle()
-
-
-def enable_open_btn_if_statement(statement, btn):
+def enable_folder_btn_if(statement, btn):
     if statement:
         btn.config(text='➔', state='normal')
     else:
         btn.config(text='⇨', state='disabled')
 
 
-def enable_open_bl_if_filled(var, unknown, w):
-    enable_open_btn_if_statement(var_str_bl.get(), btn_open_bl)
+def enable_folder_bl_if_filled(var, unknown, w):
+    enable_folder_btn_if(var_str_bl.get(), btn_folder_bl)
 
 
-def enable_open_terms_if_filled(var, unknown, w):
-    enable_open_btn_if_statement(var_str_terms.get(), btn_open_terms)
+def enable_folder_terms_if_filled(var, unknown, w):
+    enable_folder_btn_if(var_str_terms.get(), btn_folder_terms)
 
 
-def enable_open_result_if_filled(var, unknown, w):
+def enable_folder_result_if_filled(var, unknown, w):
     statement = var_str_result.get() and var_str_result.get() != ph_cp_only
-    enable_open_btn_if_statement(statement, btn_open_result)
+    enable_folder_btn_if(statement, btn_folder_result)
 
 
 three_open_funcs = [
-    enable_open_bl_if_filled, enable_open_terms_if_filled,
-    enable_open_result_if_filled]
+    enable_folder_bl_if_filled, enable_folder_terms_if_filled,
+    enable_folder_result_if_filled]
 
-for var, btn, func in zip(three_vars, three_open_buttons, three_open_funcs):
-    btn.grid(row=three_open_buttons.index(btn), column=4)
+for var, btn, func in zip(three_vars, three_folder_buttons, three_open_funcs):
+    btn.grid(row=three_folder_buttons.index(btn), column=4)
     var.trace('w', func)
 
 
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
-
-
-for rb in rbs_rate:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
-
-for rb in rbs_locked:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
 
 
 def turn_on_options(widget):
@@ -381,9 +343,14 @@ def toggle_options(self, widget):
         turn_off_options(widget)
 
 
-btn_options.bind(
-    '<ButtonRelease-1>',
-    lambda x: toggle_options('<ButtonRelease-1>', btn_options))
+def toggle_cb_open(self):
+    if not dict_cb_hover['open']:
+        cb_open.toggle()
+
+
+def toggle_cb_save(self):
+    if not dict_cb_hover['save']:
+        cb_save.toggle()
 
 
 def get_options():
@@ -405,9 +372,6 @@ def restore_default(self):
     var_str_locked.set('all')
     var_int_open.set(1)
     var_int_save.set(0)
-
-
-btn_default.bind('<ButtonRelease-1>', restore_default)
 
 
 def set_if_in_dict(dicionary, key, var):
@@ -458,9 +422,6 @@ def run(self):
     cf_scripts.ask_quit(frame_main)
 
 
-btn_run.bind('<ButtonRelease-1>', run)
-
-
 def enable_run_if_filled(var, unknown, w):
     if var_str_bl.get() and var_str_terms.get() and var_str_result.get():
         btn_run.config(state='normal', text='Run!')
@@ -471,10 +432,59 @@ def enable_run_if_filled(var, unknown, w):
 for var in three_vars:
     var.trace('w', enable_run_if_filled)
 
+# Binding
+three_funcs = [choose_bl, choose_terms, choose_result]
+for i in range(3):
+    three_buttons[i].bind('<ButtonRelease-1>', three_funcs[i])
+
+for ent in three_entries:
+    ent.bind('<Leave>', lambda x: focus_off())
+
+btn_folder_bl.bind(
+    '<ButtonRelease-1>',
+    lambda x: cf_scripts.open_folder(var_str_bl.get())
+)
+btn_folder_terms.bind(
+    '<ButtonRelease-1>',
+    lambda x: cf_scripts.open_folder(var_str_terms.get())
+)
+btn_folder_result.bind(
+    '<ButtonRelease-1>',
+    lambda x: cf_scripts.open_folder(var_str_result.get())
+)
+
+btn_options.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_options('<ButtonRelease-1>', btn_options)
+)
+btn_run.bind('<ButtonRelease-1>', run)
+
+cb_function.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_cb_function('<ButtonRelease-1>')
+)
+cb_export.bind(
+    '<ButtonRelease-1>',
+    lambda x: toggle_cb_export('<ButtonRelease-1>')
+)
+
+for rb in rbs_rate:
+    rb.bind('<ButtonRelease-1>', select_and_focus)
+for rb in rbs_locked:
+    rb.bind('<ButtonRelease-1>', select_and_focus)
+
+btn_readme.bind('<ButtonRelease-1>', lambda x: cf_scripts.open_readme())
+btn_update.bind('<ButtonRelease-1>', lambda x: cf_scripts.check_updates())
+
+cb_open.bind('<ButtonRelease-1>', toggle_cb_open)
+cb_save.bind('<ButtonRelease-1>', toggle_cb_save)
+btn_default.bind('<ButtonRelease-1>', restore_default)
+
+
 guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
-guide_open = 'Open the folder.'
+guide_folder = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_export = 'Select this Check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
@@ -502,15 +512,70 @@ def bind_show_guide(btn, guide, underline):
 bind_show_guide(btn_bl, guide_bl, ul_no)
 bind_show_guide(btn_terms, guide_terms, ul_no)
 bind_show_guide(btn_result, guide_result, ul_no)
-for btn in three_open_buttons:
-    bind_show_guide(btn, guide_open, ul_no)
-bind_show_guide(cb_function, guide_function, ul_function)
-bind_show_guide(cb_export, guide_export, ul_export)
+for btn in three_folder_buttons:
+    bind_show_guide(btn, guide_folder, ul_no)
 bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_run, guide_run, ul_run)
 
-for btn in all_guided_buttons:
+for btn in all_guided_ui:
     btn.bind('<Leave>', hide_guide)
+
+dict_cb_hover = {
+    'function': False,
+    'export': False,
+    'open': False,
+    'save': False
+}
+
+
+def enter_cb_function(self):
+    dict_cb_hover['function'] = True
+    show_guide('<Enter>', guide_function, ul_function)
+
+
+def leave_cb_function(self):
+    dict_cb_hover['function'] = False
+    hide_guide('<Leave>')
+
+
+def enter_cb_export(self):
+    dict_cb_hover['export'] = True
+    show_guide('<Enter>', guide_export, ul_export)
+
+
+def leave_cb_export(self):
+    dict_cb_hover['export'] = False
+    hide_guide('<Leave>')
+
+
+def enter_cb_open(self):
+    dict_cb_hover['open'] = True
+
+
+def leave_cb_open(self):
+    dict_cb_hover['open'] = False
+
+
+def enter_cb_save(self):
+    dict_cb_hover['save'] = True
+
+
+def leave_cb_save(self):
+    dict_cb_hover['save'] = False
+
+
+all_cbs = [cb_function, cb_export, cb_open, cb_save]
+all_keys = ['function', 'export', 'open', 'save']
+all_enter_funcs = [
+    enter_cb_function, enter_cb_export, enter_cb_open, enter_cb_save
+]
+all_leave_funcs = [
+    leave_cb_function, leave_cb_export, leave_cb_open, leave_cb_save
+]
+
+for cb, key, enter, leave in zip(all_cbs, all_keys, all_enter_funcs, all_leave_funcs):
+    cb.bind('<Enter>', enter)
+    cb.bind('<Leave>', leave)
 
 
 def sc_only_when_out_of_ent(func):
@@ -529,8 +594,8 @@ bind_keys('o', lambda x: toggle_options('o', btn_options))
 bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
-bind_keys('f', lambda x: toggle_function_sck('f', cb_function))
-bind_keys('c', lambda x: toggle_export_sck('c', cb_export))
+bind_keys('f', lambda x: toggle_cb_function('f'))
+bind_keys('c', lambda x: toggle_cb_export('c'))
 bind_keys('m', lambda x: cf_scripts.open_readme())
 bind_keys('u', lambda x: cf_scripts.check_updates())
 bind_keys('a', lambda x: rbs_rate[0].select())
@@ -544,7 +609,7 @@ bind_keys('d', restore_default)
 
 
 def press_return_key_to_click(self):
-    frame_main.focus_get().event_generate('<ButtonRelease-1>')
+    root.focus_get().event_generate('<ButtonRelease-1>')
 
 
 root.bind('<Return>', press_return_key_to_click)

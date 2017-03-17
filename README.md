@@ -129,7 +129,7 @@ Buttons and radio buttons can be selected by pressing the underlined characters 
 - Turn the function check box on/off: F
 - Open the folder: no shortcut key
 
-The Enter (Return) key can be used to invoke the focused widget.
+You can move along the UI items with "Tab" key and invoke the focused item with "Enter" key
 
 The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
 

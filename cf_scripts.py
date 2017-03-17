@@ -196,7 +196,7 @@ def open_file(str_file_path):
 
 
 def open_folder(tuple_path):
-    if tuple_path and tuple_path != 'Command Prompt only.':
+    if tuple_path and 'Command Prompt only.' not in tuple_path:
         str_path_1 = ls_from_tuple_str(tuple_path)[0]
         str_path_dir = dir_from_str_path(str_path_1)
         if sys.platform.startswith('win'):
