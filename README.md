@@ -90,6 +90,7 @@ The term list needs to meet the following specifications:
 - Any special characters (`(`, `)`, `[`, `]`, `.`, `\*`, `?`, `!` ,etc.) used in regex need to be **escaped with a backslash**. All terms are considered as regex patterns
 - Terms in the **first** column will be considered as the forbidden terms
 - You can use other columns to provide detailed information e.g. the index number, the source term, and the correct target term
+- Comma cannot be used in the file name
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 

@@ -1,0 +1,2 @@
+Target(NG),Index,Source,Target(OK),Description
+[a,1,[a],[a],unterminated character set at position 0

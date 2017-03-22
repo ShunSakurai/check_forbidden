@@ -325,10 +325,14 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
             for row in f_terms_read:
                 if not row or not row[0]:
                     continue
-                else:
-                    pass
+                try:
+                    pattern = re.compile(row[0])
+                except:
+                    print('Error occurred with regex pattern:', row[0])
+                    print(sys.exc_info()[1], '\n', sys.exc_info()[0])
+                    continue
                 for seg_id, line in f_bl_line_range_list:
-                    match = re.search(row[0], line)
+                    match = pattern.search(line)
                     if match:
                         print_and_append(str(row), row + [seg_id, line], f_result_w, dict_options)
                         s, e = match.start(), match.end()
