@@ -124,13 +124,13 @@ def function(seg_id, target):
 ### Keyboard shortcuts
 Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
-- Run!: the space bar
+- Run!: Return (Enter)
 - Show or hide the options: O
 - Turn the export method check box on/off: C
 - Turn the function check box on/off: F
 - Open the folder: no shortcut key
 
-You can move along the UI items with "Tab" key and invoke the focused item with "Enter" key
+You can move along the UI items with "Tab" key and invoke the focused item with the space bar.
 
 The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
 

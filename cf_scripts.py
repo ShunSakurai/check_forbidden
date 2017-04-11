@@ -57,7 +57,7 @@ def download_installer(str_newest_version, url_installer):
     return download_path
 
 
-def check_updates(download_function=download_installer):
+def check_updates(*event, download_function=download_installer):
     print('-' * 70)
     url_releases = 'https://github.com/ShunSakurai/check_forbidden/releases'
     try:
@@ -205,7 +205,7 @@ def open_folder(tuple_path):
             subprocess.call(['open', str_path_dir])
 
 
-def open_readme():
+def open_readme(*event):
     webbrowser.open_new_tab(
         'https://github.com/ShunSakurai/check_forbidden/blob/master/README.md')
 
