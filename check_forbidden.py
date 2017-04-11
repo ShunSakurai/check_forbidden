@@ -37,13 +37,13 @@ btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
 btn_terms.grid(row=1, column=0, columnspan=1, sticky='w', padx=5)
 btn_result.grid(row=2, column=0, columnspan=1, sticky='w', padx=5)
 
-var_int_function = tkinter.IntVar()
-cb_function = tkinter.Checkbutton(variable=var_int_function)
+var_bool_function = tkinter.BooleanVar()
+cb_function = tkinter.Checkbutton(variable=var_bool_function)
 cb_function.deselect()
 cb_function.grid(row=1, column=1, sticky='e')
 
-var_int_export = tkinter.IntVar()
-cb_export = tkinter.Checkbutton(variable=var_int_export)
+var_bool_export = tkinter.BooleanVar()
+cb_export = tkinter.Checkbutton(variable=var_bool_export)
 cb_export.select()
 cb_export.grid(row=2, column=1, sticky='e')
 
@@ -158,17 +158,17 @@ btn_update.grid(row=4, column=2, sticky='w', padx=55)
 label_settings = tkinter.Label(frame_options, text='\tOther settings')
 label_settings.grid(row=4, column=0, sticky='w')
 
-var_int_open = tkinter.IntVar()
+var_bool_open = tkinter.BooleanVar()
 cb_open = tkinter.Checkbutton(
     frame_options, text='Open CSV after export',
-    underline=3, variable=var_int_open)
+    underline=3, variable=var_bool_open)
 cb_open.select()
 cb_open.grid(row=5, column=0, sticky='w')
 
-var_int_save = tkinter.IntVar()
+var_bool_save = tkinter.BooleanVar()
 cb_save = tkinter.Checkbutton(
     frame_options, text='Save last used settings',
-    underline=0, variable=var_int_save)
+    underline=0, variable=var_bool_save)
 cb_save.deselect()
 cb_save.grid(row=6, column=0, sticky='w')
 
@@ -208,7 +208,7 @@ def choose_terms(self):
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = None
-    if var_int_function.get():
+    if var_bool_function.get():
         extensions = ext_function
     else:
         extensions = ext_terms
@@ -255,9 +255,9 @@ def turn_on_function():
 
 
 def toggle_cb_function(self):
-    if not var_int_function.get():
+    if not var_bool_function.get():
         turn_on_function()
-    elif var_int_function.get():
+    elif var_bool_function.get():
         turn_off_function()
     if not dict_cb_hover['function']:
         cb_function.toggle()
@@ -282,9 +282,9 @@ def turn_off_export():
 
 
 def toggle_cb_export(self):
-    if var_int_export.get():
+    if var_bool_export.get():
         turn_off_export()
-    elif not var_int_export.get():
+    elif not var_bool_export.get():
         turn_on_export()
     if not dict_cb_hover['export']:
         cb_export.toggle()
@@ -355,23 +355,23 @@ def toggle_cb_save(self):
 
 def get_options():
     dict_options = {
-        'int_function': var_int_function.get(),
-        'int_export': var_int_export.get(),
+        'bool_function': var_bool_function.get(),
+        'bool_export': var_bool_export.get(),
         'str_rate': var_str_rate.get(),
         'str_locked': var_str_locked.get(),
-        'int_open': var_int_open.get(),
-        'int_save': var_int_save.get()
+        'bool_open': var_bool_open.get(),
+        'bool_save': var_bool_save.get()
     }
     return dict_options
 
 
 def restore_default(self):
-    var_int_function.set(0)
-    var_int_export.set(1)
+    var_bool_function.set(0)
+    var_bool_export.set(1)
     var_str_rate.set('all')
     var_str_locked.set('all')
-    var_int_open.set(1)
-    var_int_save.set(0)
+    var_bool_open.set(1)
+    var_bool_save.set(0)
 
 
 def set_if_in_dict(dicionary, key, var):
@@ -390,18 +390,18 @@ def load_options():
     dict_loaded = pickle.load(f_loaded_options)
     f_loaded_options.close()
 
-    if not cf_scripts.return_if_in_dict(dict_loaded, 'int_save'):
+    if not cf_scripts.return_if_in_dict(dict_loaded, 'bool_save'):
         print(message_not_loaded)
         return
     else:
         turn_on_options(btn_options)
-        set_if_in_dict(dict_loaded, 'int_function', var_int_function)
-        set_if_in_dict(dict_loaded, 'int_export', var_int_export)
+        set_if_in_dict(dict_loaded, 'bool_function', var_bool_function)
+        set_if_in_dict(dict_loaded, 'bool_export', var_bool_export)
         set_if_in_dict(dict_loaded, 'str_rate', var_str_rate)
         set_if_in_dict(dict_loaded, 'str_locked', var_str_locked)
-        set_if_in_dict(dict_loaded, 'int_open', var_int_open)
-        set_if_in_dict(dict_loaded, 'int_save', var_int_save)
-        if not var_int_export.get():
+        set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
+        set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
+        if not var_bool_export.get():
             turn_off_export()
         print('Saved options are loaded.')
 

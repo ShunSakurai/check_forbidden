@@ -212,7 +212,7 @@ def open_readme():
 
 def print_and_append(to_print, to_write, file_to_write_in, dict_options):
     try_printing(to_print)
-    if not dict_options['int_export']:
+    if not dict_options['bool_export']:
         file_to_write_in.append(to_write)
     else:
         pass
@@ -220,12 +220,15 @@ def print_and_append(to_print, to_write, file_to_write_in, dict_options):
 
 def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
     print('-' * 70)
-    date_time_version = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S v') + setup.dict_console['version']
+    date_time_version = ''.join([
+        datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
+        ' Check Forbidden v', setup.dict_console['version']
+    ])
     print_and_append(
         'Time and version: ' + date_time_version,
         [date_time_version], f_result_w, dict_options)
     list_name = fname_from_str_path(fpath_terms)
-    if not dict_options['int_function']:
+    if not dict_options['bool_function']:
         f_terms = open(fpath_terms, encoding='utf-8')
         header = f_terms.readline().rstrip('\n')
         f_terms.close()
@@ -234,7 +237,7 @@ def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
         print_and_append('Function: ' + list_name, [list_name], f_result_w, dict_options)
     settings = str_from_settings(dict_options)
     print_and_append('Options: ' + settings, [settings], f_result_w, dict_options)
-    if dict_options['int_function']:
+    if dict_options['bool_function']:
         print_and_append(
             'Header: [' + header + '] + Segment Number',
             header.split(',') + ['ID', 'Target'] , f_result_w, dict_options)
@@ -298,6 +301,14 @@ def try_rmdir(i):
             print('Please go to the bilingual file location and delete the _extract folder manually.')
 
 
+def unique_ordered_list(sequence):
+    unique_list = []
+    for i in sequence:
+        if i not in unique_list:
+            unique_list.append(i)
+    return unique_list
+
+
 def unzip_if_mqxlz(fn_bl):
     if fn_bl[-5:] == 'mqxlz':
         path_extract = dirname_from_fname(fn_bl) + '_extract'
@@ -321,7 +332,7 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
-        if not dict_options['int_function']:
+        if not dict_options['bool_function']:
             for row in f_terms_read:
                 if not row or not row[0]:
                     continue
@@ -358,37 +369,36 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
 
     f_terms.close()
 
-    if list_matched_rows and not dict_options['int_function']:
+    if list_matched_rows and not dict_options['bool_function']:
         f_result_w.append([''])
         print_and_append('Summary', ['Summary'], f_result_w, dict_options)
-        list_reduced = []
-        for i in range(len(list_matched_rows)):
-            if str(list_matched_rows[i]) not in list_reduced:
-                list_reduced.append(str(list_matched_rows[i]))
+        list_reduced = unique_ordered_list([str(i) for i in list_matched_rows])
         for i in list_reduced:
             print_and_append(i, ls_from_list_str(i), f_result_w, dict_options)
         print_and_append('', [''], f_result_w, dict_options)
-    elif not dict_options['int_function']:
+    elif not dict_options['bool_function']:
         print('No forbidden term was found!')
 
-    if list_matched_rows and not dict_options['int_export']:
+    if list_matched_rows and not dict_options['bool_export']:
         f_result = open(fpath_result, 'a', encoding='utf-8-sig')
         f_result_wc = csv.writer(f_result, lineterminator='\n')
         f_result_wc.writerows(f_result_w)
         f_result.close()
         print(fname_from_str_path(fpath_result), 'was successfully created.')
-    elif list_matched_rows and dict_options['int_export']:
+        if not dict_options['bool_export'] and dict_options['bool_open']:
+            open_file(fpath_result)
+    elif list_matched_rows and dict_options['bool_export']:
         print('The search was successfully finished.')
-    if list_matched_rows and not dict_options['int_function']:
+    if list_matched_rows and not dict_options['bool_function']:
         print(str(len(list_matched_rows)), 'matches.')
 
 
 def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_options):
     # For testing
     dict_options = dict_options or {
-        'int_function': 0, 'int_export': 1,
+        'bool_function': 0, 'bool_export': 1,
         'str_rate': 'all', 'str_locked': 'all',
-        'int_open': 1, 'int_save': 0
+        'bool_open': 1, 'bool_save': 0
     }
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
@@ -410,9 +420,6 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
 
     elapsed = time.time() - start
     print(str(elapsed)[:10], 'seconds.\n\n')
-
-    if not dict_options['int_export'] and dict_options['int_open']:
-        open_file(str_result)
 
 
 def ask_quit(frame):
