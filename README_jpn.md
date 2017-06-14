@@ -1,4 +1,4 @@
-﻿# check_forbidden
+﻿# Check Forbidden
 memoQバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に含まれる禁止されている訳語を、CSVファイルを使用して確認するためのツールです。
 
 [英語のREADME](https://github.com/ShunSakurai/check_forbidden/blob/master/README.md)もあります。
@@ -182,7 +182,6 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 - memoQタグ`{1}`(mqxliffファイルでは`<x id="1" />`)を除外
 
 ### 棚上げ中の機能
-- バイリンガルファイル欄の{波かっこ}を非表示
 - CSVの区切り文字を指定するための設定を追加
 - memoQ以外のファイルへの対応
 - [Microsoftスタイルガイド](https://www.microsoft.com/Language/ja-JP/StyleGuides.aspx)の禁止語リストを例として作成
@@ -196,7 +195,7 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 - 用語一覧内にエスケープされていない文字が含まれる場合に警告。`&lt;`と`<`との区別がつけられないため
 - 複数のバイリンガルファイルを別のフォルダーから選択する機能を追加。あまり重要でないため
 
-すぐに使用したい機能がある場合は[ご連絡ください](https://app.asana.com/0/264039980253157/list)。
+すぐに使用したい機能がある場合は、[Github Issues](https://github.com/ShunSakurai/check_forbidden/issues)または[Asana](https://app.asana.com/0/264039980253157/list)からご連絡ください。
 
 ## 履歴
 履歴の詳細は、[Releases(リリース)](https://github.com/ShunSakurai/check_forbidden/releases)でご覧ください。
@@ -204,7 +203,7 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 文頭の「*」は、バグ修正を示します。
 
 ## 貢献
-これは個人的なプロジェクトです。どんな[ご意見](https://app.asana.com/0/264039980253157/list)や貢献でもいただけると幸いです。
+これは個人的なプロジェクトです。[Github Issues](https://github.com/ShunSakurai/check_forbidden/issues)または[Asana](https://app.asana.com/0/264039980253157/list)から、どんなご意見や貢献でもいただけると幸いです。
 
 同僚の翻訳者やPMの皆さん、このページの英語や訳語を自然な文にするお手伝いをしていただけたら幸いです。
 

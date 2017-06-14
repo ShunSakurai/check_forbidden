@@ -1,4 +1,4 @@
-﻿# check_forbidden
+﻿# Check Forbidden
 A tool for checking forbidden terms included in the target segments of memoQ bilingual files (.mqxlz / .mqxliff), using CSV files
 
 [Japanese README](https://github.com/ShunSakurai/check_forbidden/blob/master/README_jpn.md) is also available.
@@ -182,7 +182,6 @@ Below are some best practices to avoid false positives.
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
 
 ### Maybe later
-- Get rid of { brackets } in the bilingual file field
 - Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
@@ -196,7 +195,7 @@ Below are some best practices to avoid false positives.
 - Warn if non-escaped characters are included in the term list. `&lt;` and `<` cannot be distinguished
 - Add an ability to choose multiple bilingual files from different folders. Not very important
 
-Please [let me know](https://app.asana.com/0/264039980253157/list) if you need any of the features as soon as possible.
+Please let me know from [Github Issues](https://github.com/ShunSakurai/check_forbidden/issues) or [Asana](https://app.asana.com/0/264039980253157/list) if you need any of the features as soon as possible.
 
 ## History
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/check_forbidden/releases).
@@ -204,7 +203,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 "*" at the beginning means bug-fixing.
 
 ## Contribution
-This is just a personal project. Any [feedback](https://app.asana.com/0/264039980253157/list) and contribution is welcome!
+This is just a personal project. Any feedback and contribution from [Github Issues](https://github.com/ShunSakurai/check_forbidden/issues) or [Asana](https://app.asana.com/0/264039980253157/list) and contribution is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 
