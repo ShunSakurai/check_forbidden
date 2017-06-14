@@ -32,7 +32,7 @@ def apply_update(download_path):
 
 
 def cleanup_if_mqxlz(fn_bl):
-    if fn_bl[-5:] == 'mqxlz':
+    if fn_bl.endswith('mqxlz'):
         path_extract = dirname_from_fname(fn_bl) + '_extract'
         os.remove(path_extract + '/document.mqxliff')
         try_rmdir(path_extract)
@@ -237,7 +237,7 @@ def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
         print_and_append('Function: ' + list_name, [list_name], f_result_w, dict_options)
     settings = str_from_settings(dict_options)
     print_and_append('Options: ' + settings, [settings], f_result_w, dict_options)
-    if dict_options['bool_function']:
+    if not dict_options['bool_function']:
         print_and_append(
             'Header: [' + header + '] + Segment Number',
             header.split(',') + ['ID', 'Target'] , f_result_w, dict_options)
@@ -310,7 +310,7 @@ def unique_ordered_list(sequence):
 
 
 def unzip_if_mqxlz(fn_bl):
-    if fn_bl[-5:] == 'mqxlz':
+    if fn_bl.endswith('mqxlz'):
         path_extract = dirname_from_fname(fn_bl) + '_extract'
         fn_actual = zipfile.ZipFile(fn_bl).extract(
             'document.mqxliff', path=path_extract)
@@ -404,6 +404,16 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
     list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
     fpath_result = replace_back_slash(str_result)
+
+    for fn_terms in list_fpath_terms:
+        if fn_terms.rsplit('.', 1)[-1] not in ['csv', 'txt', 'py']:
+            print('File name is invalid:', fn_terms)
+            return
+
+    for fn_bl in list_fpath_bl:
+        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff']:
+            print('File name is invalid:', fn_bl)
+            return
 
     list_fn_bl_tuple = []
     for fn_bl in list_fpath_bl:
