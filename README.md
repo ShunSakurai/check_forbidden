@@ -24,7 +24,7 @@ All you have to prepare are:
 
 This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is useful when you have many matches and when many non-printable characters are included in the bilingual file. The Summary result is useful when you are working on a "View."
 
-This program is written in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
+This program is written in Python with tkinter and is distributed in .exe format through [PyInstaller](http://www.pyinstaller.org/) and [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows).
 
 The icon was created with [アイコン ウィザード](http://freewareplace.web.fc2.com/) and the installer is created with [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
@@ -36,16 +36,15 @@ If you have the Python environment installed, you can run the source code with `
 ## Build
 To convert the Python code to an .exe file, and to create an installer, follow the steps below.
 
-Requirements and procedures for the .exe file:
-
-- Python 3.4 (py2exe is not compatible with Python 3.5 as far as I know)
-- [py2exe](http://www.py2exe.org/)
-- Run `py -3.4 setup.py py2exe` on a Windows machine
-
-Requirements and procedures for the installer:
-
+Requirements:
+- [Python 3](https://www.python.org/downloads/)
+- [PyInstaller](http://www.pyinstaller.org/)
+- [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows), add it to PATH
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
-- Open setup_installer.iss with Inno Setup Compiler and click Build > Compile
+
+Procedures:
+- Run `py -B setup.py` on a Windows machine. `-B` is optional
+- You may have to set alias to make py = python3
 
 ## Usage
 
@@ -186,7 +185,6 @@ Below are some best practices to avoid false positives.
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs
-- Make the "Open files" dialog more useful
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter

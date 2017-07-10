@@ -31,12 +31,14 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "dist\Check Forbidden.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\tcl\*"; DestDir: "{app}\tcl"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[InstallDelete]
+Type: files; Name: "{app}\library.zip"
+Type: files; Name: "{app}\python34.dll"
+Type: files; Name: "{app}\tcl86t.dll"
+Type: files; Name: "{app}\tk86t.dll"
+Type: filesandordirs; Name: "{app}\tcl"
 
 [Icons]
 Name: "{commonprograms}\Check Forbidden"; Filename: "{app}\Check Forbidden.exe"

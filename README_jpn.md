@@ -24,7 +24,7 @@ memoQバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に含まれる�
 
 このツールは、バイリンガルファイル中の禁止語を検索し、コマンドプロンプトに結果を表示し、さらに検索結果をCSVファイルにエクスポートします。コマンドプロンプトは、結果をざっと読み、検出された用語を簡単に確認するのに適しています。CSVファイルは、検出結果が多い場合や、バイリンガルファイルに多くの印字できない文字が含まれている場合に便利です。「ビュー」を使って作業している場合は、まとめ結果が便利です。
 
-このプログラムは、Pythonとtkinterを使用して書かれており、[py2exe](http://www.py2exe.org/)を使用して.exe形式で配布するものです。
+このプログラムは、Pythonとtkinterを使用して書かれており、[PyInstaller](http://www.pyinstaller.org/)と[Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows)を使用して.exe形式で配布するものです。
 
 アイコンは[アイコン ウィザード](http://freewareplace.web.fc2.com/)を、インストーラーは[Inno Setup](http://www.jrsoftware.org/isdl.php)を使用して作成しました。
 
@@ -36,16 +36,15 @@ Python環境をインストールしている場合、`python(3) check_forbidden
 ## ビルド
 Pythonコードを.exeファイルに変換し、インストーラーを作成するには、次の手順に従います。
 
-.exeファイルの要件と手順:
-
-- Python 3.4(私の知る限り、py2exeはPython 3.5に対応していません)
-- [py2exe](http://www.py2exe.org/)
-- Windowsマシン上で`py -3.4 setup.py py2exe`を実行します
-
-インストーラーの要件と手順:
-
+要件:
+- [Python 3](https://www.python.org/downloads/)
+- [PyInstaller](http://www.pyinstaller.org/)
+- [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows)、パスを通してください
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
-- setup_installer.issをInno Setup Compilerで開き、Build(ビルド)>Compile(コンパイル)をクリックします。
+
+手順:
+- Windows環境で、`py -B setup.py`を実行します。`-B`はオプションです
+- py = python3となるように、エイリアスを設定する必要があるかもしれません
 
 ## 使用方法
 
@@ -186,7 +185,6 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 - memoQ以外のファイルへの対応
 - [Microsoftスタイルガイド](https://www.microsoft.com/Language/ja-JP/StyleGuides.aspx)の禁止語リストを例として作成
 - 外部プログラムからの呼び出しに対応
-- 「ファイルを開く」ダイアログの使いやすさを改善
 
 ### 追加予定のない機能
 - ドラッグでファイルを追加。tkinterでドラッグアンドドロップ機能を使用するのは難しいため

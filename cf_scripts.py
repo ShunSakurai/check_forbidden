@@ -28,7 +28,7 @@ def apply_update(download_path):
     if sys.platform.startswith('win'):
         os.startfile(download_path)
     else:
-        subprocess.call(['open', download_path])
+        subprocess.run(['open', download_path])
 
 
 def cleanup_if_mqxlz(fn_bl):
@@ -192,7 +192,7 @@ def open_file(str_file_path):
     if sys.platform.startswith('win'):
         os.startfile(str_file_path)
     else:
-        subprocess.call(['open', str_file_path])
+        subprocess.run(['open', str_file_path])
 
 
 def open_folder(tuple_path):
@@ -202,7 +202,7 @@ def open_folder(tuple_path):
         if sys.platform.startswith('win'):
             os.startfile(str_path_dir)
         else:
-            subprocess.call(['open', str_path_dir])
+            subprocess.run(['open', str_path_dir])
 
 
 def open_readme(*event):
@@ -429,16 +429,8 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
         cleanup_if_mqxlz(fn_bl)
 
     elapsed = time.time() - start
-    print(str(elapsed)[:10], 'seconds.\n\n')
-
-
-def ask_quit(frame):
-    print('Click [x] on the tk window or press [Enter] on this screen to exit.')
-    try:
-        input('\n')
-    except:
-        pass
-    frame.quit()
+    print(str(elapsed)[:10], 'seconds.\n')
+    print('To exit, click [x].\n')
 
 
 if __name__ == "__main__":

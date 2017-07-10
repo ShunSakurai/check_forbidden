@@ -432,7 +432,6 @@ def run(*event):
     dict_options = get_options()
     cf_scripts.check_forbidden_terms(
         var_str_bl.get(), var_str_terms.get(), var_str_result.get(), dict_options)
-    cf_scripts.ask_quit(frame_main)
 
 
 def enable_run_if_filled(var, unknown, w):
