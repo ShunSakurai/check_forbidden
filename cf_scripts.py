@@ -20,6 +20,12 @@ import urllib.request as ur
 import webbrowser
 import zipfile
 
+default_dict_options = {
+    'bool_function': 0, 'bool_export': 1,
+    'str_rate': 'all', 'str_locked': 'all',
+    'bool_open': 1, 'bool_save': 0
+}
+
 
 def apply_update(download_path):
     print('Starting the installer...')
@@ -328,7 +334,78 @@ def unzip_if_mqxlz(fn_bl):
         return fn_bl
 
 
-def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_options):
+def wrap_up_result_if_found(
+        list_matched_rows, f_result_w, fpath_result, dict_options):
+    if not dict_options['bool_function']:
+        f_result_w.append([''])
+        print_and_append('Summary', ['Summary'], f_result_w, dict_options)
+        list_reduced = unique_ordered_list([str(i) for i in list_matched_rows])
+        for i in list_reduced:
+            print_and_append(i, ls_from_list_str(i), f_result_w, dict_options)
+        print_and_append('', [''], f_result_w, dict_options)
+        print(str(len(list_matched_rows)), 'matches.')
+
+    if not dict_options['bool_export']:
+        f_result = open(fpath_result, 'a', encoding='utf-8-sig')
+        f_result_wc = csv.writer(f_result, lineterminator='\n')
+        f_result_wc.writerows(f_result_w)
+        f_result.close()
+        print(fname_from_str_path(fpath_result), 'was successfully created.')
+    elif dict_options['bool_export']:
+        print('The search was successfully finished.')
+
+
+def check_against_function(
+        f_bl_line_range_list, fpath_terms, f_result_w, dict_options):
+    list_matched_rows = []
+
+    mdir, mfile = fpath_terms.rsplit('/', 1)
+    mname = mfile.rsplit('.', 1)[0]
+    sys.path.append(mdir)
+    external_script = importlib.import_module(mname)
+    for (seg_id, source, target) in f_bl_line_range_list:
+        result = external_script.function(seg_id, target)
+        if result:
+            for ls in result:
+                print_and_append(ls, ls, f_result_w, dict_options)
+                list_matched_rows.append(ls)
+
+    return list_matched_rows
+
+
+def check_against_terms(
+        f_bl_line_range_list, f_terms_read, f_result_w, dict_options):
+    list_matched_rows = []
+
+    for row in f_terms_read:
+        if not row or not row[0]:
+            continue
+        try:
+            pattern = re.compile(row[0])
+        except:
+            print('Error occurred with regex pattern:', row[0])
+            print(sys.exc_info()[1], '\n', sys.exc_info()[0])
+            continue
+        for (seg_id, source, target) in f_bl_line_range_list:
+            match = pattern.search(target)
+            if match:
+                print_and_append(
+                    str(row), row + [seg_id, source, target], f_result_w, dict_options)
+                s, e = match.start(), match.end()
+                try_printing(''.join([
+                    str(seg_id), '\t',
+                    target[s - 5:s], '...', target[s:e], '...', target[e:e + 5]
+                ]))
+                try_printing(source)
+                try_printing(target + '\n')
+                list_matched_rows.append(row)
+            else:
+                continue
+    return list_matched_rows
+
+
+def check_for_each_term(
+        list_fn_bl_tuple, fpath_terms, fpath_result, dict_options):
     f_result_w = []
     list_matched_rows = []
     print_and_append_metadata(f_result_w, fpath_terms, dict_options)
@@ -336,80 +413,31 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
         f_result_w.append([''])
         print_and_append(fn_bl_tuple[0] + '\n', [fn_bl_tuple[0]], f_result_w, dict_options)
         f_bl_line_range_list = load_mqxliff(fn_bl_tuple, dict_options)
+        list_matched_rows = []
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
-        if not dict_options['bool_function']:
-            for row in f_terms_read:
-                if not row or not row[0]:
-                    continue
-                try:
-                    pattern = re.compile(row[0])
-                except:
-                    print('Error occurred with regex pattern:', row[0])
-                    print(sys.exc_info()[1], '\n', sys.exc_info()[0])
-                    continue
-                for (seg_id, source, target) in f_bl_line_range_list:
-                    match = pattern.search(target)
-                    if match:
-                        print_and_append(
-                            str(row), row + [seg_id, source, target], f_result_w, dict_options)
-                        s, e = match.start(), match.end()
-                        try_printing(''.join([
-                            str(seg_id), '\t',
-                            target[s - 5:s], '...', target[s:e], '...', target[e:e + 5]
-                        ]))
-                        try_printing(source)
-                        try_printing(target + '\n')
-                        list_matched_rows.append(row)
-                    else:
-                        continue
+        if dict_options['bool_function']:
+            list_matched_rows += check_against_function(
+                f_bl_line_range_list, fpath_terms, f_result_w, dict_options)
         else:
-            mdir, mfile = fpath_terms.rsplit('/', 1)
-            mname = mfile.rsplit('.', 1)[0]
-            sys.path.append(mdir)
-            external_script = importlib.import_module(mname)
-            for (seg_id, source, target) in f_bl_line_range_list:
-                result = external_script.function(seg_id, target)
-                if result:
-                    for ls in result:
-                        print_and_append(ls, ls, f_result_w, dict_options)
-                        list_matched_rows.append(ls)
+            list_matched_rows += check_against_terms(
+                f_bl_line_range_list, f_terms_read, f_result_w, dict_options)
         print('\n')
-
     f_terms.close()
 
-    if list_matched_rows and not dict_options['bool_function']:
-        f_result_w.append([''])
-        print_and_append('Summary', ['Summary'], f_result_w, dict_options)
-        list_reduced = unique_ordered_list([str(i) for i in list_matched_rows])
-        for i in list_reduced:
-            print_and_append(i, ls_from_list_str(i), f_result_w, dict_options)
-        print_and_append('', [''], f_result_w, dict_options)
+    if list_matched_rows:
+        wrap_up_result_if_found(
+            list_matched_rows, f_result_w, fpath_result, dict_options)
+        if dict_options['bool_open']:
+            open_file(fpath_result)
     elif not dict_options['bool_function']:
         print('No forbidden term was found!')
 
-    if list_matched_rows and not dict_options['bool_export']:
-        f_result = open(fpath_result, 'a', encoding='utf-8-sig')
-        f_result_wc = csv.writer(f_result, lineterminator='\n')
-        f_result_wc.writerows(f_result_w)
-        f_result.close()
-        print(fname_from_str_path(fpath_result), 'was successfully created.')
-        if not dict_options['bool_export'] and dict_options['bool_open']:
-            open_file(fpath_result)
-    elif list_matched_rows and dict_options['bool_export']:
-        print('The search was successfully finished.')
-    if list_matched_rows and not dict_options['bool_function']:
-        print(str(len(list_matched_rows)), 'matches.')
 
-
-def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_options):
-    # For testing
-    dict_options = dict_options or {
-        'bool_function': 0, 'bool_export': 1,
-        'str_rate': 'all', 'str_locked': 'all',
-        'bool_open': 1, 'bool_save': 0
-    }
+def check_forbidden_terms(
+        tuple_str_bl, tuple_str_terms, str_result, dict_options):
+    dict_options = dict_options or default_dict_options
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
     list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
@@ -432,8 +460,7 @@ def check_forbidden_terms(tuple_str_bl, tuple_str_terms, str_result, dict_option
 
     for fpath_terms in list_fpath_terms:
         check_for_each_term(
-            list_fn_bl_tuple, fpath_terms, fpath_result, dict_options
-        )
+            list_fn_bl_tuple, fpath_terms, fpath_result, dict_options)
 
     for fn_bl in list_fpath_bl:
         cleanup_if_mqxlz(fn_bl)
