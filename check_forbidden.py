@@ -23,6 +23,7 @@ ext_terms = [
     ('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
 ext_function = [('Python', '*.py')]
 ext_result = [('csv', '*.csv')]
+fn_result = 'checked_result.csv'
 
 ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
 fn_options = 'cf_options.p'
@@ -201,7 +202,7 @@ def choose_bl(*event):
         var_str_result.set(
             cf_scripts.dir_from_str_path(
                 cf_scripts.ls_from_tuple_str(var_str_bl.get())[0])
-                + '/checked_result.csv')
+                + '/' + fn_result)
     focus_off()
 
 
@@ -233,7 +234,7 @@ def choose_result(*event):
             cf_scripts.ls_from_tuple_str(var_str_bl.get()))
     f_result = tkinter.filedialog.asksaveasfilename(
         filetypes=ext_result, initialdir=initial_dir,
-        initialfile='checked_result.csv')
+        initialfile=fn_result)
     if f_result:
         var_str_result.set(f_result)
     focus_off()
@@ -281,7 +282,7 @@ def turn_off_export():
     elif not path_saved_result.get() and var_str_bl.get():
         path_1 = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
         var_str_result.set(
-            cf_scripts.dir_from_str_path(path_1) + '/checked_result.csv')
+            cf_scripts.dir_from_str_path(path_1) + '/' + fn_result)
     else:
         var_str_result.set('')
     btn_result['state'] = 'normal'

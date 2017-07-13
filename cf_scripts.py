@@ -117,19 +117,17 @@ def installed_version_is_newer(str_installed, str_online):
 
 
 def limit_header_range(header, dict_options):
-    regex_id = re.compile('(?<=trans-unit id=")\d+(?=")')
-    string_102 = 'mq:percent="102"'
-    string_101 = 'mq:percent="101"'
-    string_100 = 'mq:percent="100"'
+    regex_id = re.compile('<trans-unit id="(\d+)"')
+    regex_percent = re.compile('mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
-    seg_id = regex_id.search(header).group(0)
-    if dict_options['str_rate'] == '100' and string_100 in header:
+    seg_id = regex_id.search(header).group(1)
+    percent = 0
+    match_percent = regex_percent.search(header)
+    if match_percent:
+        percent = int(match_percent.group(1))
+    if dict_options['str_rate'] == '100' and percent >= 100:
         return seg_id, False
-    elif dict_options['str_rate'] == '100' and string_101 in header:
-        return seg_id, False
-    elif dict_options['str_rate'] == '101' and string_101 in header:
-        return seg_id, False
-    elif dict_options['str_rate'] == '101' and string_102 in header:
+    elif dict_options['str_rate'] == '101' and percent >= 101:
         return seg_id, False
     elif dict_options['str_locked'] == 'locked' and string_locked in header:
         return seg_id, False
@@ -137,9 +135,14 @@ def limit_header_range(header, dict_options):
         return seg_id, True
 
 
-def load_mqxliff(fn_bl_tuple, regex_pattern, dict_options):
+def load_mqxliff(fn_bl_tuple, dict_options):
     f_bl = open(fn_bl_tuple[1], encoding='utf-8')
     f_bl_line_range_list = []
+    source_pattern = re.compile(
+        '<source xml:space="preserve".*?>(.*?)</source>', re.S)
+    target_pattern = re.compile(
+        '<target xml:space="preserve">(.*?)</target>', re.S)
+
     not_historical = True
     for f_bl_line in f_bl:
         if '<mq:historical-unit ' in f_bl_line:
@@ -148,14 +151,20 @@ def load_mqxliff(fn_bl_tuple, regex_pattern, dict_options):
             not_historical = True
         elif f_bl_line.startswith('<trans-unit id="') and not_historical:
             seg_id, is_range = limit_header_range(f_bl_line, dict_options)
+        elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
+            if is_range:
+                while '</source>' not in f_bl_line:
+                    f_bl_line += next(f_bl)
+                source_line_with_tag = source_pattern.search(f_bl_line).group(1)
+                source_line_clean = remove_tags(source_line_with_tag)
         elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
             if is_range:
                 while '</target>' not in f_bl_line:
                     f_bl_line += next(f_bl)
-                f_bl_line_with_tag = regex_pattern.search(f_bl_line).group(0)
-                if f_bl_line_with_tag:
-                    f_bl_line_clean = remove_tags(f_bl_line_with_tag)
-                    f_bl_line_range_list.append((seg_id, f_bl_line_clean))
+                target_line_with_tag = target_pattern.search(f_bl_line).group(1)
+                target_line_clean = remove_tags(target_line_with_tag)
+                if target_line_clean:
+                    f_bl_line_range_list.append((seg_id, source_line_clean, target_line_clean))
         else:
             continue
     f_bl.close()
@@ -240,7 +249,7 @@ def print_and_append_metadata(f_result_w, fpath_terms, dict_options):
     if not dict_options['bool_function']:
         print_and_append(
             'Header: [' + header + '] + Segment Number',
-            header.split(',') + ['ID', 'Target'] , f_result_w, dict_options)
+            header.split(',') + ['Segment', 'Source', 'Target'] , f_result_w, dict_options)
     print('-' * 70)
 
 
@@ -323,12 +332,10 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
     f_result_w = []
     list_matched_rows = []
     print_and_append_metadata(f_result_w, fpath_terms, dict_options)
-    regex_pattern = re.compile(
-        '(?<=<target xml:space="preserve">).*?(?=</target>)', re.S)
     for fn_bl_tuple in list_fn_bl_tuple:
         f_result_w.append([''])
         print_and_append(fn_bl_tuple[0] + '\n', [fn_bl_tuple[0]], f_result_w, dict_options)
-        f_bl_line_range_list = load_mqxliff(fn_bl_tuple, regex_pattern, dict_options)
+        f_bl_line_range_list = load_mqxliff(fn_bl_tuple, dict_options)
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_read = csv.reader(f_terms)
@@ -342,15 +349,18 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
                     print('Error occurred with regex pattern:', row[0])
                     print(sys.exc_info()[1], '\n', sys.exc_info()[0])
                     continue
-                for seg_id, line in f_bl_line_range_list:
-                    match = pattern.search(line)
+                for (seg_id, source, target) in f_bl_line_range_list:
+                    match = pattern.search(target)
                     if match:
-                        print_and_append(str(row), row + [seg_id, line], f_result_w, dict_options)
+                        print_and_append(
+                            str(row), row + [seg_id, source, target], f_result_w, dict_options)
                         s, e = match.start(), match.end()
                         try_printing(''.join([
-                            str(seg_id), '\t', line[s - 5:s], '...', line[s:e], '...', line[e:e + 5]
+                            str(seg_id), '\t',
+                            target[s - 5:s], '...', target[s:e], '...', target[e:e + 5]
                         ]))
-                        try_printing(line + '\n')
+                        try_printing(source)
+                        try_printing(target + '\n')
                         list_matched_rows.append(row)
                     else:
                         continue
@@ -359,7 +369,7 @@ def check_for_each_term(list_fn_bl_tuple, fpath_terms, fpath_result, dict_option
             mname = mfile.rsplit('.', 1)[0]
             sys.path.append(mdir)
             external_script = importlib.import_module(mname)
-            for (seg_id, target) in f_bl_line_range_list:
+            for (seg_id, source, target) in f_bl_line_range_list:
                 result = external_script.function(seg_id, target)
                 if result:
                     for ls in result:
