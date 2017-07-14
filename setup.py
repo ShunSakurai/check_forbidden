@@ -17,7 +17,7 @@ dict_console = {
     'author': 'Shun Sakurai',
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
-    'version': '1.9.9'
+    'version': '1.9.10'
 }
 
 dict_options = {
