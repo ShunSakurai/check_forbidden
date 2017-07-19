@@ -415,6 +415,11 @@ def load_options():
         set_if_in_dict(dict_loaded, 'str_locked', var_str_locked)
         set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
         set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
+        if var_bool_function.get():
+            turn_on_function()
+        # set_if_in_dict doesn't work for bool_export
+        if 'bool_export' in dict_loaded and not dict_loaded['bool_export']:
+            var_bool_export.set(False)
         if not var_bool_export.get():
             turn_off_export()
         print('Saved options are loaded.')
