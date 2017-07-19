@@ -6,6 +6,7 @@ This file contains helper functions, which are
 basically without any side effects to UIs and Variables
 '''
 import setup
+import cf_html
 import csv
 import datetime
 import importlib
@@ -129,16 +130,17 @@ def limit_header_range(header, dict_options):
     seg_id = regex_id.search(header).group(1)
     percent = 0
     match_percent = regex_percent.search(header)
+    locked = string_locked in header
     if match_percent:
         percent = int(match_percent.group(1))
     if dict_options['str_rate'] == '100' and percent >= 100:
         return seg_id, False
     elif dict_options['str_rate'] == '101' and percent >= 101:
         return seg_id, False
-    elif dict_options['str_locked'] == 'locked' and string_locked in header:
+    elif dict_options['str_locked'] == 'locked' and locked:
         return seg_id, False
     else:
-        return seg_id, True
+        return seg_id, percent, locked, True
 
 
 def load_mqxliff(fn_bl_tuple, dict_options):
@@ -156,7 +158,7 @@ def load_mqxliff(fn_bl_tuple, dict_options):
         elif '</mq:historical-unit>' in f_bl_line:
             not_historical = True
         elif f_bl_line.startswith('<trans-unit id="') and not_historical:
-            seg_id, is_range = limit_header_range(f_bl_line, dict_options)
+            seg_id, percent, locked, is_range = limit_header_range(f_bl_line, dict_options)
         elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
             if is_range:
                 while '</source>' not in f_bl_line:
@@ -170,7 +172,9 @@ def load_mqxliff(fn_bl_tuple, dict_options):
                 target_line_with_tag = target_pattern.search(f_bl_line).group(1)
                 target_line_clean = remove_tags(target_line_with_tag)
                 if target_line_clean:
-                    f_bl_line_range_list.append((seg_id, source_line_clean, target_line_clean))
+                    f_bl_line_range_list.append(
+                        (seg_id, source_line_clean, target_line_clean, percent, locked)
+                    )
         else:
             continue
     f_bl.close()
@@ -189,11 +193,23 @@ def ls_from_list_str(x):
     return list_from_str
 
 
+def ls_from_settings(dict_options):
+    if dict_options['str_rate'] == 'all':
+        setting_rate = 'Check all match rates'
+    elif dict_options['str_rate'] == '101':
+        setting_rate = r'Exclude 101% matches'
+    elif dict_options['str_rate'] == '100':
+        setting_rate = r'Exclude 100% / 101%'
+    if dict_options['str_locked'] == 'all':
+        setting_locked = 'Include locked segments'
+    else:
+        setting_locked = 'Exclude locked segments'
+    settings = [setting_rate, setting_locked]
+    return settings
+
+
 def ls_from_tuple_str(tuple_str):
     r'''
-    >>> ls_from_tuple_str(r'/Users/path/mqxliff.mqxliff {/Users/path/mqxlz.mqxlz}')
-    ['/Users/path/mqxliff.mqxliff', '/Users/path/mqxlz.mqxlz']
-
     >>> ls_from_tuple_str(r' C:/Users/path/mqxliff1.mqxliff {C:/Users/path/mqxliff2.mqxliff} {C:\Users\path\mqxlz1.mqxlz} {C:\Users\path\mqxlz2.mqxlz}')
     ['C:/Users/path/mqxliff1.mqxliff', 'C:/Users/path/mqxliff2.mqxliff', 'C:\\Users\\path\\mqxlz1.mqxlz', 'C:\\Users\\path\\mqxlz2.mqxlz']
     '''
@@ -233,30 +249,38 @@ def print_and_append(to_print, to_write, file_to_write_in, dict_options):
         pass
 
 
-def print_and_append_metadata(list_matches, fpath_terms, dict_options):
+def print_and_append_metadata(dict_options):
+    list_metadata = []
+
     print('-' * 70)
-    date_time_version = ''.join([
-        datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
-        ' Check Forbidden v', setup.dict_console['version']
-    ])
-    print_and_append(
-        'Time and version: ' + date_time_version,
-        [date_time_version], list_matches, dict_options)
-    list_name = fname_from_str_path(fpath_terms)
+    meta_date_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    meta_version = 'Check Forbidden v' + setup.dict_console['version']
+    print(' '.join(['Time and version:', meta_date_time, meta_version]))
+    list_metadata.append(meta_date_time)
+    list_metadata.append(meta_version)
+
+    return list_metadata
+
+
+def print_and_append_terms_data(fpath_terms, dict_options):
+    fname_header_terms = []
+
+    print('-' * 70)
     if not dict_options['bool_function']:
         f_terms = open(fpath_terms, encoding='utf-8')
         header = f_terms.readline().rstrip('\n')
         f_terms.close()
-        print_and_append('Terms: ' + list_name, [list_name], list_matches, dict_options)
-    else:
-        print_and_append('Function: ' + list_name, [list_name], list_matches, dict_options)
-    settings = str_from_settings(dict_options)
-    print_and_append('Options: ' + settings, [settings], list_matches, dict_options)
-    if not dict_options['bool_function']:
         print_and_append(
-            'Header: [' + header + '] + Segment Number',
-            header.split(',') + ['Segment', 'Source', 'Target'] , list_matches, dict_options)
+            'Terms: ' + fpath_terms, fpath_terms, fname_header_terms, dict_options)
+        print_and_append(
+            'Header: [' + header + '] + Segment Number', header.split(','),
+            fname_header_terms, dict_options)
+    else:
+        print_and_append(
+            'Function: ' + fpath_terms, fpath_terms, fname_header_terms, dict_options)
     print('-' * 70)
+
+    return fname_header_terms
 
 
 def remove_tags(segment):
@@ -276,19 +300,11 @@ def return_if_in_dict(dicionary, key):
         return
 
 
-def str_from_settings(dict_options):
-    if dict_options['str_rate'] == 'all':
-        setting_rate = 'Check all match rates'
-    elif dict_options['str_rate'] == '101':
-        setting_rate = r'Exclude 101% matches'
-    elif dict_options['str_rate'] == '100':
-        setting_rate = r'Exclude 100% / 101%'
-    if dict_options['str_locked'] == 'all':
-        setting_locked = 'Include locked segments'
+def tf_to_yn(boolian):
+    if boolian:
+        return ('Yes')
     else:
-        setting_locked = 'Exclude locked segments'
-    settings = setting_rate + '; ' + setting_locked
-    return settings
+        return ('No')
 
 
 def try_printing(to_print):
@@ -334,10 +350,27 @@ def unzip_if_mqxlz(fn_bl):
         return fn_bl
 
 
-def write_result(f_result_w, fpath_result, dict_options):
-    f_result = open(fpath_result, 'a', encoding='utf-8-sig')
-    f_result_wc = csv.writer(f_result, lineterminator='\n')
-    f_result_wc.writerows(f_result_w)
+def write_result(list_metadata, f_result_w, fpath_result, dict_options):
+    if os.path.exists(fpath_result):
+        import tkinter.messagebox
+        answer = tkinter.messagebox.askquestion(
+            'Warning', 'Overwrite ' + fpath_result + '?')
+        if answer == 'no':
+            return
+
+    f_template = open('files/cf_template.html')
+    fr_template = f_template.read()
+
+    f_result = open(fpath_result, 'w', encoding='utf-8')
+    f_result.write(fr_template.replace(
+        '@list_metadata', '</li>\n<li>'.join(list_metadata)
+    ).replace(
+        '@tr_results', cf_html.mk_table_result(f_result_w, dict_options)
+    ).replace(
+        '@filter_header', cf_html.mk_table_filter_header(dict_options)
+    ).replace(
+        '@filter_body', cf_html.mk_table_filter_body()
+    ))
     f_result.close()
     print(
         '\n' + fname_from_str_path(fpath_result),
@@ -348,40 +381,38 @@ def write_result(f_result_w, fpath_result, dict_options):
 
 
 def wrap_up_result_if_found(
-        list_matched_rows, list_matches, fpath_result, dict_options):
+        list_matched_rows, fpath_result, dict_options):
     if not dict_options['bool_function']:
-        list_matches.append([''])
-        print_and_append('Summary', ['Summary'], list_matches, dict_options)
+        print('Summary')
         list_reduced = unique_ordered_list([str(i) for i in list_matched_rows])
         for i in list_reduced:
-            print_and_append(i, ls_from_list_str(i), list_matches, dict_options)
-        print_and_append('', [''], list_matches, dict_options)
+            try_printing(i)
+        print('')
         print(str(len(list_matched_rows)), 'matches.')
 
 
 def check_against_function(
-        f_bl_line_range_list, fpath_terms, list_matches, dict_options):
+        fname_bl, f_bl_line_range_list, fpath_terms, dict_options):
     list_matched_rows = []
 
     mdir, mfile = fpath_terms.rsplit('/', 1)
     mname = mfile.rsplit('.', 1)[0]
     sys.path.append(mdir)
     external_script = importlib.import_module(mname)
-    for (seg_id, source, target) in f_bl_line_range_list:
+    for (seg_id, source, target, percent, locked) in f_bl_line_range_list:
         result = external_script.function(seg_id, target)
         if result:
             for ls in result:
-                print_and_append(ls, ls, list_matches, dict_options)
-                list_matched_rows.append(ls)
+                print_and_append(ls, ls, list_matched_rows, dict_options)
 
     return list_matched_rows
 
 
 def check_against_terms(
-        f_bl_line_range_list, f_terms_read, list_matches, dict_options):
+        fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
     list_matched_rows = []
 
-    for row in f_terms_read:
+    for row in f_terms_reader:
         if not row or not row[0]:
             continue
         try:
@@ -390,52 +421,58 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
-        for (seg_id, source, target) in f_bl_line_range_list:
+        for (seg_id, source, target, percent, locked) in f_bl_line_range_list:
             match = pattern.search(target)
             if match:
-                print_and_append(
-                    str(row), row + [seg_id, source, target], list_matches, dict_options)
                 s, e = match.start(), match.end()
+                print_and_append(
+                    str(row),
+                    [
+                        fname_bl, seg_id, source,
+                        ''.join([target[:s], '<mark>', target[s:e], '</mark>', target[e:]]),
+                        percent, tf_to_yn(locked)
+                    ] + row,
+                    list_matched_rows, dict_options
+                )
                 try_printing(''.join([
                     str(seg_id), '\t',
                     target[s - 5:s], '...', target[s:e], '...', target[e:e + 5]
                 ]))
                 try_printing(source)
                 try_printing(target + '\n')
-                list_matched_rows.append(row)
             else:
                 continue
     return list_matched_rows
 
 
-def check_for_each_term(
+def check_for_each_term_list(
         list_fn_bl_tuple, fpath_terms, fpath_result, dict_options):
-    list_matches = []
+    fname_header_terms = print_and_append_terms_data(fpath_terms, dict_options)
     list_matched_rows = []
-    print_and_append_metadata(list_matches, fpath_terms, dict_options)
     for fn_bl_tuple in list_fn_bl_tuple:
-        list_matches.append([''])
-        print_and_append(fn_bl_tuple[0] + '\n', [fn_bl_tuple[0]], list_matches, dict_options)
+        try_printing(fn_bl_tuple[0] + '\n')
+        fname_bl = fname_from_str_path(fn_bl_tuple[0])
         f_bl_line_range_list = load_mqxliff(fn_bl_tuple, dict_options)
-        list_matched_rows = []
 
         f_terms = open(fpath_terms, encoding='utf-8')
-        f_terms_read = csv.reader(f_terms)
+        f_terms_reader = csv.reader(f_terms)
         if dict_options['bool_function']:
             list_matched_rows += check_against_function(
-                f_bl_line_range_list, fpath_terms, list_matches, dict_options)
+                fname_bl, f_bl_line_range_list, fpath_terms, dict_options)
         else:
             list_matched_rows += check_against_terms(
-                f_bl_line_range_list, f_terms_read, list_matches, dict_options)
-        print('\n')
+                fname_bl, f_bl_line_range_list, f_terms_reader, dict_options)
     f_terms.close()
 
     if list_matched_rows:
         wrap_up_result_if_found(
-            list_matched_rows, list_matches, fpath_result, dict_options)
-        return list_matches
+            list_matched_rows, fpath_result, dict_options)
+        return fname_header_terms + list_matched_rows
     elif not dict_options['bool_function']:
         print('No forbidden term was found!')
+
+    print('')
+    return []
 
 
 def check_forbidden_terms(
@@ -456,6 +493,8 @@ def check_forbidden_terms(
             print('File name is invalid:', fn_bl)
             return
 
+    list_metadata = print_and_append_metadata(dict_options)
+
     list_fn_bl_tuple = []
     for fn_bl in list_fpath_bl:
         fn_actual = replace_back_slash(unzip_if_mqxlz(fn_bl))
@@ -463,21 +502,22 @@ def check_forbidden_terms(
 
     f_result_w = []
     for fpath_terms in list_fpath_terms:
-        f_result_w += check_for_each_term(
+        f_result_w += check_for_each_term_list(
             list_fn_bl_tuple, fpath_terms, fpath_result, dict_options
         )
 
+    elapsed = time.time() - start
+    print(str(elapsed)[:10], 'seconds.\n')
+
     if f_result_w:
         if not dict_options['bool_export']:
-            write_result(f_result_w, fpath_result, dict_options)
+            write_result(list_metadata, f_result_w, fpath_result, dict_options)
         elif dict_options['bool_export']:
             print('The search was successfully finished.')
 
     for fn_bl in list_fpath_bl:
         cleanup_if_mqxlz(fn_bl)
 
-    elapsed = time.time() - start
-    print(str(elapsed)[:10], 'seconds.\n')
     print('To exit, click [x].\n')
 
 

@@ -22,8 +22,8 @@ ext_bl = [
 ext_terms = [
     ('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
 ext_function = [('Python', '*.py')]
-ext_result = [('csv', '*.csv')]
-fn_result = 'checked_result.csv'
+ext_result = [('html', '*.html')]
+fn_result = 'checked_result.html'
 
 ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
 fn_options = 'cf_options.p'
@@ -38,7 +38,7 @@ dict_cb_hover = {
 # Widgets
 btn_bl = tkinter.Button(text='Billingual', underline=0)
 btn_terms = tkinter.Button(text='Terms', underline=0)
-btn_result = tkinter.Button(text='Result', underline=0, state='disabled')
+btn_result = tkinter.Button(text='Result', underline=0)
 three_buttons = [btn_bl, btn_terms, btn_result]
 
 btn_bl.grid(row=0, column=0, columnspan=2, sticky='w', padx=5)
@@ -52,13 +52,12 @@ cb_function.grid(row=1, column=1, sticky='e')
 
 var_bool_export = tkinter.BooleanVar()
 cb_export = tkinter.Checkbutton(variable=var_bool_export)
-cb_export.select()
+cb_export.deselect()
 cb_export.grid(row=2, column=1, sticky='e')
 
 var_str_bl = tkinter.StringVar(frame_main)
 var_str_terms = tkinter.StringVar(frame_main)
 var_str_result = tkinter.StringVar(frame_main)
-var_str_result.set(ph_cp_only)
 three_vars = [var_str_bl, var_str_terms, var_str_result]
 
 ent_bl = tkinter.Entry(width=85, textvariable=var_str_bl)
@@ -164,7 +163,7 @@ label_settings.grid(row=4, column=0, sticky='w')
 
 var_bool_open = tkinter.BooleanVar()
 cb_open = tkinter.Checkbutton(
-    frame_options, text='Open CSV after export',
+    frame_options, text='Open HTML after export',
     underline=3, variable=var_bool_open)
 cb_open.select()
 cb_open.grid(row=5, column=0, sticky='w')
@@ -266,7 +265,7 @@ def toggle_cb_function(*event):
 
     if not var_bool_function.get():
         turn_off_function()
-    elif var_bool_function.get():
+    else:
         turn_on_function()
 
 
@@ -296,7 +295,7 @@ def toggle_cb_export(*event):
 
     if var_bool_export.get():
         turn_on_export()
-    elif not var_bool_export.get():
+    else:
         turn_off_export()
 
 
@@ -418,10 +417,10 @@ def load_options():
         if var_bool_function.get():
             turn_on_function()
         # set_if_in_dict doesn't work for bool_export
-        if 'bool_export' in dict_loaded and not dict_loaded['bool_export']:
-            var_bool_export.set(False)
-        if not var_bool_export.get():
-            turn_off_export()
+        if 'bool_export' in dict_loaded:
+            var_bool_export.set(dict_loaded['bool_export'])
+        if var_bool_export.get():
+            turn_on_export()
         print('Saved options are loaded.')
 
 

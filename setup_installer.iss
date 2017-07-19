@@ -32,6 +32,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "dist\{#MyAppName}.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "files\cf_template.html"; DestDir: "{app}\files"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]

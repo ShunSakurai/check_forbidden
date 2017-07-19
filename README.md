@@ -22,7 +22,7 @@ All you have to prepare are:
 - memoQ bilingual .mqxlz or .mqxliff file(s)
 - CSV or text file(s) containing the list of forbidden terms
 
-This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into a CSV file. Command Prompt is good for browsing the result and quickly checking what was detected. The CSV file is useful when you have many matches and when many non-printable characters are included in the bilingual file. The Summary result is useful when you are working on a "View."
+This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into an HTML file. Command Prompt is good when the file is small and you want to quickly check what was detected. The Summary result is useful when you are working on a "View." Some characters are non-printable on Command Prompt. The HTML file is useful when you have many matches and you want to use filtering features.
 
 This program is written in Python with tkinter and is distributed in .exe format through [PyInstaller](http://www.pyinstaller.org/) and [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows).
 
@@ -52,10 +52,10 @@ Procedures:
 - You can open the program by double-clicking Check Forbidden.exe or its alias
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose CSV or text file(s) containing the list of forbidden terms
-- Specify the path and the name of the result file to be exported if necessary, by unselecting the check box. The default path is the first bilingual file's path + "checked_result.csv"
+- Specify the path and the name of the result file to be exported if necessary, by unselecting the check box. The default path is the first bilingual file's path + "checked_result.html"
 - Click "Run!"
-- The result is displayed in the Command Prompt. If exporting is enabled and any matches are found,  they are also exported into a CSV file
-- Press "Enter" key or click "X" (close) button to exit the program
+- The result is displayed in the Command Prompt. If exporting is enabled and any matches are found, they are also exported into an HTML file
+- Click "X" (close) button to exit the program
 
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
@@ -64,7 +64,6 @@ Procedures:
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
 - You can re-run the program without closing it
-- If you choose an existing CSV file as the result file, the result will be added to the bottom of it
 
 ### Options
 You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▲ icon.
@@ -93,8 +92,6 @@ The term list needs to meet the following specifications:
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
-The exported result CSV file is encoded in UTF-8 with BOM (Python utf-8-sig) with commas as the delimiters. Be careful about the encoding when opening the file with some programs.
-
 ### Regular expressions
 - This program uses the syntax in [re](https://docs.python.org/3/library/re.html) module
 - memoQ's regex for tags `\tag` is not currently supported
@@ -102,10 +99,10 @@ The exported result CSV file is encoded in UTF-8 with BOM (Python utf-8-sig) wit
 - (Example) `\\)\S` searches for a bracket without whitespace around it
 
 ### Call external functions
-When the function check box is selected, you can call a function from an external Python script.
+When the function check box is selected, you can call a function from an external Python script. *Specifications below are to be changed soon.*
 
 - Call a function named "function" in an external Python script, which takes segment ID (integer) and the target segment (string) as the arguments
-- The function should return a 2D list for each segment, each inner list representing one line in the result display both on Command Prompt and in the CSV file
+- The function should return a 2D list for each segment, each inner list representing one line in the result display both on Command Prompt and in the HTML table
 
 Code example:
 calculate_width.py
@@ -169,16 +166,16 @@ Below are some best practices to avoid false positives.
 - When many false positives are found for 1 term, consider dividing the CSV file
 
 ### Things to do when searching takes too long time
-- Consider using Exclude 100%/101% matches options
+- Consider using Exclude 100%/101% matches or Exclude Locked options
 - Consider creating a view for multiple documents (files)
 
 ## Features to come
 ### Working on
 - Save term lists and their paths as favorites
 - Make the program window re-sizable
-- Create a tk pane for displaying and filtering the result
-- Specify the range of segment IDs to search
+- Make the HTML table sortable
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
+- Suppress printing on Command Prompt for more speed
 
 ### Maybe later
 - Add settings to specify CSV delimiters

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Check Forbidden results</title>
+     <style type="text/css">
+        button, div { margin-bottom: 5px; margin-top: 5px; }
+        caption { font-weight: bold; }
+        tr input, td input { width: 100%; }
+        table { border-collapse: collapse; table-layout: fixed; width: 100%; }
+        td { word-wrap: break-word; }
+        th { background: silver; }
+    </style>
+
+    <script type="text/javascript">
+    document.fluxColor = false;
+    document.hiddenRows = {};
+    document.predefinedFilters = {matchRates: "all", lockedStatus: "all"};
+    document.predefinedFilterStrings = {
+      matchRates: {all: '', 101: '10[12]', 100: '10[012]'},
+      lockedStatus: {all: '', locked: 'Yes'},
+    };
+
+    var assessKey = function(event) {
+      if (event.ctrlKey || event.altKey
+      || document.activeElement.nodeName === "INPUT") {
+        return;
+      }
+      switch (event.keyCode){
+        case 'C'.charCodeAt(0):
+          clearFilter();
+          break;
+        case 'A'.charCodeAt(0):
+          predefinedFilterByKey("matchRatesAll", 4);
+          break;
+        case '1'.charCodeAt(0):
+          predefinedFilterByKey("matchRates101", 4);
+          break;
+        case '0'.charCodeAt(0):
+          predefinedFilterByKey("matchRates100", 4);
+          break;
+        case 'I'.charCodeAt(0):
+          predefinedFilterByKey("lockedStatusAll", 5);
+          break;
+        case 'E'.charCodeAt(0):
+          predefinedFilterByKey("lockedStatusLocked", 5);
+          break;
+        case 'F'.charCodeAt(0):
+          var cb = document.getElementById("fluxCheckbox");
+          cb.checked = !cb.checked;
+          toggleFluxColor();
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', assessKey);
+
+    var updateSegmentVisibility = function (allTr) {
+      var hiddenRowsArray = new Array(allTr.length).fill(false);
+      var n = allTr.length;
+      for (var key in document.hiddenRows) {
+        if (document.hiddenRows.hasOwnProperty(key)
+        && typeof document.hiddenRows[key] === "object") {
+          for (var i = 0; i < n; i ++){
+            hiddenRowsArray[i] = hiddenRowsArray[i] || document.hiddenRows[key][i];
+          }
+        }
+      }
+      for (var j = 0; j < n; j ++){
+        if (allTr[j].className.indexOf("filter") == -1) {
+          allTr[j].style.display = hiddenRowsArray[j]? "None": "";
+        }
+      }
+    };
+
+    var include = function(range, string) {
+      return range.indexOf(string) === -1;
+    };
+
+    var exclude = function(range, string) {
+      if (string === "") {
+        return;
+      }
+      return range.indexOf(string) !== -1;
+    };
+
+    var includeRegex = function(range, string) {
+      try {
+        var regex = new RegExp(string);
+        return !regex.exec(range);
+      } catch (e) {
+        if (e instanceof SyntaxError){
+          return;
+        } else {
+          throw e;
+        }
+      }
+    };
+
+    var excludeRegex = function(range, string) {
+      if (string === "") {
+        return;
+      }
+      try {
+        var regex = new RegExp(string);
+        return regex.exec(range);
+      } catch (e) {
+        if (e instanceof SyntaxError){
+          return;
+        } else {
+          throw e;
+        }
+      }
+    };
+
+    var filterSegments = function(element, func) {
+      var th = element.parentNode;
+      var column = Array.prototype.indexOf.call(th.parentNode.children, th);
+      var filterId = func.name + "Filter" + column;
+      var allTr = document.querySelectorAll('tr');
+
+      if (!element.value) {
+        delete document.hiddenRows[filterId];
+      } else {
+        document.hiddenRows[filterId] = [];
+        for (var i = 0, n = allTr.length; i < n; i ++) {
+          if (allTr[i].children[0] && allTr[i].children[0].nodeName === "TD"
+          && func(allTr[i].children[column].textContent, element.value)){
+            document.hiddenRows[filterId].push(true);
+          } else {
+            document.hiddenRows[filterId].push(false);
+          }
+        }
+      }
+      updateSegmentVisibility(allTr);
+    };
+
+    var clearFilter = function () {
+      document.querySelectorAll(".filter").forEach(function(element){
+        var filterTd = document.getElementById(element.id).children;
+        for (var td in filterTd) {
+          if (filterTd.hasOwnProperty(td)
+          && filterTd[td].nodeName === "TD"){
+            for (var input in filterTd[td].children){
+              if (filterTd[td].children.hasOwnProperty(input)
+              && filterTd[td].children[input].nodeName === "INPUT"){
+                filterTd[td].children[input].value = "";
+              }
+            }
+          }
+        }
+        for (var key in document.hiddenRows){
+          if (document.hiddenRows.hasOwnProperty(key)
+          && key.indexOf("Filter") >= 0) {
+            delete document.hiddenRows[key];
+          }
+        }
+      });
+      var allTr = document.querySelectorAll('tr');
+      updateSegmentVisibility(allTr);
+    };
+
+    var predefinedFilter = function (element, column) {
+      var filterTable = document.getElementById("filterTable");
+      var excludeRegexInput = filterTable.children[1].children[4].children[column].children[0];
+      excludeRegexInput.value = document.predefinedFilterStrings[element.name][element.value];
+      filterSegments(excludeRegexInput, excludeRegex);
+      var allTr = document.querySelectorAll('tr');
+      updateSegmentVisibility(allTr);
+    };
+
+    var predefinedFilterByKey = function (name, column) {
+      var element = document.getElementById(name);
+      element.checked = true;
+      predefinedFilter(element, column);
+    };
+
+    var toggleFluxColor = function() {
+      document.fluxColor = !document.fluxColor;
+      var styleSheet = document.styleSheets[0];
+      var styleLength = styleSheet.cssRules.length;
+      if (document.fluxColor){
+        styleSheet.insertRule('mark {background: #dff;}', styleLength);
+      } else {
+      styleSheet.deleteRule(styleLength - 1);
+      }
+    };
+    </script>
+
+  </head>
+  <body>
+    <h3>Check Forbidden results</h3>
+    <ul class="info">
+      <li>@list_metadata</li>
+    </ul>
+
+    <table id="filterTable" style="width:75%">
+      <caption>Filters (Include, Exclude, Include Regex, Exclude Regex)</caption>
+      <tbody>
+        <tr>
+@filter_header
+        </tr>
+@filter_body
+      </tbody>
+    </table>
+
+    <div>
+      <button onclick="clearFilter()"><u>C</u>lear Filter</button>
+    </div>
+
+    <div>
+      <input type="radio" id="matchRatesAll" name="matchRates" onclick="predefinedFilter(this, 4)" value="all" checked /> Include <u>a</u>ll segments / Exclude
+      <input type="radio" id="matchRates101" name="matchRates" onclick="predefinedFilter(this, 4)" value="101" /> 10<u>1</u>+%
+      <input type="radio" id="matchRates100" name="matchRates" onclick="predefinedFilter(this, 4)" value="100" /> 10<u>0</u>+%
+    </div>
+
+    <div>
+      <input type="radio" id="lockedStatusAll" name="lockedStatus" onclick="predefinedFilter(this, 5)" value="all" checked /> <u>I</u>nclude /
+      <input type="radio" id="lockedStatusLocked" name="lockedStatus" onclick="predefinedFilter(this, 5)" value="locked" /> <u>E</u>xclude locked segments
+    </div>
+
+    <div>
+      <input type="checkbox" id="fluxCheckbox" onclick="toggleFluxColor()" /><u>f</u>.lux-friendly color
+    </div>
+
+@tr_results
+
+  </body>
+</html>
