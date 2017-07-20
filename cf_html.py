@@ -59,9 +59,7 @@ def mk_table_result_header(dict_options):
 def mk_table_result(f_result_w, dict_options):
     ls_str_tables = []
     first_line = True
-    closing_tags = ''.join([
-        ' ' * 10, '</td></tr>\n', ' ' * 6, '</tbody>\n', ' ' * 4, '</table>'
-    ])
+    closing_tags = ''.join([' ' * 6, '</tbody>\n', ' ' * 4, '</table>'])
 
     iter_result = iter(f_result_w)
     for line in iter_result:
@@ -76,20 +74,22 @@ def mk_table_result(f_result_w, dict_options):
             )
             ls_str_tables.append(mk_table_result_header(dict_options))
             if not dict_options['bool_function']:
-                ls_str_tables.append(' ' * 10 + '<th>')
                 ls_str_tables.append(
+                    ' ' * 10 + '<th>' +
                     ''.join(['</th>\n', ' ' * 10, '<th>'])
-                    .join(str(i) for i in next(iter_result))
+                    .join(str(i) for i in next(iter_result)) +
+                    '</th>'
                 )
-                ls_str_tables.append(' ' * 10 + '</th>')
             ls_str_tables.append(' ' * 8 + '</tr>')
             first_line = False
         else:
-            ls_str_tables.append(''.join([' ' * 8, '<tr>\n', ' ' * 10, '<td>']))
+            ls_str_tables.append(' ' * 8 + '<tr>')
             ls_str_tables.append(
+                ' ' * 10 + '<td>' +
                 ''.join(['</td>\n', ' ' * 10, '<td>'])
-                .join([str(i) for i in line])
+                .join([str(i) for i in line]) +
+                '</td>'
             )
-            ls_str_tables.append(' ' * 10 + '</td></tr>')
+            ls_str_tables.append(' ' * 8 + '</tr>')
     ls_str_tables.append(closing_tags)
     return '\n'.join(ls_str_tables)

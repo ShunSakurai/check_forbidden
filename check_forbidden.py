@@ -380,7 +380,7 @@ def get_options():
 
 def restore_default(*event):
     var_bool_function.set(0)
-    var_bool_export.set(1)
+    var_bool_export.set(0)
     var_str_rate.set('all')
     var_str_locked.set('all')
     var_bool_open.set(1)

@@ -1,49 +1,59 @@
 # Test cases and procedures
 
 ## Bilingual
-- △very long path
 - mqxlz, mqxliff
 - Single, Multiple
 - Bold, Italic, Underlined
-- tags
+- Tags
 - {} {}, (), comma, space, \, /, ""
-- very long content
-- very large file
-- empty segment
-- single-byte and multi-byte characters
+- Empty segment
+- Single-byte and multi-byte characters
+- △Very long path
+- △Very long content
+- △Very large file
 
 ## Terms
 - CSV, text
-- empty term
-- empty row
-- single-byte and multi-byte characters
+- Empty term
+- Empty row
+- Single-byte and multi-byte characters
 - 1 ~ 5 columns
-- very long term
-- very large file
-- cases
-- word separation
+- Cases
+- △Very long term
+- △Very large file
+
+## Matches
+- No match
+- Matches in one file
+- Matches in multiple bilingual files
+- Matches in multiple term files
 
 ## Function
-- filedialog
-- UI
-- Result
+- Mode switched correctly
 
 ## Result
 - Result file is exported correctly
 - Select result style
 
 ## filedialog
-- incorrect path
-- incorrect file
-- incorrect extension
+- Incorrect path
+- Incorrect file
+- Incorrect extension
 - Btn to Ent
 - Ent to Btn
 - Btn to Cancel
 - Saved path
 - SC disabled when an entry field is focused
 
-## Options
+## Filter options
 - 3 x 2 = 6 patterns
+
+## Other options
+- Work correctly
+
+## Web links
+- Readme opens
+- Check for updates works
 
 ## UI
 - SC keys
@@ -51,13 +61,13 @@
 - Move focus with tab key
 
 ## Install
-- Version No.
+- Version number is correct
 
 ## Close the program
-- Enter, [X], before and after running the program
+- Click [X], before and after running the program
 - Load saved settings
 
-## Useful string for debugging
+## Command for debugging when the program closes due to an error
 `
 cmd /k "Check Forbidden.exe"
 `

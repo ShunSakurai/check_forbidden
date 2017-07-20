@@ -22,7 +22,7 @@ import webbrowser
 import zipfile
 
 default_dict_options = {
-    'bool_function': 0, 'bool_export': 1,
+    'bool_function': 0, 'bool_export': 0,
     'str_rate': 'all', 'str_locked': 'all',
     'bool_open': 1, 'bool_save': 0
 }
@@ -131,16 +131,18 @@ def limit_header_range(header, dict_options):
     percent = 0
     match_percent = regex_percent.search(header)
     locked = string_locked in header
+    is_range = False
     if match_percent:
         percent = int(match_percent.group(1))
     if dict_options['str_rate'] == '100' and percent >= 100:
-        return seg_id, False
+        pass
     elif dict_options['str_rate'] == '101' and percent >= 101:
-        return seg_id, False
+        pass
     elif dict_options['str_locked'] == 'locked' and locked:
-        return seg_id, False
+        pass
     else:
-        return seg_id, percent, locked, True
+        is_range = True
+    return seg_id, percent, locked, is_range
 
 
 def load_mqxliff(fn_bl_tuple, dict_options):
