@@ -157,6 +157,13 @@
       });
       var allTr = document.querySelectorAll('tr');
       updateSegmentVisibility(allTr);
+
+      resetCheckButtons();
+    };
+
+    var resetCheckButtons = function () {
+      document.getElementById("matchRatesAll").checked = true;
+      document.getElementById("lockedStatusAll").checked = true;
     };
 
     var predefinedFilter = function (element, column) {
