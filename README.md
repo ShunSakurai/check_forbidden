@@ -176,7 +176,6 @@ Below are some best practices to avoid false positives.
 - Make the program window re-sizable
 - Make the HTML table sortable
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
-- Suppress printing on Command Prompt for more speed
 
 ### Maybe later
 - Add settings to specify CSV delimiters

@@ -243,14 +243,6 @@ def open_readme(*event):
         'https://github.com/ShunSakurai/check_forbidden/blob/master/README.md')
 
 
-def print_and_append(to_print, to_write, file_to_write_in, dict_options):
-    try_printing(to_print)
-    if not dict_options['bool_export']:
-        file_to_write_in.append(to_write)
-    else:
-        pass
-
-
 def print_and_append_metadata(dict_options):
     list_metadata = []
 
@@ -272,17 +264,22 @@ def print_and_append_terms_data(fpath_terms, dict_options):
         f_terms = open(fpath_terms, encoding='utf-8')
         header = f_terms.readline().rstrip('\n')
         f_terms.close()
-        print_and_append(
-            'Terms: ' + fpath_terms, fpath_terms, fname_header_terms, dict_options)
-        print_and_append(
-            'Header: [' + header + '] + Segment Number', header.split(','),
-            fname_header_terms, dict_options)
+        try_printing('Terms: ' + fpath_terms)
+        try_printing('Header: [' + header + '] + Segment Number')
+        fname_header_terms.append(fpath_terms)
+        fname_header_terms.append(header.split(','))
     else:
-        print_and_append(
-            'Function: ' + fpath_terms, fpath_terms, fname_header_terms, dict_options)
+        try_printing('Function: ' + fpath_terms)
+        fname_header_terms.append(fpath_terms)
     print('-' * 70)
 
     return fname_header_terms
+
+
+def print_or_append(to_print, to_write, file_to_write_in, dict_options):
+    file_to_write_in.append(to_write)
+    if dict_options['bool_export']:
+        try_printing(to_print)
 
 
 def remove_tags(segment):
@@ -405,7 +402,7 @@ def check_against_function(
         result = external_script.function(seg_id, target)
         if result:
             for ls in result:
-                print_and_append(ls, ls, list_matched_rows, dict_options)
+                print_or_append(ls, ls, list_matched_rows, dict_options)
 
     return list_matched_rows
 
@@ -427,21 +424,26 @@ def check_against_terms(
             match = pattern.search(target)
             if match:
                 s, e = match.start(), match.end()
-                print_and_append(
-                    str(row),
+                print_or_append(
+                    '\n\r'.join([
+                        str(row),
+                        ''.join([
+                            str(seg_id), '\t',
+                            target[s - 5:s], '...', target[s:e],
+                            '...', target[e:e + 5]
+                        ]),
+                        source, target, ''
+                    ]),
                     [
                         fname_bl, seg_id, source,
-                        ''.join([target[:s], '<mark>', target[s:e], '</mark>', target[e:]]),
+                        ''.join([
+                            target[:s], '<mark>', target[s:e],
+                            '</mark>', target[e:]
+                        ]),
                         percent, tf_to_yn(locked)
                     ] + row,
                     list_matched_rows, dict_options
                 )
-                try_printing(''.join([
-                    str(seg_id), '\t',
-                    target[s - 5:s], '...', target[s:e], '...', target[e:e + 5]
-                ]))
-                try_printing(source)
-                try_printing(target + '\n')
             else:
                 continue
     return list_matched_rows
