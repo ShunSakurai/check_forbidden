@@ -380,10 +380,12 @@ def write_result(list_metadata, f_result_w, fpath_result, dict_options):
 
 
 def wrap_up_result_if_found(
-        list_matched_rows, fpath_result, dict_options):
+        list_matched_rows, list_matches_summary, fpath_result, dict_options):
     if not dict_options['bool_function']:
         print('Summary')
-        list_reduced = unique_ordered_list([str(i) for i in list_matched_rows])
+        list_reduced = unique_ordered_list(
+            [str(i) for i in list_matches_summary]
+        )
         for i in list_reduced:
             try_printing(i)
         print('')
@@ -410,6 +412,7 @@ def check_against_function(
 def check_against_terms(
         fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
     list_matched_rows = []
+    list_matches_summary = []
 
     for row in f_terms_reader:
         if not row or not row[0]:
@@ -444,15 +447,17 @@ def check_against_terms(
                     ] + row,
                     list_matched_rows, dict_options
                 )
+                list_matches_summary.append(row)
             else:
                 continue
-    return list_matched_rows
+    return list_matched_rows, list_matches_summary
 
 
 def check_for_each_term_list(
         list_fn_bl_tuple, fpath_terms, fpath_result, dict_options):
     fname_header_terms = print_and_append_terms_data(fpath_terms, dict_options)
     list_matched_rows = []
+    list_matches_summary = []
     for fn_bl_tuple in list_fn_bl_tuple:
         try_printing(fn_bl_tuple[0] + '\n')
         fname_bl = fname_from_str_path(fn_bl_tuple[0])
@@ -464,13 +469,16 @@ def check_for_each_term_list(
             list_matched_rows += check_against_function(
                 fname_bl, f_bl_line_range_list, fpath_terms, dict_options)
         else:
-            list_matched_rows += check_against_terms(
+            tuple_matches = check_against_terms(
                 fname_bl, f_bl_line_range_list, f_terms_reader, dict_options)
+            list_matched_rows += tuple_matches[0]
+            list_matches_summary += tuple_matches[1]
     f_terms.close()
 
     if list_matched_rows:
         wrap_up_result_if_found(
-            list_matched_rows, fpath_result, dict_options)
+            list_matched_rows, list_matches_summary, fpath_result, dict_options
+        )
         return fname_header_terms + list_matched_rows
     elif not dict_options['bool_function']:
         print('No forbidden term was found!')
