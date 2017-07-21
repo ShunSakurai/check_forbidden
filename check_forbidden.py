@@ -399,9 +399,13 @@ def load_options():
         print(message_not_loaded)
         return
 
-    f_loaded_options = open(fn_options, 'rb')
-    dict_loaded = pickle.load(f_loaded_options)
-    f_loaded_options.close()
+    with open(fn_options, 'rb') as f_loaded_options:
+        try:
+            dict_loaded = pickle.load(f_loaded_options)
+        except:
+            os.remove(fn_options)
+            print(message_not_loaded)
+            return
 
     if not cf_scripts.return_if_in_dict(dict_loaded, 'bool_save'):
         print(message_not_loaded)
