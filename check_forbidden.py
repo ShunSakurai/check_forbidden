@@ -176,7 +176,7 @@ cb_save.deselect()
 cb_save.grid(row=6, column=0, sticky='w')
 
 btn_default = tkinter.Button(
-    frame_options, text='Restore default settings', underline=8,
+    frame_options, text='Restore settings to default', underline=20,
     takefocus=True
 )
 btn_default.grid(row=7, column=0, sticky='w')
@@ -263,10 +263,10 @@ def toggle_cb_function(*event):
     else:
         cb_function.toggle()
 
-    if not var_bool_function.get():
-        turn_off_function()
-    else:
+    if var_bool_function.get():
         turn_on_function()
+    else:
+        turn_off_function()
 
 
 def turn_on_export():
@@ -379,6 +379,10 @@ def get_options():
 
 
 def restore_default(*event):
+    if var_bool_function.get():
+        toggle_cb_function()
+    if var_bool_export.get():
+        toggle_cb_export()
     var_bool_function.set(0)
     var_bool_export.set(0)
     var_str_rate.set('all')
