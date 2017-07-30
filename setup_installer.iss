@@ -18,7 +18,6 @@ AppSupportURL=https://github.com/ShunSakurai/check_forbidden
 AppUpdatesURL=https://github.com/ShunSakurai/check_forbidden
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-;InfoAfterFile"README.md
 OutputBaseFilename=check_forbidden_installer_{#ProgramVersion}
 Compression=lzma
 SolidCompression=yes

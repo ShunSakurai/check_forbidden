@@ -10,13 +10,14 @@ git clone https://github.com/pyinstaller/pyinstaller.git
 cd pyinstaller
 py setup.py install
 '''
-# Verpatch is needed to supplement PyInstaller's bug for version info in Python 3
+# Verpatch is needed to supplement PyInstaller's Python 3 version info in  bug
 # Dictionary names and keys taken from py2exe settings
 
 dict_console = {
     'author': 'Shun Sakurai',
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
+    'script': 'check_forbidden.py',
     'version': '2.0.6'
 }
 
@@ -46,11 +47,12 @@ for lib in dict_options['excludes']:
 
 list_pyinstaller = [
     'pyinstaller', '--onefile',
-    '--icon', './icons/check_forbidden_icon.ico',
-    '--name', 'Check Forbidden'
-] + list_excluded + ['check_forbidden.py']
+    '--icon', dict_console['icon_resources'][0][1],
+    '--name', dict_console['dest_base']
+] + list_excluded + [dict_console['script']]
 list_verpatch = [
-    'verpatch', 'dist/Check Forbidden.exe', zero_pad(dict_console['version']),
+    'verpatch', ''.join(['dist/', dict_console['dest_base'], '.exe']),
+    zero_pad(dict_console['version']),
     '/va', '/pv', zero_pad(dict_console['version']),
     '/s', 'copyright', '©2016-2017 ' + dict_console['author']
 ]
@@ -74,6 +76,6 @@ if __name__ == "__main__":
     print_with_border('Cleaning')
     shutil.rmtree('__pycache__')
     shutil.rmtree('build')
-    os.remove('Check Forbidden.spec')
+    os.remove(''.join([dict_console['dest_base'], '.spec']))
 
     print('Executable and installer for v' + dict_console['version'], 'created.')

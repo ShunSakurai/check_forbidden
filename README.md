@@ -36,13 +36,13 @@ If you have the Python environment installed, you can run the source code with `
 ## Build
 To convert the Python code to an .exe file, and to create an installer, follow the steps below.
 
-Requirements:
+### Requirements
 - [Python 3](https://www.python.org/downloads/)
 - [PyInstaller](http://www.pyinstaller.org/)
 - [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows), add it to PATH
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
 
-Procedures:
+### Procedures
 - Run `py -B setup.py` on a Windows machine. `-B` is optional
 - You may have to set alias to make py = python3
 
