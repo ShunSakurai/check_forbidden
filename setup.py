@@ -18,7 +18,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '2.0.6'
+    'version': '2.0.7'
 }
 
 dict_options = {
@@ -40,6 +40,8 @@ def zero_pad(str_ver):
     return str_ver2
 
 
+folder_dist = 'dist'
+
 list_excluded = []
 for lib in dict_options['excludes']:
     list_excluded.append('--exclude-module')
@@ -51,7 +53,7 @@ list_pyinstaller = [
     '--name', dict_console['dest_base']
 ] + list_excluded + [dict_console['script']]
 list_verpatch = [
-    'verpatch', ''.join(['dist/', dict_console['dest_base'], '.exe']),
+    'verpatch', ''.join([folder_dist, '/', dict_console['dest_base'], '.exe']),
     zero_pad(dict_console['version']),
     '/va', '/pv', zero_pad(dict_console['version']),
     '/s', 'copyright', '©2016-2017 ' + dict_console['author']
@@ -63,8 +65,8 @@ if __name__ == "__main__":
     import shutil
     import subprocess
 
-    if os.path.exists('dist'):
-        shutil.rmtree('dist')
+    if os.path.exists(folder_dist):
+        shutil.rmtree(folder_dist)
 
     print_with_border('Running PyInstaller')
     subprocess.run(list_pyinstaller)

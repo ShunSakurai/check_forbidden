@@ -1,4 +1,5 @@
 '''
+cd /d z:
 cd dropbox/codes/check_forbidden
 py -B check_forbidden.py
 '''

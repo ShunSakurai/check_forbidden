@@ -212,12 +212,35 @@ def ls_from_settings(dict_options):
 
 def ls_from_tuple_str(tuple_str):
     r'''
-    >>> ls_from_tuple_str(r' C:/Users/path/mqxliff1.mqxliff {C:/Users/path/mqxliff2.mqxliff} {C:\Users\path\mqxlz1.mqxlz} {C:\Users\path\mqxlz2.mqxlz}')
-    ['C:/Users/path/mqxliff1.mqxliff', 'C:/Users/path/mqxliff2.mqxliff', 'C:\\Users\\path\\mqxlz1.mqxlz', 'C:\\Users\\path\\mqxlz2.mqxlz']
+    >>> ls_from_tuple_str(r' {C:\Users\path\file name with space.mqliff} C:/Users/path/file_name,_with_comma.mqxlz')
+    ['C:\\Users\\path\\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz']
+    >>> ls_from_tuple_str(r"('C:\Users\path\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz')")
+    ['C:\\Users\\path\\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz']
     '''
-    tuple_str_split = tuple_str.replace('{', ',').strip('(),').split(',')
-    list_from_str = [i.strip(' {},"\'') for i in tuple_str_split]
-    return list_from_str
+    tuple_str = tuple_str.strip()
+    if not tuple_str:
+        return ['']
+
+    if tuple_str[0] == '(':
+        for (old, new) in [('(\'', '{'), ('\',', '}'), ('\')', '}'), ('\'', '{')]:
+            tuple_str = tuple_str.replace(old, new)
+    list_from_str = []
+
+    while tuple_str:
+        if tuple_str[0] == '{':
+            end = tuple_str.find('}') + 1
+        else:
+            end = tuple_str.find(' ', 1)
+
+        if end == -1:
+            list_from_str.append(tuple_str)
+            break
+        else:
+            list_from_str.append(tuple_str[: end])
+            tuple_str = tuple_str[end + 1:]
+
+    list_from_str_clean = [i.strip(' {},"\'') for i in list_from_str]
+    return list_from_str_clean
 
 
 def open_file(str_file_path):
