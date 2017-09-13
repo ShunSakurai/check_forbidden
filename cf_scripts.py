@@ -33,7 +33,8 @@ def apply_update(download_path):
     print('You may have to close the current process to continue.')
     print('After installation, please manually delete the installer in Downloads folder.')
     if sys.platform.startswith('win'):
-        os.startfile(download_path)
+        download_path_bslash = replace_fslash_w_bslash(download_path)
+        os.startfile(download_path_bslash)
     else:
         subprocess.run(['open', download_path])
 
@@ -251,7 +252,8 @@ def ls_from_tuple_str(tuple_str):
 def open_file(str_file_path):
     print('Opening the file...')
     if sys.platform.startswith('win'):
-        os.startfile(str_file_path)
+        str_file_path_bslash = replace_fslash_w_bslash(str_file_path)
+        os.startfile(str_file_path_bslash)
     else:
         subprocess.run(['open', str_file_path])
 
@@ -261,7 +263,8 @@ def open_folder(tuple_path):
         str_path_1 = ls_from_tuple_str(tuple_path)[0]
         str_path_dir = dir_from_str_path(str_path_1)
         if sys.platform.startswith('win'):
-            os.startfile(str_path_dir)
+            str_path_dir_bslash = replace_fslash_w_bslash(str_path_dir)
+            os.startfile(str_path_dir_bslash)
         else:
             subprocess.run(['open', str_path_dir])
 
@@ -316,8 +319,12 @@ def remove_tags(segment):
     return segment_clean
 
 
-def replace_back_slash(str_path):
+def replace_bslash_w_fslash(str_path):
     return str_path.replace('\\', '/')
+
+
+def replace_fslash_w_bslash(str_path):
+    return str_path.replace('/', '\\')
 
 
 def return_if_in_dict(dicionary, key):
@@ -521,7 +528,7 @@ def check_forbidden_terms(
     start = time.time()
     list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
     list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
-    fpath_result = replace_back_slash(str_result)
+    fpath_result = replace_bslash_w_fslash(str_result)
 
     for fn_terms in list_fpath_terms:
         if fn_terms.rsplit('.', 1)[-1] not in ['csv', 'txt', 'py']:
@@ -537,7 +544,7 @@ def check_forbidden_terms(
 
     list_fn_bl_tuple = []
     for fn_bl in list_fpath_bl:
-        fn_actual = replace_back_slash(unzip_if_mqxlz(fn_bl))
+        fn_actual = replace_bslash_w_fslash(unzip_if_mqxlz(fn_bl))
         list_fn_bl_tuple.append((fn_bl, fn_actual))
 
     f_result_w = []
