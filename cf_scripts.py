@@ -222,8 +222,13 @@ def ls_from_tuple_str(tuple_str):
         return ['']
 
     if tuple_str[0] == '(':
+        # file is selected from the button
         for (old, new) in [('(\'', '{'), ('\',', '}'), ('\')', '}'), ('\'', '{')]:
             tuple_str = tuple_str.replace(old, new)
+    else:
+        # file is input directly in the field
+        # assuming only one file is selected
+        tuple_str = ''.join(['{', tuple_str, '}'])
     list_from_str = []
 
     while tuple_str:
