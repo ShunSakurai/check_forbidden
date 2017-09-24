@@ -112,19 +112,19 @@
       }
     };
 
-    var filterSegments = function(element, func) {
-      var th = element.parentNode;
+    var filterSegments = function(tr, func) {
+      var th = tr.parentNode;
       var column = Array.prototype.indexOf.call(th.parentNode.children, th);
       var filterId = func.name + "Filter" + column;
       var allTr = document.querySelectorAll('tr');
 
-      if (!element.value) {
+      if (!tr.value) {
         delete document.hiddenRows[filterId];
       } else {
         document.hiddenRows[filterId] = [];
         for (var i = 0, n = allTr.length; i < n; i ++) {
           if (allTr[i].children[0] && allTr[i].children[0].nodeName === "TD"
-          && func(allTr[i].children[column].textContent, element.value)){
+          && func(allTr[i].children[column].textContent, tr.value)){
             document.hiddenRows[filterId].push(true);
           } else {
             document.hiddenRows[filterId].push(false);
@@ -135,8 +135,8 @@
     };
 
     var clearFilter = function () {
-      document.querySelectorAll(".filter").forEach(function(element){
-        var filterTd = document.getElementById(element.id).children;
+      document.querySelectorAll(".filter").forEach(function(tr){
+        var filterTd = document.getElementById(tr.id).children;
         for (var td in filterTd) {
           if (filterTd.hasOwnProperty(td)
           && filterTd[td].nodeName === "TD"){
@@ -166,19 +166,19 @@
       document.getElementById("lockedStatusAll").checked = true;
     };
 
-    var predefinedFilter = function (element, column) {
+    var predefinedFilter = function (radio, column) {
       var filterTable = document.getElementById("filterTable");
       var excludeRegexInput = filterTable.children[1].children[4].children[column].children[0];
-      excludeRegexInput.value = document.predefinedFilterStrings[element.name][element.value];
+      excludeRegexInput.value = document.predefinedFilterStrings[radio.name][radio.value];
       filterSegments(excludeRegexInput, excludeRegex);
       var allTr = document.querySelectorAll('tr');
       updateSegmentVisibility(allTr);
     };
 
     var predefinedFilterByKey = function (name, column) {
-      var element = document.getElementById(name);
-      element.checked = true;
-      predefinedFilter(element, column);
+      var radio = document.getElementById(name);
+      radio.checked = true;
+      predefinedFilter(radio, column);
     };
 
     var toggleFluxColor = function() {
@@ -189,6 +189,17 @@
         styleSheet.insertRule('mark {background: #dff;}', styleLength);
       } else {
       styleSheet.deleteRule(styleLength - 1);
+      }
+    };
+
+    var collapseTbody = function(caption) {
+      tbody = caption.parentNode.children[1];
+      if (caption.textContent[0] === '▼') {
+        caption.innerHTML = '▷' + caption.textContent.slice(1);
+        tbody.style.display = 'None';
+      } else {
+        caption.innerHTML = '▼' + caption.textContent.slice(1);
+        tbody.style.display = '';
       }
     };
     </script>

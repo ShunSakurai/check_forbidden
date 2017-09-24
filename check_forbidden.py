@@ -335,7 +335,7 @@ def select_and_focus(event):
 
 
 def turn_on_options(widget):
-    widget.config(text='▲', font=('', 12))
+    widget.config(text='▼', font=('', 12))
     frame_options.grid(
         row=4, column=0, columnspan=4, sticky='w', padx=30
     )
@@ -349,7 +349,7 @@ def turn_off_options(widget):
 def toggle_options(widget):
     if widget['text'] == '⚙':
         turn_on_options(widget)
-    elif widget['text'] == '▲':
+    elif widget['text'] == '▼':
         turn_off_options(widget)
 
 

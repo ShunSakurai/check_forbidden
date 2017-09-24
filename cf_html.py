@@ -68,7 +68,7 @@ def mk_table_result(f_result_w, dict_options):
         if isinstance(line, str):
             ls_str_tables.append(''.join([
                 ' ' * 4, '<table border="1">\n',
-                ' ' * 6, '<caption>{}</caption>\n',
+                ' ' * 6, '<caption onclick="collapseTbody(this)">▼ {}</caption>\n',
                 ' ' * 6, '<tbody>\n', ' ' * 8, '<tr>'
             ]).format(line)
             )
