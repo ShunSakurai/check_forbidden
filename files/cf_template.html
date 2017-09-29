@@ -2,22 +2,21 @@
 <html>
   <head>
     <title>Check Forbidden results</title>
-     <style type="text/css">
-        button, div { margin-bottom: 5px; margin-top: 5px; }
-        caption { font-weight: bold; }
-        tr input, td input { width: 100%; }
-        table { border-collapse: collapse; table-layout: fixed; width: 100%; }
-        td { word-wrap: break-word; }
-        th { background: silver; }
+    <style type="text/css">
+      button, div { margin-bottom: 5px; margin-top: 5px; }
+      caption { font-weight: bold; }
+      tr input, td input { width: 100%; }
+      table { border-collapse: collapse; table-layout: fixed; width: 100%; }
+      td { word-wrap: break-word; }
+      th { background: silver; }
     </style>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
     document.fluxColor = false;
     document.hiddenRows = {};
-    document.predefinedFilters = {matchRates: "all", lockedStatus: "all"};
-    document.predefinedFilterStrings = {
-      matchRates: {all: '', 101: '10[12]', 100: '10[012]'},
-      lockedStatus: {all: '', locked: 'Yes'},
+    document.predefinedFilterConfig = {
+      matchRates: [5, 4, {all: '', 101: '0-100', 100: '0-99'}],
+      lockedStatus: [4, 3, {all: '', locked: 'Yes'}],
     };
 
     var assessKey = function(event) {
@@ -112,6 +111,17 @@
       }
     };
 
+    var numberRange = function(range, string) {
+      var match = /^(\d+)\-(\d+)$/.exec(string);
+      var numberInRange = parseInt(range);
+      if (!match || isNaN(numberInRange)) {
+        return;
+      }
+      return !(match[1] <= numberInRange && numberInRange <= match[2]);
+    };
+
+    var functionsList = [include, exclude, includeRegex, excludeRegex, numberRange]
+
     var filterSegments = function(tr, func) {
       var th = tr.parentNode;
       var column = Array.prototype.indexOf.call(th.parentNode.children, th);
@@ -167,10 +177,11 @@
     };
 
     var predefinedFilter = function (radio, column) {
+      var predifinedList = document.predefinedFilterConfig[radio.name];
       var filterTable = document.getElementById("filterTable");
-      var excludeRegexInput = filterTable.children[1].children[4].children[column].children[0];
-      excludeRegexInput.value = document.predefinedFilterStrings[radio.name][radio.value];
-      filterSegments(excludeRegexInput, excludeRegex);
+      var cellToFill = filterTable.children[1].children[predifinedList[0]].children[column].children[0];
+      cellToFill.value = predifinedList[2][radio.value];
+      filterSegments(cellToFill, functionsList[predifinedList[1]]);
       var allTr = document.querySelectorAll('tr');
       updateSegmentVisibility(allTr);
     };
@@ -202,7 +213,7 @@
         tbody.style.display = '';
       }
     };
-    </script>
+  </script>
 
   </head>
   <body>
@@ -212,7 +223,7 @@
     </ul>
 
     <table id="filterTable" style="width:75%">
-      <caption>Filters (Include, Exclude, Include Regex, Exclude Regex)</caption>
+      <caption>Filters (Include, Exclude, Include Regex, Exclude Regex, Number Range)</caption>
       <tbody>
         <tr>
 @filter_header

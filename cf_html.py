@@ -17,9 +17,9 @@ def mk_table_filter_header(dict_options):
 def mk_table_filter_body():
     ls_filter_body = []
     for (id, klass, ph) in zip(
-        ['include', 'exclude', 'includeRegex', 'excludeRegex'],
-        ['filter', 'filter moreTools', 'filter moreTools', 'filter moreTools'],
-        ['', '!', '.*', '!.*']
+        ['include', 'exclude', 'includeRegex', 'excludeRegex', 'numberRange'],
+        ['filter', 'filter moreTools', 'filter moreTools', 'filter moreTools', 'filter moreTools'],
+        ['', '!', '.*', '!.*', '1-2']
     ):
         ls_filter_body.append(
             ''.join([' ' * 8, '<tr id="', id, '" class="', klass, '">'])

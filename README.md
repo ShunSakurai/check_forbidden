@@ -68,7 +68,7 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ### Options
 You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▼ icon.
 
-You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\<UserName>\AppData\Local\VirtualStore\Program Files\Check Forbidden" (checked on Windows 7).
+You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\ < UserName > \AppData\Local\VirtualStore\Program Files\Check Forbidden" (checked on Windows 7).
 
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
@@ -106,7 +106,7 @@ When the function check box is selected, you can call a function from an externa
 
 Code example:
 calculate_width.py
-```
+```python
 import re
 pattern_half_width = re.compile(r'[ -~]')
 
@@ -171,6 +171,7 @@ Below are some best practices to avoid false positives.
 
 ## Features to come
 ### Working on
+- Show whitespace characters in HTML file
 - Support tags
 - Save term lists and their paths as favorites
 - Make the program window re-sizable

@@ -36,13 +36,13 @@ Python環境をインストールしている場合、`python(3) check_forbidden
 ## ビルド
 Pythonコードを.exeファイルに変換し、インストーラーを作成するには、次の手順に従います。
 
-要件:
+### 要件
 - [Python 3](https://www.python.org/downloads/)
 - [PyInstaller](http://www.pyinstaller.org/)
 - [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows)、パスを通してください
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
 
-手順:
+### 手順
 - Windows環境で、`py -B setup.py`を実行します。`-B`はオプションです
 - py = python3となるように、エイリアスを設定する必要があるかもしれません
 
@@ -66,9 +66,9 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 - プログラムを開いたまま、何度も繰り返し実行できます
 
 ### オプション
-検索の対象とするセグメントの種類を指定できます。オプション画面を表示するには、歯車⚙アイコンをクリックします。画面を隠すには、三角▼アイコンをクリックします。
+検索の対象とするセグメントの種類を指定できます。オプション画面を表示するには、歯車⚙アイコンをクリックします。画面を隠すには、三角▲アイコンをクリックします。
 
-最後に使用したオプションを保存するかどうかを指定できます。"C:\Users\<UserName>\AppData\Local\VirtualStore\Program Files\Check Forbidden"に"cf_options.p"というファイルが作成されます(Windows 7にて確認)。
+最後に使用したオプションを保存するかどうかを指定できます。"C:\Users\ < UserName > \AppData\Local\VirtualStore\Program Files\Check Forbidden"に"cf_options.p"というファイルが作成されます(Windows 7にて確認)。
 
 ![オプション](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
@@ -106,7 +106,7 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 
 コード例:
 calculate_width.py
-```
+```python
 import re
 pattern_half_width = re.compile(r'[ -~]')
 
@@ -171,6 +171,7 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 
 ## 今後追加予定の機能
 ### 開発中の機能
+- HTMLファイルで空白文字を表示
 - タグをサポート
 - 用語リストとパスをお気に入りとして保存
 - プログラム画面の大きさの自由変更
