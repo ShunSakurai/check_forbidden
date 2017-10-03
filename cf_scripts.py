@@ -392,7 +392,7 @@ def write_result(list_metadata, f_result_w, fpath_result, dict_options):
         if answer == 'no':
             return
 
-    f_template = open('files/cf_template.html')
+    f_template = open('files/cf_template.html', encoding='utf-8')
     fr_template = f_template.read()
 
     f_result = open(fpath_result, 'w', encoding='utf-8')
