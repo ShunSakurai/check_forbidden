@@ -4,14 +4,8 @@ cd dropbox/codes/check_forbidden
 py -B setup.py
 '''
 
-# Installing PyInstaller that supports Python 3.6
-'''
-git clone https://github.com/pyinstaller/pyinstaller.git
-cd pyinstaller
-py setup.py install
-'''
-# Verpatch is needed to supplement PyInstaller's Python 3 version info in  bug
-# Dictionary names and keys taken from py2exe settings
+# Verpatch is needed to supplement PyInstaller's Python 3 version info bug
+# Dictionary names and keys are taken from py2exe settings
 
 dict_console = {
     'author': 'Shun Sakurai',
