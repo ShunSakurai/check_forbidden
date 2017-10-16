@@ -172,7 +172,6 @@ Below are some best practices to avoid false positives.
 ## Features to come
 ### Working on
 - Show whitespace characters in HTML file
-- Support tags
 - Save term lists and their paths as favorites
 - Make the program window re-sizable
 - Make the HTML table sortable

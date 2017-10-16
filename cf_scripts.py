@@ -167,16 +167,16 @@ def load_mqxliff(fn_bl_tuple, dict_options):
                 while '</source>' not in f_bl_line:
                     f_bl_line += next(f_bl)
                 source_line_with_tag = source_pattern.search(f_bl_line).group(1)
-                source_line_clean = remove_tags(source_line_with_tag)
+                source_line_text_only = replace_tags(source_line_with_tag)
         elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
             if is_range:
                 while '</target>' not in f_bl_line:
                     f_bl_line += next(f_bl)
                 target_line_with_tag = target_pattern.search(f_bl_line).group(1)
-                target_line_clean = remove_tags(target_line_with_tag)
-                if target_line_clean:
+                target_line_text_only = replace_tags(target_line_with_tag)
+                if target_line_text_only:
                     f_bl_line_range_list.append(
-                        (seg_id, source_line_clean, target_line_clean, percent, locked)
+                        (seg_id, source_line_text_only, target_line_text_only, percent, locked)
                     )
         else:
             continue
@@ -313,10 +313,22 @@ def print_or_append(to_print, to_write, file_to_write_in, dict_options):
         try_printing(to_print)
 
 
-def remove_tags(segment):
-    regex_tag = re.compile('<[^/].*?>.*?</.*?>', re.S)
-    segment_clean = regex_tag.sub('', segment)
-    return segment_clean
+def replace_tags(segment):
+    regex_tag = re.compile(r'<[^/].*?>(.*?)</.*?>', re.S)
+    regex_val = re.compile(r'val=&quot;(.*?)&quot;')
+    match_tag = True
+    while match_tag:
+        match_tag = re.search(regex_tag, segment)
+        if match_tag:
+            match_val = re.search(regex_val, match_tag[1])
+            if match_val and not match_val[1].startswith('&amp;lt;'):
+                text_after = match_val[1]
+            else:
+                text_after = ''
+            segment = ''.join([
+                segment[:match_tag.start()], text_after, segment[match_tag.end():]
+            ])
+    return segment
 
 
 def replace_bslash_w_fslash(str_path):

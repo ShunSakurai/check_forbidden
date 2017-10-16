@@ -399,7 +399,8 @@ def set_if_in_dict(dicionary, key, var):
 
 
 def load_options():
-    message_not_loaded = 'Saved options are not loaded.'
+    message_loaded = 'Saved options have been loaded.'
+    message_not_loaded = 'Saved options have not been loaded.'
     if not os.path.exists(fn_options):
         print(message_not_loaded)
         return
@@ -430,7 +431,7 @@ def load_options():
             var_bool_export.set(dict_loaded['bool_export'])
         if var_bool_export.get():
             turn_on_export()
-        print('Saved options are loaded.')
+        print(message_loaded)
 
 
 def save_options():
