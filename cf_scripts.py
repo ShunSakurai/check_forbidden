@@ -314,14 +314,21 @@ def print_or_append(to_print, to_write, file_to_write_in, dict_options):
 
 
 def replace_tags(segment):
-    regex_tag = re.compile(r'<[^/].*?>(.*?)</.*?>', re.S)
+    regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
+    regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
     regex_val = re.compile(r'val=&quot;(.*?)&quot;')
+    tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
     match_tag = True
     while match_tag:
         match_tag = re.search(regex_tag, segment)
         if match_tag:
-            match_val = re.search(regex_val, match_tag[1])
-            if match_val and not match_val[1].startswith('&amp;lt;'):
+            match_displaytext = re.search(regex_displaytext, match_tag[2])
+            match_val = re.search(regex_val, match_tag[2])
+            if match_displaytext:
+                text_after = match_displaytext[1]
+                for i in tuple_html_entities:
+                    text_after = text_after.replace(i[0], i[1])
+            elif match_val and not match_val[1].startswith('&amp;lt;'):
                 text_after = match_val[1]
             else:
                 text_after = ''
