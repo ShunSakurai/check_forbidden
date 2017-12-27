@@ -396,9 +396,9 @@ def restore_default(*event):
     var_bool_save.set(0)
 
 
-def set_if_in_dict(dicionary, key, var):
-    loaded = cf_scripts.return_if_in_dict(dicionary, key)
-    if loaded:
+def set_if_in_dict(dictionary, key, var):
+    loaded = cf_scripts.return_if_in_dict(dictionary, key)
+    if loaded is not None:
         var.set(loaded)
 
 
@@ -428,13 +428,6 @@ def load_options():
         set_if_in_dict(dict_loaded, 'str_locked', var_str_locked)
         set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
         set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
-        if var_bool_function.get():
-            turn_on_function()
-        # set_if_in_dict doesn't work for bool_export
-        if 'bool_export' in dict_loaded:
-            var_bool_export.set(dict_loaded['bool_export'])
-        if var_bool_export.get():
-            turn_on_export()
         print(message_loaded)
 
 

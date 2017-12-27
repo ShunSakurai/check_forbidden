@@ -346,9 +346,9 @@ def replace_fslash_w_bslash(str_path):
     return str_path.replace('/', '\\')
 
 
-def return_if_in_dict(dicionary, key):
-    if key in dicionary:
-        return dicionary[key]
+def return_if_in_dict(dictionary, key):
+    if key in dictionary:
+        return dictionary[key]
     else:
         return
 
