@@ -8,6 +8,7 @@ import setup
 import datetime
 import os
 import pickle
+import sys
 import tkinter
 import tkinter.filedialog
 
@@ -27,7 +28,10 @@ ext_result = [('html', '*.html')]
 fn_result = 'checked_result.html'
 
 ph_cp_only = 'Command Prompt only. Uncheck to export the results.'
-fn_options = 'cf_options.p'
+if sys.platform.startswith('win'):
+    fn_options = os.getenv('APPDATA') + r'\Check Forbidden\cf_options.p'
+else:
+    fn_options = 'cf_options.p'
 
 dict_cb_hover = {
     'function': False,
@@ -436,9 +440,8 @@ def load_options():
 
 def save_options():
     dict_options = get_options()
-    f_to_save_options = open(fn_options, 'wb')
-    pickle.dump(dict_options, f_to_save_options)
-    f_to_save_options.close()
+    with open(fn_options, 'wb') as f_to_save_options:
+        pickle.dump(dict_options, f_to_save_options)
 
 
 def run(*event):

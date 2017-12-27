@@ -29,12 +29,16 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Dirs]
+Name: "{userappdata}\Check Forbidden"
+
 [Files]
 Source: "dist\{#MyAppName}.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "files\cf_template.html"; DestDir: "{app}\files"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]
+Type: files; Name: "{app}\cf_options.p"
 Type: files; Name: "{app}\library.zip"
 Type: files; Name: "{app}\python34.dll"
 Type: files; Name: "{app}\tcl86t.dll"
