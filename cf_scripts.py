@@ -22,9 +22,10 @@ import webbrowser
 import zipfile
 
 default_dict_options = {
-    'bool_function': 0, 'bool_export': 0,
-    'str_rate': 'all', 'str_locked': 'all',
-    'bool_open': 1, 'bool_save': 0
+    'bool_function': False, 'bool_export': False,
+    'bool_ex_101': False, 'bool_ex_100': False,
+    'bool_ex_locked': False, # 'bool_ex_same': False,
+    'bool_open': True, 'bool_save': False
 }
 
 
@@ -135,11 +136,11 @@ def limit_header_range(header, dict_options):
     is_range = False
     if match_percent:
         percent = int(match_percent.group(1))
-    if dict_options['str_rate'] == '100' and percent >= 100:
+    if dict_options['bool_ex_100'] and percent >= 100:
         pass
-    elif dict_options['str_rate'] == '101' and percent >= 101:
+    elif dict_options['bool_ex_101'] and percent >= 101:
         pass
-    elif dict_options['str_locked'] == 'locked' and locked:
+    elif dict_options['bool_ex_locked'] and locked:
         pass
     else:
         is_range = True
@@ -197,15 +198,11 @@ def ls_from_list_str(x):
 
 
 def ls_from_settings(dict_options):
-    if dict_options['str_rate'] == 'all':
-        setting_rate = 'Check all match rates'
-    elif dict_options['str_rate'] == '101':
-        setting_rate = r'Exclude 101% matches'
-    elif dict_options['str_rate'] == '100':
+    if dict_options['bool_ex_100']:
         setting_rate = r'Exclude 100% / 101%'
-    if dict_options['str_locked'] == 'all':
-        setting_locked = 'Include locked segments'
-    else:
+    elif dict_options['bool_ex_101']:
+        setting_rate = r'Exclude 101% matches'
+    if dict_options['bool_ex_locked']:
         setting_locked = 'Exclude locked segments'
     settings = [setting_rate, setting_locked]
     return settings

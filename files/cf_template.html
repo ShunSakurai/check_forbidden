@@ -15,8 +15,9 @@
     document.fluxColor = false;
     document.hiddenRows = {};
     document.predefinedFilterConfig = {
-      matchRates: [5, 4, {all: '', 101: '0-100', 100: '0-99'}],
-      lockedStatus: [4, 3, {all: '', locked: 'Yes'}],
+      matchRates101: [5, 4, '0-100'],
+      matchRates100: [5, 4, '0-99'],
+      lockedStatusLocked: [4, 3, 'Yes'],
     };
 
     var assessKey = function(event) {
@@ -28,24 +29,21 @@
         case 'C'.charCodeAt(0):
           clearFilter();
           break;
-        case 'A'.charCodeAt(0):
-          predefinedFilterByKey("matchRatesAll", 4);
-          break;
         case '1'.charCodeAt(0):
-          predefinedFilterByKey("matchRates101", 4);
+          toggleCheckboxByKey("matchRates101");
+          predefinedFilter("matchRates101", 4);
           break;
         case '0'.charCodeAt(0):
-          predefinedFilterByKey("matchRates100", 4);
+          toggleCheckboxByKey("matchRates100");
+          predefinedFilter("matchRates100", 4);
+          disable101When100();
           break;
-        case 'I'.charCodeAt(0):
-          predefinedFilterByKey("lockedStatusAll", 5);
-          break;
-        case 'E'.charCodeAt(0):
-          predefinedFilterByKey("lockedStatusLocked", 5);
+        case 'L'.charCodeAt(0):
+          toggleCheckboxByKey("lockedStatusLocked");
+          predefinedFilter("lockedStatusLocked", 5);
           break;
         case 'F'.charCodeAt(0):
-          var cb = document.getElementById("fluxCheckbox");
-          cb.checked = !cb.checked;
+          toggleCheckboxByKey("fluxCheckbox");
           toggleFluxColor();
           break;
       }
@@ -120,7 +118,7 @@
       return !(match[1] <= numberInRange && numberInRange <= match[2]);
     };
 
-    var functionsList = [include, exclude, includeRegex, excludeRegex, numberRange]
+    var functionsList = [include, exclude, includeRegex, excludeRegex, numberRange];
 
     var filterSegments = function(tr, func) {
       var th = tr.parentNode;
@@ -168,28 +166,40 @@
       var allTr = document.querySelectorAll('tr');
       updateSegmentVisibility(allTr);
 
-      resetCheckButtons();
+      resetCheckboxes();
     };
 
-    var resetCheckButtons = function () {
-      document.getElementById("matchRatesAll").checked = true;
-      document.getElementById("lockedStatusAll").checked = true;
+    var resetCheckboxes = function () {
+      document.getElementById("matchRates101").checked = false;
+      ocument.getElementById('matchRates101').removeAttribute("disabled");
+      document.getElementById("matchRates100").checked = false;
+      document.getElementById("lockedStatusLocked").checked = false;
     };
 
-    var predefinedFilter = function (radio, column) {
-      var predifinedList = document.predefinedFilterConfig[radio.name];
+    var predefinedFilter = function (id, column) {
+      var cb = document.getElementById(id);
+      if (cb.disabled) return;
+      var predifinedList = document.predefinedFilterConfig[id];
       var filterTable = document.getElementById("filterTable");
       var cellToFill = filterTable.children[1].children[predifinedList[0]].children[column].children[0];
-      cellToFill.value = predifinedList[2][radio.value];
+      cellToFill.value = cb.checked ? predifinedList[2]: '';
       filterSegments(cellToFill, functionsList[predifinedList[1]]);
       var allTr = document.querySelectorAll('tr');
       updateSegmentVisibility(allTr);
     };
 
-    var predefinedFilterByKey = function (name, column) {
-      var radio = document.getElementById(name);
-      radio.checked = true;
-      predefinedFilter(radio, column);
+    var toggleCheckboxByKey = function (id) {
+      var cb = document.getElementById(id);
+      if (cb.disabled) return;
+      cb.checked = !cb.checked;
+    };
+
+    var disable101When100 = function () {
+      if (document.getElementById('matchRates100').checked) {
+        document.getElementById('matchRates101').setAttribute("disabled", true);
+      } else {
+        document.getElementById('matchRates101').removeAttribute("disabled");
+      }
     };
 
     var toggleFluxColor = function() {
@@ -199,7 +209,7 @@
       if (document.fluxColor){
         styleSheet.insertRule('mark {background: #dff;}', styleLength);
       } else {
-      styleSheet.deleteRule(styleLength - 1);
+        styleSheet.deleteRule(styleLength - 1);
       }
     };
 
@@ -237,14 +247,14 @@
     </div>
 
     <div>
-      <input type="radio" id="matchRatesAll" name="matchRates" onclick="predefinedFilter(this, 4)" value="all" checked /> Include <u>a</u>ll segments / Exclude
-      <input type="radio" id="matchRates101" name="matchRates" onclick="predefinedFilter(this, 4)" value="101" /> 10<u>1</u>+%
-      <input type="radio" id="matchRates100" name="matchRates" onclick="predefinedFilter(this, 4)" value="100" /> 10<u>0</u>+%
+      Exclude
+      <input type="checkbox" id="matchRates101" onclick="predefinedFilter(this.id, 4)" /> 10<u>1</u>+%
+      <input type="checkbox" id="matchRates100" onclick="predefinedFilter(this.id, 4)" onchange="disable101When100()" /> 10<u>0</u>+%
     </div>
 
     <div>
-      <input type="radio" id="lockedStatusAll" name="lockedStatus" onclick="predefinedFilter(this, 5)" value="all" checked /> <u>I</u>nclude /
-      <input type="radio" id="lockedStatusLocked" name="lockedStatus" onclick="predefinedFilter(this, 5)" value="locked" /> <u>E</u>xclude locked segments
+      Exclude
+      <input type="checkbox" id="lockedStatusLocked" onclick="predefinedFilter(this.id, 5)" /> <u>l</u>ocked segments
     </div>
 
     <div>

@@ -35,9 +35,7 @@ else:
 
 dict_cb_hover = {
     'function': False,
-    'export': False,
-    'open': False,
-    'save': False
+    'export': False
 }
 
 # Widgets
@@ -107,45 +105,77 @@ all_guided_ui = three_buttons + three_folder_buttons + [
 
 frame_options = tkinter.Frame(root, pady=5)
 
-label_rates = tkinter.Label(frame_options, text='\tMatch rates')
-label_rates.grid(row=0, column=0, sticky='w')
-label_locked = tkinter.Label(frame_options, text='\tLocked status')
-label_locked.grid(row=0, column=1, sticky='w')
+label_exclude = tkinter.Label(frame_options, text='Exclude segments')
+label_exclude.grid(row=0, column=0, sticky='w')
 
-match_rates = [
-    ('Check all segments', 'all', 6),
-    (r'Exclude 101% matches', '101', 10),
-    (r'Exclude 100% and 101%', '100', 10)]
-var_str_rate = tkinter.StringVar()
-var_str_rate.set('all')
-rbs_rate = []
+var_bool_ex_101 = tkinter.BooleanVar()
+cb_ex_101 = tkinter.Checkbutton(
+    frame_options, text='101% matches',
+    underline=2, variable=var_bool_ex_101,
+)
+cb_ex_101.deselect()
+cb_ex_101.grid(row=1, column=0, sticky='w')
 
-for label, rate, ul in match_rates:
-    rb_rate = tkinter.Radiobutton(
-        frame_options,
-        text=label, variable=var_str_rate, value=rate, underline=ul)
-    rbs_rate.append(rb_rate)
+var_bool_ex_100 = tkinter.BooleanVar()
+cb_ex_100 = tkinter.Checkbutton(
+    frame_options, text='100% matches',
+    underline=2, variable=var_bool_ex_100,
+)
+cb_ex_100.deselect()
+cb_ex_100.grid(row=2, column=0, sticky='w')
 
-for rb in rbs_rate:
-    rb.grid(row=(rbs_rate.index(rb) + 1), column=0, sticky='w', padx=10)
+var_bool_ex_locked = tkinter.BooleanVar()
+cb_ex_locked = tkinter.Checkbutton(
+    frame_options, text='Locked',
+    underline=0, variable=var_bool_ex_locked,
+)
+cb_ex_locked.deselect()
+cb_ex_locked.grid(row=3, column=0, sticky='w')
 
-locked_states = [
-    ('Include locked segments', 'all', 0),
-    ('Exclude locked segments', 'locked', 0)]
-var_str_locked = tkinter.StringVar()
-var_str_locked.set('all')
-rbs_locked = []
+# var_bool_ex_same = tkinter.BooleanVar()
+# cb_ex_same = tkinter.Checkbutton(
+#     frame_options, text='Same as target',
+#     underline=11, variable=var_bool_ex_same,
+# )
+# cb_ex_same.deselect()
+# cb_ex_same.grid(row=4, column=0, sticky='w')
 
-for label, state, ul in locked_states:
-    rb_locked = tkinter.Radiobutton(
-        frame_options,
-        text=label, variable=var_str_locked, value=state, underline=ul)
-    rbs_locked.append(rb_locked)
 
-for rb in rbs_locked:
-    rb.grid(row=(rbs_locked.index(rb) + 1), column=1, sticky='w', padx=10)
+def disable_101_when_100(var, unknown, w):
+    if var_bool_ex_100.get():
+        cb_ex_101['state'] = 'disabled'
+    else:
+        cb_ex_101['state'] = 'normal'
 
-label_about = tkinter.Label(frame_options, text='\t\tAbout')
+
+var_bool_ex_100.trace('w', disable_101_when_100)
+
+
+label_settings = tkinter.Label(frame_options, text='Other settings')
+label_settings.grid(row=0, column=1, sticky='w')
+
+var_bool_open = tkinter.BooleanVar()
+cb_open = tkinter.Checkbutton(
+    frame_options, text='Open HTML after export',
+    underline=3, variable=var_bool_open)
+cb_open.select()
+cb_open.grid(row=1, column=1, sticky='w')
+
+var_bool_save = tkinter.BooleanVar()
+cb_save = tkinter.Checkbutton(
+    frame_options, text='Save last used settings',
+    underline=0, variable=var_bool_save)
+cb_save.deselect()
+cb_save.grid(row=2, column=1, sticky='w')
+
+btn_default = tkinter.Button(
+    frame_options, text='Restore settings to default', underline=20,
+    takefocus=True
+)
+btn_default.grid(row=3, column=1, sticky='w')
+
+
+label_about = tkinter.Label(frame_options, text='\tAbout')
 label_about.grid(row=0, column=2, sticky='w')
 
 label_version = tkinter.Label(
@@ -162,29 +192,6 @@ label_version.grid(row=1, column=2, sticky='w')
 label_author.grid(row=2, column=2, sticky='w')
 btn_readme.grid(row=3, column=2, sticky='w', padx=55)
 btn_update.grid(row=4, column=2, sticky='w', padx=55)
-
-label_settings = tkinter.Label(frame_options, text='\tOther settings')
-label_settings.grid(row=4, column=0, sticky='w')
-
-var_bool_open = tkinter.BooleanVar()
-cb_open = tkinter.Checkbutton(
-    frame_options, text='Open HTML after export',
-    underline=3, variable=var_bool_open)
-cb_open.select()
-cb_open.grid(row=5, column=0, sticky='w')
-
-var_bool_save = tkinter.BooleanVar()
-cb_save = tkinter.Checkbutton(
-    frame_options, text='Save last used settings',
-    underline=0, variable=var_bool_save)
-cb_save.deselect()
-cb_save.grid(row=6, column=0, sticky='w')
-
-btn_default = tkinter.Button(
-    frame_options, text='Restore settings to default', underline=20,
-    takefocus=True
-)
-btn_default.grid(row=7, column=0, sticky='w')
 
 
 # Functions
@@ -333,11 +340,6 @@ for var, btn, func in zip(three_vars, three_folder_buttons, three_open_funcs):
     var.trace('w', func)
 
 
-def select_and_focus(event):
-    event.widget.select()
-    event.widget.focus()
-
-
 def turn_on_options(widget):
     widget.config(text='▼', font=('', 12))
     frame_options.grid(
@@ -357,26 +359,14 @@ def toggle_options(widget):
         turn_off_options(widget)
 
 
-def toggle_cb_open(*event):
-    if root.focus_get() == cb_open or dict_cb_hover['open']:
-        pass
-    else:
-        cb_open.toggle()
-
-
-def toggle_cb_save(*event):
-    if root.focus_get() == cb_save or dict_cb_hover['save']:
-        pass
-    else:
-        cb_save.toggle()
-
-
 def get_options():
     dict_options = {
         'bool_function': var_bool_function.get(),
         'bool_export': var_bool_export.get(),
-        'str_rate': var_str_rate.get(),
-        'str_locked': var_str_locked.get(),
+        'bool_ex_101': var_bool_ex_101.get(),
+        'bool_ex_100': var_bool_ex_100.get(),
+        'bool_ex_locked': var_bool_ex_locked.get(),
+        # 'bool_ex_same': var_bool_ex_same.get(),
         'bool_open': var_bool_open.get(),
         'bool_save': var_bool_save.get()
     }
@@ -388,12 +378,14 @@ def restore_default(*event):
         toggle_cb_function()
     if var_bool_export.get():
         toggle_cb_export()
-    var_bool_function.set(0)
-    var_bool_export.set(0)
-    var_str_rate.set('all')
-    var_str_locked.set('all')
-    var_bool_open.set(1)
-    var_bool_save.set(0)
+    var_bool_function.set(False)
+    var_bool_export.set(False)
+    var_bool_ex_101.set(False)
+    var_bool_ex_100.set(False)
+    var_bool_ex_locked.set(False)
+    # var_bool_ex_same.set(False)
+    var_bool_open.set(True)
+    var_bool_save.set(False)
 
 
 def set_if_in_dict(dictionary, key, var):
@@ -424,8 +416,10 @@ def load_options():
         turn_on_options(btn_options)
         set_if_in_dict(dict_loaded, 'bool_function', var_bool_function)
         set_if_in_dict(dict_loaded, 'bool_export', var_bool_export)
-        set_if_in_dict(dict_loaded, 'str_rate', var_str_rate)
-        set_if_in_dict(dict_loaded, 'str_locked', var_str_locked)
+        set_if_in_dict(dict_loaded, 'bool_ex_101', var_bool_ex_101)
+        set_if_in_dict(dict_loaded, 'bool_ex_100', var_bool_ex_100)
+        set_if_in_dict(dict_loaded, 'bool_ex_locked', var_bool_ex_locked)
+        # set_if_in_dict(dict_loaded, 'bool_ex_same', var_bool_ex_same)
         set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
         set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
         print(message_loaded)
@@ -473,14 +467,9 @@ btn_run['command'] = run
 cb_function['command'] = toggle_cb_function
 cb_export['command'] = toggle_cb_export
 
-for rb in rbs_rate + rbs_locked:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
-
 btn_readme['command'] = cf_scripts.open_readme
 btn_update['command'] = cf_scripts.check_updates
 
-cb_open['command'] = toggle_cb_open
-cb_save['command'] = toggle_cb_save
 btn_default['command'] = restore_default
 
 
@@ -489,13 +478,13 @@ guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Can be an existing file. Results are added to the bottom.'
 guide_folder = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
-guide_export = 'Select this Check box if you don\'t export the CSV file.'
+guide_export = 'Select this check box if you don\'t export the CSV file.'
 guide_options = 'Show or hide Options.'
 guide_run = 'Enabled when all the three fields are filled. (Return key)'
 
 ul_no = -1
 ul_function = 0
-ul_export = 12
+ul_export = 35
 ul_options = 13
 
 
@@ -543,32 +532,11 @@ def leave_cb_export(*event):
     hide_guide('<Leave>')
 
 
-def enter_cb_open(*event):
-    dict_cb_hover['open'] = True
-
-
-def leave_cb_open(*event):
-    dict_cb_hover['open'] = False
-
-
-def enter_cb_save(*event):
-    dict_cb_hover['save'] = True
-
-
-def leave_cb_save(*event):
-    dict_cb_hover['save'] = False
-
-
-all_cbs = [cb_function, cb_export, cb_open, cb_save]
-all_keys = ['function', 'export', 'open', 'save']
-all_enter_funcs = [
-    enter_cb_function, enter_cb_export, enter_cb_open, enter_cb_save
-]
-all_leave_funcs = [
-    leave_cb_function, leave_cb_export, leave_cb_open, leave_cb_save
-]
-
-for cb, key, enter, leave in zip(all_cbs, all_keys, all_enter_funcs, all_leave_funcs):
+for cb, enter, leave in zip(
+    [cb_function, cb_export],
+    [enter_cb_function, enter_cb_export],
+    [leave_cb_function, leave_cb_export]
+):
     cb.bind('<Enter>', enter)
     cb.bind('<Leave>', leave)
 
@@ -578,6 +546,11 @@ def sc_only_when_out_of_ent(func):
         pass
     else:
         func('')
+
+
+def toggle_101_if_enabled(*event):
+    if cb_ex_101['state'] != 'disabled':
+        cb_ex_101.toggle()
 
 
 def bind_keys(key, func):
@@ -590,14 +563,13 @@ bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
 bind_keys('r', choose_result)
 bind_keys('f', toggle_cb_function)
-bind_keys('c', toggle_cb_export)
+bind_keys('e', toggle_cb_export)
 bind_keys('m', cf_scripts.open_readme)
 bind_keys('u', cf_scripts.check_updates)
-bind_keys('a', lambda x: rbs_rate[0].select())
-bind_keys('1', lambda x: rbs_rate[1].select())
-bind_keys('0', lambda x: rbs_rate[2].select())
-bind_keys('i', lambda x: rbs_locked[0].select())
-bind_keys('e', lambda x: rbs_locked[1].select())
+bind_keys('1', toggle_101_if_enabled)
+bind_keys('0', lambda x: cb_ex_100.toggle())
+bind_keys('l', lambda x: cb_ex_locked.toggle())
+# bind_keys('g', lambda x: cb_ex_same.toggle())
 bind_keys('n', lambda x: cb_open.toggle())
 bind_keys('s', lambda x: cb_save.toggle())
 bind_keys('d', restore_default)

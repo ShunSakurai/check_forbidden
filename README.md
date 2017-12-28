@@ -63,12 +63,11 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 - If you type or paste a path into the entry field and press the button to choose the file(s) afterwards, browsing starts from the folder written in the field
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
-- You can re-run the program without closing it
 
 ### Options
 You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▼ icon.
 
-You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\ < UserName > \AppData\Local\VirtualStore\Program Files\Check Forbidden" (checked on Windows 7).
+You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\<UserName>\AppData\Roaming\Check Forbidden" (on Windows).
 
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
@@ -118,12 +117,10 @@ def function(seg_id, target):
 ```
 
 ### Keyboard shortcuts
-Buttons and radio buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
+Buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
 
 - Run!: Return (Enter)
 - Show or hide the options: O
-- Turn the export method check box on/off: C
-- Turn the function check box on/off: F
 - Open the folder: no shortcut key
 
 You can move along the UI items with "Tab" key and invoke the focused item with the space bar.
