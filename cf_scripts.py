@@ -24,7 +24,7 @@ import zipfile
 default_dict_options = {
     'bool_function': False, 'bool_export': False,
     'bool_ex_101': False, 'bool_ex_100': False,
-    'bool_ex_locked': False, # 'bool_ex_same': False,
+    'bool_ex_locked': False, 'bool_ex_same': False,
     'bool_open': True, 'bool_save': False
 }
 
