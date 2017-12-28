@@ -24,7 +24,7 @@ All you have to prepare are:
 
 This tool searches for the forbidden terms in the bilingual files, displays the result on the Command Prompt, and exports it into an HTML file. Command Prompt is good when the file is small and you want to quickly check what was detected. The Summary result is useful when you are working on a "View." Some characters are non-printable on Command Prompt. The HTML file is useful when you have many matches and you want to use filtering features.
 
-This program is written in Python with tkinter and is distributed in .exe format through [PyInstaller](http://www.pyinstaller.org/) and [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows).
+This program is written in Python with tkinter and is distributed in .exe format through [PyInstaller](http://www.pyinstaller.org/) and [Verpatch](https://ddverpatch.codeplex.com/releases).
 
 The icon was created with [アイコン ウィザード](http://freewareplace.web.fc2.com/) and the installer is created with [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
@@ -39,7 +39,7 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ### Requirements
 - [Python 3](https://www.python.org/downloads/)
 - [PyInstaller](http://www.pyinstaller.org/)
-- [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows), add it to PATH
+- [Verpatch](https://ddverpatch.codeplex.com/releases), add it to PATH
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
 
 ### Procedures

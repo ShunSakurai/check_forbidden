@@ -28,6 +28,8 @@ default_dict_options = {
     'bool_open': True, 'bool_save': False
 }
 
+tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
+
 
 def apply_update(download_path):
     print('Starting the installer...')
@@ -125,7 +127,22 @@ def installed_version_is_newer(str_installed, str_online):
     return True
 
 
-def limit_header_range(header, dict_options):
+def is_range(tuple_range, dict_options):
+    (percent, locked, same) = tuple_range
+    if dict_options['bool_ex_100'] and percent >= 100:
+        pass
+    elif dict_options['bool_ex_101'] and percent >= 101:
+        pass
+    elif dict_options['bool_ex_locked'] and locked:
+        pass
+    elif dict_options['bool_ex_same'] and same:
+        pass
+    else:
+        return True
+    return False
+
+
+def load_header_range(header):
     regex_id = re.compile('<trans-unit id="(\d+)"')
     regex_percent = re.compile('mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
@@ -133,18 +150,9 @@ def limit_header_range(header, dict_options):
     percent = 0
     match_percent = regex_percent.search(header)
     locked = string_locked in header
-    is_range = False
     if match_percent:
         percent = int(match_percent.group(1))
-    if dict_options['bool_ex_100'] and percent >= 100:
-        pass
-    elif dict_options['bool_ex_101'] and percent >= 101:
-        pass
-    elif dict_options['bool_ex_locked'] and locked:
-        pass
-    else:
-        is_range = True
-    return seg_id, percent, locked, is_range
+    return seg_id, percent, locked
 
 
 def load_mqxliff(fn_bl_tuple, dict_options):
@@ -162,23 +170,22 @@ def load_mqxliff(fn_bl_tuple, dict_options):
         elif '</mq:historical-unit>' in f_bl_line:
             not_historical = True
         elif f_bl_line.startswith('<trans-unit id="') and not_historical:
-            seg_id, percent, locked, is_range = limit_header_range(f_bl_line, dict_options)
+            seg_id, percent, locked = load_header_range(f_bl_line)
         elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
-            if is_range:
-                while '</source>' not in f_bl_line:
-                    f_bl_line += next(f_bl)
-                source_line_with_tag = source_pattern.search(f_bl_line).group(1)
-                source_line_text_only = replace_tags(source_line_with_tag)
+            while '</source>' not in f_bl_line:
+                f_bl_line += next(f_bl)
+            source_line_with_tag = source_pattern.search(f_bl_line).group(1)
+            source_line_text_only = replace_tags(source_line_with_tag)
         elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
-            if is_range:
-                while '</target>' not in f_bl_line:
-                    f_bl_line += next(f_bl)
-                target_line_with_tag = target_pattern.search(f_bl_line).group(1)
-                target_line_text_only = replace_tags(target_line_with_tag)
-                if target_line_text_only:
-                    f_bl_line_range_list.append(
-                        (seg_id, source_line_text_only, target_line_text_only, percent, locked)
-                    )
+            while '</target>' not in f_bl_line:
+                f_bl_line += next(f_bl)
+            target_line_with_tag = target_pattern.search(f_bl_line).group(1)
+            target_line_text_only = replace_tags(target_line_with_tag)
+            same = source_line_text_only == target_line_text_only
+            if is_range((percent, locked, same), dict_options) and target_line_text_only:
+                f_bl_line_range_list.append(
+                    (seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
+                )
         else:
             continue
     f_bl.close()
@@ -204,6 +211,8 @@ def ls_from_settings(dict_options):
         setting_rate = r'Exclude 101% matches'
     if dict_options['bool_ex_locked']:
         setting_locked = 'Exclude locked segments'
+    if dict_options['bool_ex_same']:
+        setting_locked = 'Exclude segments same as source'
     settings = [setting_rate, setting_locked]
     return settings
 
@@ -314,7 +323,6 @@ def replace_tags(segment):
     regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
     regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
     regex_val = re.compile(r'val=&quot;(.*?)&quot;')
-    tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
     match_tag = True
     while match_tag:
         match_tag = re.search(regex_tag, segment)
@@ -323,8 +331,8 @@ def replace_tags(segment):
             match_val = re.search(regex_val, match_tag[2])
             if match_displaytext:
                 text_after = match_displaytext[1]
-                for i in tuple_html_entities:
-                    text_after = text_after.replace(i[0], i[1])
+                for (entity, symbol) in tuple_html_entities:
+                    text_after = text_after.replace(entity, symbol)
             elif match_val and not match_val[1].startswith('&amp;lt;'):
                 text_after = match_val[1]
             else:
@@ -445,25 +453,25 @@ def wrap_up_result_if_found(
 
 def check_against_function(
         fname_bl, f_bl_line_range_list, fpath_terms, dict_options):
-    list_matched_rows = []
+    sublist_matched_rows = []
 
     mdir, mfile = fpath_terms.rsplit('/', 1)
     mname = mfile.rsplit('.', 1)[0]
     sys.path.append(mdir)
     external_script = importlib.import_module(mname)
-    for (seg_id, source, target, percent, locked) in f_bl_line_range_list:
+    for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
         result = external_script.function(seg_id, target)
         if result:
             for ls in result:
-                print_or_append(ls, ls, list_matched_rows, dict_options)
+                print_or_append(ls, ls, sublist_matched_rows, dict_options)
 
-    return list_matched_rows
+    return sublist_matched_rows
 
 
 def check_against_terms(
         fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
-    list_matched_rows = []
-    list_matches_summary = []
+    sublist_matched_rows = []
+    sublist_matches_summary = []
 
     for row in f_terms_reader:
         if not row or not row[0]:
@@ -474,7 +482,7 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
-        for (seg_id, source, target, percent, locked) in f_bl_line_range_list:
+        for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
             match = pattern.search(target)
             if match:
                 s, e = match.start(), match.end()
@@ -494,14 +502,14 @@ def check_against_terms(
                             target[:s], '<mark>', target[s:e],
                             '</mark>', target[e:]
                         ]),
-                        percent, tf_to_yn(locked)
+                        percent, tf_to_yn(locked), tf_to_yn(same)
                     ] + row,
-                    list_matched_rows, dict_options
+                    sublist_matched_rows, dict_options
                 )
-                list_matches_summary.append(row)
+                sublist_matches_summary.append(row)
             else:
                 continue
-    return list_matched_rows, list_matches_summary
+    return sublist_matched_rows, sublist_matches_summary
 
 
 def check_for_each_term_list(
@@ -520,10 +528,10 @@ def check_for_each_term_list(
             list_matched_rows += check_against_function(
                 fname_bl, f_bl_line_range_list, fpath_terms, dict_options)
         else:
-            tuple_matches = check_against_terms(
+            sublist_matched_rows, sublist_matches_summary = check_against_terms(
                 fname_bl, f_bl_line_range_list, f_terms_reader, dict_options)
-            list_matched_rows += tuple_matches[0]
-            list_matches_summary += tuple_matches[1]
+            list_matched_rows += sublist_matched_rows
+            list_matches_summary += sublist_matches_summary
     f_terms.close()
 
     if list_matched_rows:

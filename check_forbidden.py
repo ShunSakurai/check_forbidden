@@ -110,28 +110,28 @@ label_exclude = tkinter.Label(frame_options, text='\tExclude')
 var_bool_ex_101 = tkinter.BooleanVar()
 cb_ex_101 = tkinter.Checkbutton(
     frame_options, text='101% matches',
-    underline=2, variable=var_bool_ex_101,
+    underline=2, variable=var_bool_ex_101
 )
 cb_ex_101.deselect()
 
 var_bool_ex_100 = tkinter.BooleanVar()
 cb_ex_100 = tkinter.Checkbutton(
     frame_options, text='100% matches',
-    underline=2, variable=var_bool_ex_100,
+    underline=2, variable=var_bool_ex_100
 )
 cb_ex_100.deselect()
 
 var_bool_ex_locked = tkinter.BooleanVar()
 cb_ex_locked = tkinter.Checkbutton(
     frame_options, text='Locked',
-    underline=0, variable=var_bool_ex_locked,
+    underline=0, variable=var_bool_ex_locked
 )
 cb_ex_locked.deselect()
 
 var_bool_ex_same = tkinter.BooleanVar()
 cb_ex_same = tkinter.Checkbutton(
     frame_options, text='Same as source',
-    underline=0, variable=var_bool_ex_same,
+    underline=0, variable=var_bool_ex_same
 )
 cb_ex_same.deselect()
 

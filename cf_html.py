@@ -2,8 +2,8 @@ def mk_table_filter_header(dict_options):
     ls_filter_header = []
     if not dict_options['bool_function']:
         for (width, col) in zip(
-            [10, 5, 20, 20, 5, 5, 10],
-            ['File', 'Seg', 'Source', 'Target', r'%', 'Lock', 'Forbidden']
+            [9, 4, 20, 20, 4, 4, 4, 10],
+            ['File', 'Seg', 'Source', 'Target', r'%', 'Locked', 'Same', 'Forbidden']
         ):
             ls_filter_header.append(
                 ''.join([
@@ -35,7 +35,7 @@ def mk_table_filter_body():
                 ' ' * 10, '<td><input oninput="filterSegments(this, ', id,
                 ')" /></td>'
             ])
-        ] * 6
+        ] * 7
         ls_filter_body.append(' ' * 8 + '</tr>')
     return '\n'.join(ls_filter_body)
 
@@ -44,8 +44,8 @@ def mk_table_result_header(dict_options):
     ls_result_header = []
     if not dict_options['bool_function']:
         for (width, col) in zip(
-            [10, 5, 20, 20, 5, 5],
-            ['File', 'Seg', 'Source', 'Target', r'%', 'Lock']
+            [9, 4, 20, 20, 4, 4, 4],
+            ['File', 'Seg', 'Source', 'Target', r'%', 'Locked', 'Same']
         ):
             ls_result_header.append(
                 ''.join([

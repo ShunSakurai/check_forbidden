@@ -24,7 +24,7 @@ memoQバイリンガルファイル(.mqxlz/.mqxliff)の訳文中に含まれる�
 
 このツールは、バイリンガルファイル中の禁止語を検索し、コマンドプロンプトに結果を表示し、さらに検索結果をHTMLファイルにエクスポートします。コマンドプロンプトは、ファイルが小さい場合に、検出された用語を簡単に確認するのに適しています。「ビュー」を使って作業している場合は、まとめ結果が便利です。コマンドプロンプト上では印字できない文字もあります。HTMLファイルは、検出結果が多い場合や、フィルタ機能を使用したい場合に便利です。
 
-このプログラムは、Pythonとtkinterを使用して書かれており、[PyInstaller](http://www.pyinstaller.org/)と[Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows)を使用して.exe形式で配布するものです。
+このプログラムは、Pythonとtkinterを使用して書かれており、[PyInstaller](http://www.pyinstaller.org/)と[Verpatch](https://ddverpatch.codeplex.com/releases)を使用して.exe形式で配布するものです。
 
 アイコンは[アイコン ウィザード](http://freewareplace.web.fc2.com/)を、インストーラーは[Inno Setup](http://www.jrsoftware.org/isdl.php)を使用して作成しました。
 
@@ -39,7 +39,7 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 ### 要件
 - [Python 3](https://www.python.org/downloads/)
 - [PyInstaller](http://www.pyinstaller.org/)
-- [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows)、パスを通してください
+- [Verpatch](https://ddverpatch.codeplex.com/releases)、パスを通してください
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
 
 ### 手順
