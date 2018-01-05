@@ -202,7 +202,7 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 ## License
 ### Usage
 You can use it for free.
-© 2016-2017 Shun Sakurai
+© 2016-2018 Shun Sakurai
 
 ### MIT License
 The code is protected under MIT License. Please see license.md for details.

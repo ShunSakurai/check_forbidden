@@ -319,6 +319,12 @@ def print_or_append(to_print, to_write, file_to_write_in, dict_options):
         try_printing(to_print)
 
 
+def replace_entities(string):
+    for (entity, symbol) in tuple_html_entities:
+        string = string.replace(symbol, entity)
+    return string
+
+
 def replace_tags(segment):
     regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
     regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
@@ -503,7 +509,7 @@ def check_against_terms(
                             '</mark>', target[e:]
                         ]),
                         percent, tf_to_yn(locked), tf_to_yn(same)
-                    ] + row,
+                    ] + [replace_entities(cell) for cell in row],
                     sublist_matched_rows, dict_options
                 )
                 sublist_matches_summary.append(row)

@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '2.2.2'
+    'version': '2.2.3'
 }
 
 dict_options = {
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         'verpatch', ''.join([folder_dist, '/', dict_console['dest_base'], '.exe']),
         zero_pad(dict_console['version']),
         '/va', '/pv', zero_pad(dict_console['version']),
-        '/s', 'copyright', '©2016-2017 ' + dict_console['author']
+        '/s', 'copyright', '©2016-2018 ' + dict_console['author']
     ]
 
     list_iscc = ['C:\Program Files (x86)\Inno Setup 5\iscc', 'setup_installer.iss']
