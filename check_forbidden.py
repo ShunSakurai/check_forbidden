@@ -136,10 +136,10 @@ cb_ex_same = tkinter.Checkbutton(
 cb_ex_same.deselect()
 
 label_exclude.grid(row=0, column=0, sticky='w')
-cb_ex_101.grid(row=1, column=0, sticky='w', padx=30)
-cb_ex_100.grid(row=2, column=0, sticky='w', padx=30)
-cb_ex_locked.grid(row=3, column=0, sticky='w', padx=30)
-cb_ex_same.grid(row=4, column=0, sticky='w', padx=30)
+cb_ex_101.grid(row=1, column=0, sticky='w', padx=20)
+cb_ex_100.grid(row=2, column=0, sticky='w', padx=20)
+cb_ex_locked.grid(row=3, column=0, sticky='w', padx=20)
+cb_ex_same.grid(row=4, column=0, sticky='w', padx=20)
 
 
 label_settings = tkinter.Label(frame_options, text='\tOther settings')
@@ -162,9 +162,9 @@ btn_default = tkinter.Button(
 )
 
 label_settings.grid(row=0, column=1, sticky='w')
-cb_open.grid(row=1, column=1, sticky='w', padx=30)
-cb_save.grid(row=2, column=1, sticky='w', padx=30)
-btn_default.grid(row=3, column=1, sticky='w', padx=30)
+cb_open.grid(row=1, column=1, sticky='w', padx=20)
+cb_save.grid(row=2, column=1, sticky='w', padx=20)
+btn_default.grid(row=3, column=1, sticky='w', padx=20)
 
 
 label_about = tkinter.Label(frame_options, text='\tAbout')
@@ -181,10 +181,10 @@ btn_readme = tkinter.Button(frame_options, text='Read readme', underline=9)
 btn_update = tkinter.Button(frame_options, text='Check for updates', underline=10)
 
 label_about.grid(row=0, column=2, sticky='w')
-label_version.grid(row=1, column=2, sticky='w', padx=30)
-label_author.grid(row=2, column=2, sticky='w', padx=30)
-btn_readme.grid(row=3, column=2, sticky='w', padx=30)
-btn_update.grid(row=4, column=2, sticky='w', padx=30)
+label_version.grid(row=1, column=2, sticky='w', padx=20)
+label_author.grid(row=2, column=2, sticky='w', padx=20)
+btn_readme.grid(row=3, column=2, sticky='w', padx=20)
+btn_update.grid(row=4, column=2, sticky='w', padx=20)
 
 
 # Functions
@@ -336,7 +336,7 @@ for var, btn, func in zip(three_vars, three_folder_buttons, three_open_funcs):
 def turn_on_options(widget):
     widget.config(text='▼', font=('', 12))
     frame_options.grid(
-        row=4, column=0, columnspan=4, sticky='w', padx=30
+        row=4, column=0, columnspan=4, sticky='w', padx=20
     )
 
 
