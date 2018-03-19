@@ -285,10 +285,16 @@ def print_and_append_metadata(dict_options):
 
     print('-' * 70)
     meta_date_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
-    meta_version = 'Check Forbidden v' + setup.dict_console['version']
-    print(' '.join(['Time and version:', meta_date_time, meta_version]))
+    meta_program = 'Check Forbidden'
+    meta_version = 'v' + setup.dict_console['version']
+    print(' '.join([
+        'Time and version:', meta_date_time, meta_program, meta_version
+    ]))
     list_metadata.append(meta_date_time)
-    list_metadata.append(meta_version)
+    list_metadata.append(''.join([
+        '<a href="https://github.com/ShunSakurai/check_forbidden" target="_blank">',
+        meta_program, '</a>', ' ', meta_version
+    ]))
 
     return list_metadata
 
