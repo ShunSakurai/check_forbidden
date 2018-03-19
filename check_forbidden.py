@@ -433,6 +433,10 @@ def load_options():
         set_if_in_dict(dict_loaded, 'bool_ex_same', var_bool_ex_same)
         set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
         set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
+        if var_bool_function.get():
+            turn_on_function()
+        if var_bool_export.get():
+            turn_on_export()
         print(message_loaded)
 
 
