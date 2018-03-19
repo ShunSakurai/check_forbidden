@@ -100,7 +100,7 @@ The term list needs to meet the following specifications:
 ### Call external functions
 When the function check box is selected, you can call a function from an external Python script. *Specifications below are to be changed soon.*
 
-- Call a function named "function" in an external Python script, which takes segment ID (integer) and the target segment (string) as the arguments
+- Call a function named "function" in an external Python script, which takes six arguments: segment ID (integer), the source segment (string), target segment (string), match percentage (integer), locked status (boolean), target same as source (boolean)
 - The function should return a 2D list for each segment, each inner list representing one line in the result display both on Command Prompt and in the HTML table
 
 Code example:
@@ -109,7 +109,7 @@ calculate_width.py
 import re
 pattern_half_width = re.compile(r'[ -~]')
 
-def function(seg_id, target):
+def function(seg_id, source, target, percent, locked, same):
     length_half = len(re.findall(pattern_half_width, target))
     length_full = len(target) - length_half
     length_total = length_half + length_full * 2

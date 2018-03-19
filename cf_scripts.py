@@ -164,7 +164,7 @@ def load_header_range(header):
     regex_id = re.compile('<trans-unit id="(\d+)"')
     regex_percent = re.compile('mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
-    seg_id = regex_id.search(header).group(1)
+    seg_id = int(regex_id.search(header).group(1))
     percent = 0
     match_percent = regex_percent.search(header)
     locked = string_locked in header
@@ -490,7 +490,7 @@ def check_against_function(
     sys.path.append(mdir)
     external_script = importlib.import_module(mname)
     for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
-        result = external_script.function(seg_id, target)
+        result = external_script.function(seg_id, source, target, percent, locked, same)
         if result:
             for ls in result:
                 print_or_append(ls, ls, sublist_matched_rows, dict_options)

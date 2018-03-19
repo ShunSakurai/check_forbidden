@@ -100,7 +100,7 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 ### 外部関数の呼び出し
 関数のチェックボックスを選択すると、外部のPythonスクリプトから訳文セグメントに対して関数を呼び出すことができます。*下記仕様は近日中に変更予定です。*
 
-- 外部のPythonスクリプト内の「Function」という名前の関数を呼び出します。この関数は、セグメントID(整数)および訳文セグメント(文字列)を引数として取るものです
+- 外部のPythonスクリプト内の「Function」という名前の関数を呼び出します。この関数は、セグメントID(整数)、原文セグメント(文字列)、訳文セグメント(文字列)、マッチ率(整数)、ロック状態(ブーリアン)、訳文が原文と同じ(ブーリアン)、の6つを引数として取るものです
 - この関数は、各セグメントに対して2次元のリストを返すようにしてください。内側のリスト1つは、コマンドプロンプト上およびHTMLテーブル中の結果表示において1行で表示されます
 
 コード例:
@@ -109,7 +109,7 @@ calculate_width.py
 import re
 pattern_half_width = re.compile(r'[ -~]')
 
-def function(seg_id, target):
+def function(seg_id, source, target, percent, locked, same):
     length_half = len(re.findall(pattern_half_width, target))
     length_full = len(target) - length_half
     length_total = length_half + length_full * 2
