@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import time
+import tkinter
 import urllib.request as ur
 import webbrowser
 import zipfile
@@ -27,6 +28,10 @@ default_dict_options = {
     'bool_ex_locked': False, 'bool_ex_same': False,
     'bool_open': True, 'bool_save': False
 }
+
+message_no_result = 'No forbidden term was found!'
+message_no_export = 'The search was successfully finished.'
+snippet_file_created = ' was successfully created.'
 
 tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
 
@@ -107,6 +112,19 @@ def dir_from_str_path(str_path):
 def dirname_from_fname(fname):
     dir_name = fname.rsplit('.', 1)[0]
     return dir_name
+
+
+def display_toast(message):
+    toast_tk = tkinter.Tk()
+    toast_message = tkinter.Message(toast_tk, text=message)
+    toast_message.pack()
+    # destroy works but quit doesn't
+    alarm_id = toast_tk.after(3000, toast_tk.destroy)
+    toast_tk.protocol(
+        'WM_DELETE_WINDOW',
+        lambda: (toast_tk.after_cancel(alarm_id), toast_tk.quit())
+    )
+    toast_tk.mainloop()
 
 
 def fname_from_str_path(str_path):
@@ -421,7 +439,8 @@ def unzip_if_mqxlz(fn_bl):
 
 
 def write_result(list_metadata, f_result_w, fpath_result, dict_options):
-    if os.path.exists(fpath_result):
+    file_exists = os.path.exists(fpath_result)
+    if file_exists:
         import tkinter.messagebox
         answer = tkinter.messagebox.askquestion(
             'Warning', 'Overwrite ' + fpath_result + '?')
@@ -442,12 +461,11 @@ def write_result(list_metadata, f_result_w, fpath_result, dict_options):
         '@filter_body', cf_html.mk_table_filter_body()
     ))
     f_result.close()
-    print(
-        '\n' + fname_from_str_path(fpath_result),
-        'was successfully created.'
-    )
+    print('\n' + fname_from_str_path(fpath_result) + snippet_file_created)
     if dict_options['bool_open']:
         open_file(fpath_result)
+    elif not file_exists:
+        display_toast(fname_from_str_path(fpath_result) + snippet_file_created)
 
 
 def wrap_up_result_if_found(
@@ -552,7 +570,7 @@ def check_for_each_term_list(
         )
         return fname_header_terms + list_matched_rows
     elif not dict_options['bool_function']:
-        print('No forbidden term was found!')
+        print(message_no_result)
 
     print('')
     return []
@@ -596,7 +614,10 @@ def check_forbidden_terms(
         if not dict_options['bool_export']:
             write_result(list_metadata, f_result_w, fpath_result, dict_options)
         elif dict_options['bool_export']:
-            print('The search was successfully finished.')
+            print(message_no_export)
+            display_toast(message_no_export)
+    else:
+        display_toast(message_no_result)
 
     for fn_bl in list_fpath_bl:
         cleanup_if_mqxlz(fn_bl)

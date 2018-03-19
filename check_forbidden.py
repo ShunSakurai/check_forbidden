@@ -593,16 +593,10 @@ bind_keys('n', toggle_open_if_enabled)
 bind_keys('v', lambda x: cb_save.toggle())
 bind_keys('d', restore_default)
 
-
-def close_callback():
-    save_options()
-    root.destroy()
-
-
 # Initiating the program
 top = frame_main.winfo_toplevel()
 top.resizable(False, False)
 load_options()
 print('tk window is ready to use.')
-root.protocol('WM_DELETE_WINDOW', close_callback)
+root.protocol('WM_DELETE_WINDOW', lambda: (save_options(), root.destroy()))
 frame_main.mainloop()
