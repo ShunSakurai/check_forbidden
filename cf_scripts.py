@@ -454,11 +454,11 @@ def write_result(list_metadata, f_result_w, fpath_result, dict_options):
     f_result.write(fr_template.replace(
         '@list_metadata', '</li>\n<li>'.join(list_metadata)
     ).replace(
-        '@tr_results', cf_html.mk_table_result(f_result_w, dict_options)
-    ).replace(
         '@filter_header', cf_html.mk_table_filter_header(dict_options)
     ).replace(
         '@filter_body', cf_html.mk_table_filter_body()
+    ).replace(
+        '@result_tables', cf_html.mk_table_result(f_result_w, dict_options)
     ))
     f_result.close()
     print('\n' + fname_from_str_path(fpath_result) + snippet_file_created)

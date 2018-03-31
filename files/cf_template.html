@@ -4,7 +4,7 @@
     <title>Check Forbidden results</title>
     <style type="text/css">
       button, div { margin-bottom: 5px; margin-top: 5px; }
-      caption { font-weight: bold; }
+      caption { font-size: 125%; font-weight: bold; padding: 10px 0px 10px 0px;}
       tr input, td input { width: 100%; }
       table { border-collapse: collapse; table-layout: fixed; width: 100%; }
       td { word-wrap: break-word; }
@@ -230,6 +230,10 @@
         tbody.style.display = '';
       }
     };
+
+    var sortTable = function(th) {
+      return;
+    }
   </script>
 
   </head>
@@ -273,7 +277,7 @@
       <input type="checkbox" id="fluxCheckbox" onclick="toggleFluxColor()" /><u>f</u>.lux-friendly color
     </div>
 
-@tr_results
+@result_tables
 
   </body>
 </html>
