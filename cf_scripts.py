@@ -17,7 +17,6 @@ import re
 import subprocess
 import sys
 import time
-import tkinter
 import urllib.request as ur
 import webbrowser
 import zipfile
@@ -29,9 +28,20 @@ default_dict_options = {
     'bool_open': True, 'bool_save': False
 }
 
-message_no_result = 'No forbidden term was found!'
-message_no_export = 'The search was successfully finished.'
-snippet_file_created = ' was successfully created.'
+
+def append_metadata(dict_options):
+    list_metadata = []
+
+    meta_date_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    meta_program = 'Check Forbidden'
+    meta_version = 'v' + setup.dict_console['version']
+    list_metadata.append(meta_date_time)
+    list_metadata.append(''.join([
+        '<a href="https://github.com/ShunSakurai/check_forbidden" target="_blank">',
+        meta_program, '</a>', ' ', meta_version
+    ]))
+
+    return list_metadata
 
 tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
 
@@ -112,19 +122,6 @@ def dir_from_str_path(str_path):
 def dirname_from_fname(fname):
     dir_name = fname.rsplit('.', 1)[0]
     return dir_name
-
-
-def display_toast(message):
-    toast_tk = tkinter.Tk()
-    toast_message = tkinter.Message(toast_tk, text=message)
-    toast_message.pack()
-    # destroy works but quit doesn't
-    alarm_id = toast_tk.after(3000, toast_tk.destroy)
-    toast_tk.protocol(
-        'WM_DELETE_WINDOW',
-        lambda: (toast_tk.after_cancel(alarm_id), toast_tk.quit())
-    )
-    toast_tk.mainloop()
 
 
 def fname_from_str_path(str_path):
@@ -210,7 +207,7 @@ def load_mqxliff(fn_bl_tuple, dict_options):
     return f_bl_line_range_list
 
 
-def ls_from_list_str(x):
+def ls_from_list_str(list_str):
     r'''
     >>> ls_from_list_str("['Index', 'Source', 'Target (NG)', 'Target (OK)']")
     ['Index', 'Source', 'Target (NG)', 'Target (OK)']
@@ -218,7 +215,7 @@ def ls_from_list_str(x):
     >>> ls_from_list_str('Mere string')
     ['Mere string']
     '''
-    list_from_str = [i.strip('\'') for i in x.strip('[]').split(', ')]
+    list_from_str = [i.strip('\'') for i in list_str.strip('[]').split(', ')]
     return list_from_str
 
 
@@ -296,25 +293,6 @@ def open_folder(tuple_path):
 def open_readme(*event):
     webbrowser.open_new_tab(
         'https://github.com/ShunSakurai/check_forbidden/blob/master/README.md')
-
-
-def print_and_append_metadata(dict_options):
-    list_metadata = []
-
-    print('-' * 70)
-    meta_date_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
-    meta_program = 'Check Forbidden'
-    meta_version = 'v' + setup.dict_console['version']
-    print(' '.join([
-        'Time and version:', meta_date_time, meta_program, meta_version
-    ]))
-    list_metadata.append(meta_date_time)
-    list_metadata.append(''.join([
-        '<a href="https://github.com/ShunSakurai/check_forbidden" target="_blank">',
-        meta_program, '</a>', ' ', meta_version
-    ]))
-
-    return list_metadata
 
 
 def print_and_append_terms_data(fpath_terms, dict_options):
@@ -413,13 +391,13 @@ def try_printing(to_print):
         print(sys.exc_info()[1], '\n', sys.exc_info()[0])
 
 
-def try_rmdir(i):
+def try_rmdir(dir_path):
     try:
-        os.rmdir(i)
+        os.dir_path(path)
     except:
         try:
             time.sleep(0.01)
-            os.rmdir(i)
+            os.rmdir(dir_path)
         except:
             print('Please go to the bilingual file location and delete the _extract folder manually.')
 
@@ -442,15 +420,8 @@ def unzip_if_mqxlz(fn_bl):
         return fn_bl
 
 
-def write_result(list_metadata, f_result_w, fpath_result, dict_options):
-    file_exists = os.path.exists(fpath_result)
-    if file_exists:
-        import tkinter.messagebox
-        answer = tkinter.messagebox.askquestion(
-            'Warning', 'Overwrite ' + fpath_result + '?')
-        if answer == 'no':
-            return
-
+def write_result(f_result_w, fpath_result, dict_options):
+    list_metadata = append_metadata(dict_options)
     f_template = open('files/cf_template.html', encoding='utf-8')
     fr_template = f_template.read()
 
@@ -465,11 +436,7 @@ def write_result(list_metadata, f_result_w, fpath_result, dict_options):
         '@result_tables', cf_html.mk_table_result(f_result_w, dict_options)
     ))
     f_result.close()
-    print('\n' + fname_from_str_path(fpath_result) + snippet_file_created)
-    if dict_options['bool_open']:
-        open_file(fpath_result)
-    elif not file_exists:
-        display_toast(fname_from_str_path(fpath_result) + snippet_file_created)
+    return fname_from_str_path(fpath_result)
 
 
 def wrap_up_result_if_found(
@@ -573,11 +540,9 @@ def check_for_each_term_list(
             list_matched_rows, list_matches_summary, fpath_result, dict_options
         )
         return fname_header_terms + list_matched_rows
-    elif not dict_options['bool_function']:
-        print(message_no_result)
-
-    print('')
-    return []
+    else:
+        print('No forbidden term was found!')
+        return []
 
 
 def check_forbidden_terms(
@@ -598,8 +563,6 @@ def check_forbidden_terms(
             print('File name is invalid:', fn_bl)
             return
 
-    list_metadata = print_and_append_metadata(dict_options)
-
     list_fn_bl_tuple = []
     for fn_bl in list_fpath_bl:
         fn_actual = replace_bslash_w_fslash(unzip_if_mqxlz(fn_bl))
@@ -613,20 +576,7 @@ def check_forbidden_terms(
 
     elapsed = time.time() - start
     print(str(elapsed)[:10], 'seconds.\n')
-
-    if f_result_w:
-        if not dict_options['bool_export']:
-            write_result(list_metadata, f_result_w, fpath_result, dict_options)
-        elif dict_options['bool_export']:
-            print(message_no_export)
-            display_toast(message_no_export)
-    else:
-        display_toast(message_no_result)
-
-    for fn_bl in list_fpath_bl:
-        cleanup_if_mqxlz(fn_bl)
-
-    print('To exit, click [x].\n')
+    return f_result_w, fpath_result, list_fpath_bl
 
 
 if __name__ == "__main__":

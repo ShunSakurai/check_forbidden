@@ -11,6 +11,7 @@ import pickle
 import sys
 import tkinter
 import tkinter.filedialog
+import tkinter.messagebox
 
 print('Loading v', setup.dict_console['version'], '...', sep='')
 
@@ -446,12 +447,65 @@ def save_options():
         pickle.dump(dict_options, f_to_save_options)
 
 
+def ask_question(title, message):
+    answer = tkinter.messagebox.askquestion(title, message)
+    return answer == 'yes'
+
+
+def display_toast(message, also_print=False):
+    if also_print:
+        print(message)
+    toast_tk = tkinter.Tk()
+    toast_message = tkinter.Message(toast_tk, text=message)
+    toast_message.pack()
+    # destroy works but quit doesn't
+    alarm_id = toast_tk.after(3000, toast_tk.destroy)
+    toast_tk.protocol(
+        'WM_DELETE_WINDOW',
+        lambda: (toast_tk.after_cancel(alarm_id), toast_tk.quit())
+    )
+    toast_tk.mainloop()
+
+
+def main(tuple_str_bl, tuple_str_terms, str_result, dict_options):
+    message_no_export = 'The search was successfully finished.'
+    message_no_result = 'No forbidden term was found!'
+    snippet_file_created = ' was successfully created.'
+    f_result_w, fpath_result, list_fpath_bl = cf_scripts.check_forbidden_terms(
+            tuple_str_bl, tuple_str_terms, str_result, dict_options)
+
+    if not f_result_w:
+        display_toast(message_no_result, also_print=True)
+    else:
+        if dict_options['bool_export']:
+            display_toast(message_no_export, also_print=True)
+        else:
+            file_existing = os.path.exists(fpath_result)
+            if file_existing:
+                overwrite_file = ask_question(
+                    'Warning', 'Overwrite ' + fpath_result + '?')
+                if not overwrite_file:
+                    display_toast(message_no_export, also_print=True)
+            if not file_existing or overwrite_file:
+                fname_result = cf_scripts.write_result(
+                    f_result_w, fpath_result, dict_options)
+                print('\n' + fname_result + snippet_file_created)
+
+                if dict_options['bool_open']:
+                    cf_scripts.open_file(fpath_result)
+                elif not file_existing:
+                    display_toast(fname_result + snippet_file_created)
+
+    for fn_bl in list_fpath_bl:
+        cf_scripts.cleanup_if_mqxlz(fn_bl)
+    print('To exit, click [x].\n')
+
+
 def run(*event):
     if btn_run['state'] == 'disabled':
         return
     dict_options = get_options()
-    cf_scripts.check_forbidden_terms(
-        var_str_bl.get(), var_str_terms.get(), var_str_result.get(), dict_options)
+    main(var_str_bl.get(), var_str_terms.get(), var_str_result.get(), dict_options)
 
 
 def enable_run_if_filled(var, unknown, w):
@@ -594,9 +648,10 @@ bind_keys('v', lambda x: cb_save.toggle())
 bind_keys('d', restore_default)
 
 # Initiating the program
-top = frame_main.winfo_toplevel()
-top.resizable(False, False)
-load_options()
-print('tk window is ready to use.')
-root.protocol('WM_DELETE_WINDOW', lambda: (save_options(), root.destroy()))
-frame_main.mainloop()
+if __name__ == "__main__":
+    top = frame_main.winfo_toplevel()
+    top.resizable(False, False)
+    load_options()
+    print('tk window is ready to use.')
+    root.protocol('WM_DELETE_WINDOW', lambda: (save_options(), root.destroy()))
+    frame_main.mainloop()
