@@ -171,7 +171,6 @@ Below are some best practices to avoid false positives.
 - Show whitespace characters in HTML file
 - Save term lists and their paths as favorites
 - Make the program window re-sizable
-- Make the HTML table sortable
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
 
 ### Maybe later

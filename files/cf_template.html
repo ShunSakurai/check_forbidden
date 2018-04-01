@@ -232,8 +232,39 @@
     };
 
     var sortTable = function(th) {
-      return;
-    }
+      var tableBody = th.parentNode.parentNode;
+      var index = 0;
+      while ( (th = th.previousElementSibling) ) {
+        index++;
+      }
+      var arrayTr = new Array();
+      for (var i = 1; i <= tableBody.children.length - 1; i++) {
+        arrayTr.push(tableBody.children[i]);
+      }
+
+      arrayTr.sort(function (a, b) {
+        if (index == 0) {
+          a = a.id;
+          b = b.id;
+        } else {
+          a = a.children[index].textContent;
+          b = b.children[index].textContent;
+        }
+        if (isNaN(a) || isNaN(b)) {
+          return a > b? 1: -1;
+        } else {
+          return a - b;
+        }
+      });
+
+      for (var i = tableBody.children.length - 1; i >= 1; i--) {
+        tableBody.removeChild(tableBody.children[i]);
+      }
+      for (var i = 0; i <= arrayTr.length - 1; i++) {
+        tableBody.appendChild(arrayTr[i]);
+      }
+    };
+
   </script>
 
   </head>
