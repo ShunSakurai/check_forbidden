@@ -351,8 +351,11 @@ def replace_entities(string):
 
 def replace_tags(segment):
     regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
+    regex_tag_comment = re.compile(r'<mrk mtype=.*?>', re.S)
     regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
     regex_val = re.compile(r'val=&quot;(.*?)&quot;')
+    if regex_tag_comment.search(segment):
+        segment = regex_tag_comment.sub('', segment)
 
     match_tag = True
     while match_tag:
