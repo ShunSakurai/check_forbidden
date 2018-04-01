@@ -174,7 +174,6 @@ Below are some best practices to avoid false positives.
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
 
 ### Maybe later
-- Add settings to specify CSV delimiters
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs

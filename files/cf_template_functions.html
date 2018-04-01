@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Check Forbidden results</title>
+    <style type="text/css">
+      button, div { margin-bottom: 5px; margin-top: 5px; }
+      caption { font-size: 125%; font-weight: bold; padding: 10px 0px 10px 0px;}
+      tr input, td input { width: 100%; }
+      table { border-collapse: collapse; table-layout: fixed; width: 100%; }
+      td { word-wrap: break-word; }
+      th { background: silver; }
+    </style>
+
+  <script type="text/javascript">
+    document.fluxColor = false;
+    document.hiddenRows = {};
+
+
+    var assessKey = function(event) {
+      if (event.ctrlKey || event.altKey || event.metaKey
+      || document.activeElement.nodeName === "INPUT") {
+        return;
+      }
+      switch (event.keyCode){
+        case 'C'.charCodeAt(0):
+          clearFilter();
+          break;
+        case 'F'.charCodeAt(0):
+          toggleCheckboxByKey("fluxCheckbox");
+          toggleFluxColor();
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', assessKey);
+
+    var updateSegmentVisibility = function (allTr) {
+      var hiddenRowsArray = new Array(allTr.length).fill(false);
+      var n = allTr.length;
+      for (var key in document.hiddenRows) {
+        if (document.hiddenRows.hasOwnProperty(key)
+        && typeof document.hiddenRows[key] === "object") {
+          for (var i = 0; i < n; i ++){
+            hiddenRowsArray[i] = hiddenRowsArray[i] || document.hiddenRows[key][i];
+          }
+        }
+      }
+      for (var j = 0; j < n; j ++){
+        if (allTr[j].className.indexOf("filter") == -1) {
+          allTr[j].style.display = hiddenRowsArray[j]? "None": "";
+        }
+      }
+    };
+
+    var include = function(range, string) {
+      return range.indexOf(string) === -1;
+    };
+
+    var exclude = function(range, string) {
+      if (string === "") {
+        return;
+      }
+      return range.indexOf(string) !== -1;
+    };
+
+    var includeRegex = function(range, string) {
+      try {
+        var regex = new RegExp(string);
+        return !regex.exec(range);
+      } catch (e) {
+        if (e instanceof SyntaxError){
+          return;
+        } else {
+          throw e;
+        }
+      }
+    };
+
+    var excludeRegex = function(range, string) {
+      if (string === "") {
+        return;
+      }
+      try {
+        var regex = new RegExp(string);
+        return regex.exec(range);
+      } catch (e) {
+        if (e instanceof SyntaxError){
+          return;
+        } else {
+          throw e;
+        }
+      }
+    };
+
+    var numberRange = function(range, string) {
+      var match = /^(\d+)\-(\d+)$/.exec(string);
+      var numberInRange = parseInt(range);
+      if (!match || isNaN(numberInRange)) {
+        return;
+      }
+      return !(match[1] <= numberInRange && numberInRange <= match[2]);
+    };
+
+    var functionsList = [include, exclude, includeRegex, excludeRegex, numberRange];
+
+    var filterSegments = function(tr, func) {
+      var th = tr.parentNode;
+      var column = Array.prototype.indexOf.call(th.parentNode.children, th);
+      var filterId = func.name + "Filter" + column;
+      var allTr = document.querySelectorAll('tr');
+
+      if (!tr.value) {
+        delete document.hiddenRows[filterId];
+      } else {
+        document.hiddenRows[filterId] = [];
+        for (var i = 0, n = allTr.length; i < n; i ++) {
+          if (allTr[i].children[0] && allTr[i].children[0].nodeName === "TD"
+          && func(allTr[i].children[column].textContent, tr.value)){
+            document.hiddenRows[filterId].push(true);
+          } else {
+            document.hiddenRows[filterId].push(false);
+          }
+        }
+      }
+      updateSegmentVisibility(allTr);
+    };
+
+    var clearFilter = function () {
+      document.querySelectorAll(".filter").forEach(function(tr){
+        var filterTd = document.getElementById(tr.id).children;
+        for (var td in filterTd) {
+          if (filterTd.hasOwnProperty(td)
+          && filterTd[td].nodeName === "TD"){
+            for (var input in filterTd[td].children){
+              if (filterTd[td].children.hasOwnProperty(input)
+              && filterTd[td].children[input].nodeName === "INPUT"){
+                filterTd[td].children[input].value = "";
+              }
+            }
+          }
+        }
+        for (var key in document.hiddenRows){
+          if (document.hiddenRows.hasOwnProperty(key)
+          && key.indexOf("Filter") >= 0) {
+            delete document.hiddenRows[key];
+          }
+        }
+      });
+      var allTr = document.querySelectorAll('tr');
+      updateSegmentVisibility(allTr);
+    };
+
+    var toggleCheckboxByKey = function (id) {
+      var cb = document.getElementById(id);
+      if (cb.disabled) return;
+      cb.checked = !cb.checked;
+    };
+
+    var toggleFluxColor = function() {
+      document.fluxColor = !document.fluxColor;
+      var styleSheet = document.styleSheets[0];
+      var styleLength = styleSheet.cssRules.length;
+      if (document.fluxColor){
+        styleSheet.insertRule('mark {background: #dff;}', styleLength);
+      } else {
+        styleSheet.deleteRule(styleLength - 1);
+      }
+    };
+
+    var collapseTbody = function(caption) {
+      tbody = caption.parentNode.children[1];
+      if (caption.textContent[0] === '▼') {
+        caption.innerHTML = '▷' + caption.textContent.slice(1);
+        tbody.style.display = 'None';
+      } else {
+        caption.innerHTML = '▼' + caption.textContent.slice(1);
+        tbody.style.display = '';
+      }
+    };
+
+    var sortTable = function(th) {
+      var tableBody = th.parentNode.parentNode;
+      var index = 0;
+      while ( (th = th.previousElementSibling) ) {
+        index++;
+      }
+      var arrayTr = new Array();
+      for (var i = 1; i <= tableBody.children.length - 1; i++) {
+        arrayTr.push(tableBody.children[i]);
+      }
+
+      arrayTr.sort(function (a, b) {
+        if (index == 0) {
+          a = a.id;
+          b = b.id;
+        } else {
+          a = a.children[index].textContent;
+          b = b.children[index].textContent;
+        }
+        if (isNaN(a) || isNaN(b)) {
+          return a > b? 1: -1;
+        } else {
+          return a - b;
+        }
+      });
+
+      for (var i = tableBody.children.length - 1; i >= 1; i--) {
+        tableBody.removeChild(tableBody.children[i]);
+      }
+      for (var i = 0; i <= arrayTr.length - 1; i++) {
+        tableBody.appendChild(arrayTr[i]);
+      }
+    };
+
+  </script>
+
+  </head>
+  <body>
+    <h3>Check Forbidden results</h3>
+    <ul class="info">
+      <li>@list_metadata</li>
+    </ul>
+
+    <table id="filterTable">
+      <caption>Filters (Include, Exclude, Include Regex, Exclude Regex, Number Range)</caption>
+      <tbody>
+        <tr>
+@filter_header
+        </tr>
+@filter_body
+      </tbody>
+    </table>
+
+    <div>
+      <button onclick="clearFilter()"><u>C</u>lear Filter</button>
+    </div>
+
+    <div>
+      <input type="checkbox" id="fluxCheckbox" onclick="toggleFluxColor()" /><u>f</u>.lux-friendly color
+    </div>
+
+@result_tables
+
+  </body>
+</html>

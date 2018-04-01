@@ -1,20 +1,21 @@
 def mk_table_filter_header(dict_options):
+    if dict_options['bool_function']:
+        return ''
     ls_filter_header = []
-    if not dict_options['bool_function']:
-        for (width, col) in zip(
-            [9, 4, 20, 20, 4, 4, 4, 10],
-            ['File', 'Seg', 'Source', 'Target', r'%', 'Locked', 'Same', 'Forbidden']
-        ):
-            ls_filter_header.append(
-                ''.join([
-                    ' ' * 10, '<th style="width:', str(width),
-                    r'%;">', col, '</th>'
-                ])
-            )
+    for (width, col) in zip(
+        [9, 4, 20, 20, 4, 4, 4, 10],
+        ['File', 'Seg', 'Source', 'Target', r'%', 'Locked', 'Same', 'Forbidden']
+    ):
+        ls_filter_header.append(
+            ''.join([
+                ' ' * 10, '<th style="width:', str(width),
+                r'%;">', col, '</th>'
+            ])
+        )
     return '\n'.join(ls_filter_header)
 
 
-def mk_table_filter_body():
+def mk_table_filter_body(num_columns):
     ls_filter_body = []
     for (id, klass, ph) in zip(
         ['include', 'exclude', 'includeRegex', 'excludeRegex', 'numberRange'],
@@ -35,7 +36,7 @@ def mk_table_filter_body():
                 ' ' * 10, '<td><input oninput="filterSegments(this, ', id,
                 ')" /></td>'
             ])
-        ] * 7
+        ] * (num_columns - 1)
         ls_filter_body.append(' ' * 8 + '</tr>')
     return '\n'.join(ls_filter_body)
 

@@ -34,7 +34,8 @@ Name: "{userappdata}\Check Forbidden"
 
 [Files]
 Source: "dist\{#MyAppName}.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "files\cf_template.html"; DestDir: "{app}\files"; Flags: ignoreversion
+Source: "files\cf_template_terms.html"; DestDir: "{app}\files"; Flags: ignoreversion
+Source: "files\cf_template_functions.html"; DestDir: "{app}\files"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [InstallDelete]

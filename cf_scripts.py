@@ -124,6 +124,14 @@ def dirname_from_fname(fname):
     return dir_name
 
 
+def get_max_length(two_dimensions_list):
+    max_length = 0
+    for row in two_dimensions_list:
+        if isinstance(row, list) and len(row) > max_length:
+            max_length = len(row)
+    return max_length
+
+
 def fname_from_str_path(str_path):
     f_name = str_path.rsplit('/', 1)[-1]
     return f_name
@@ -297,6 +305,7 @@ def open_readme(*event):
 
 def print_and_append_terms_data(fpath_terms, dict_options):
     fname_header_terms = []
+    fname_terms = fname_from_str_path(fpath_terms)
 
     print('-' * 70)
     if not dict_options['bool_function']:
@@ -305,11 +314,11 @@ def print_and_append_terms_data(fpath_terms, dict_options):
         f_terms.close()
         try_printing('Terms: ' + fpath_terms)
         try_printing('Header: [' + header + '] + Segment Number')
-        fname_header_terms.append(fpath_terms)
+        fname_header_terms.append(fname_terms)
         fname_header_terms.append(header.split(','))
     else:
         try_printing('Function: ' + fpath_terms)
-        fname_header_terms.append(fpath_terms)
+        fname_header_terms.append(fname_terms)
     print('-' * 70)
 
     return fname_header_terms
@@ -422,7 +431,14 @@ def unzip_if_mqxlz(fn_bl):
 
 def write_result(f_result_w, fpath_result, dict_options):
     list_metadata = append_metadata(dict_options)
-    f_template = open('files/cf_template.html', encoding='utf-8')
+    if not dict_options['bool_function']:
+        fpath_template = 'files/cf_template_terms.html'
+        num_columns = 8
+    else:
+        fpath_template = 'files/cf_template_functions.html'
+        num_columns = get_max_length(f_result_w)
+
+    f_template = open(fpath_template, encoding='utf-8')
     fr_template = f_template.read()
 
     f_result = open(fpath_result, 'w', encoding='utf-8')
@@ -431,7 +447,7 @@ def write_result(f_result_w, fpath_result, dict_options):
     ).replace(
         '@filter_header', cf_html.mk_table_filter_header(dict_options)
     ).replace(
-        '@filter_body', cf_html.mk_table_filter_body()
+        '@filter_body', cf_html.mk_table_filter_body(num_columns)
     ).replace(
         '@result_tables', cf_html.mk_table_result(f_result_w, dict_options)
     ))

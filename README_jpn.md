@@ -174,7 +174,6 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 - memoQタグ`{1}`(mqxliffファイルでは`<x id="1" />`)を除外
 
 ### 棚上げ中の機能
-- CSVの区切り文字を指定するための設定を追加
 - memoQ以外のファイルへの対応
 - [Microsoftスタイルガイド](https://www.microsoft.com/Language/ja-JP/StyleGuides.aspx)の禁止語リストを例として作成
 - 外部プログラムからの呼び出しに対応
