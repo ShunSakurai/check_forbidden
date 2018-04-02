@@ -473,6 +473,8 @@ def main(tuple_str_bl, tuple_str_terms, str_result, dict_options):
     snippet_file_created = ' was successfully created.'
     f_result_w, fpath_result, list_fpath_bl = cf_scripts.check_forbidden_terms(
             tuple_str_bl, tuple_str_terms, str_result, dict_options)
+    for fn_bl in list_fpath_bl:
+        cf_scripts.cleanup_if_mqxlz(fn_bl)
 
     if not f_result_w:
         display_toast(message_no_result, also_print=True)
@@ -496,8 +498,6 @@ def main(tuple_str_bl, tuple_str_terms, str_result, dict_options):
                 elif not file_existing:
                     display_toast(fname_result + snippet_file_created)
 
-    for fn_bl in list_fpath_bl:
-        cf_scripts.cleanup_if_mqxlz(fn_bl)
     print('To exit, click [x].\n')
 
 

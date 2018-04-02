@@ -29,7 +29,7 @@ This program is written in Python with tkinter and is distributed in .exe format
 The icon was created with [アイコン ウィザード](http://freewareplace.web.fc2.com/) and the installer is created with [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
 ## Installation
-This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/check_forbidden/releases). All you have to do for installation and upgrading is to download and run the installer.
+This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/check_forbidden/releases). All you have to do for installation and upgrading is to download and run the installer. Both 32-bit and 64-bit environments are supported.
 
 If you have the Python environment installed, you can run the source code with `python(3) check_forbidden.py` or `import check_forbidden` even on Mac and on any OS.
 
@@ -49,10 +49,12 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ## Usage
 
 ### Overview
-- You can open the program by double-clicking Check Forbidden.exe or its alias
+- Export bilingual file(s) from memoQ
+- Open the program by double-clicking Check Forbidden.exe or its alias
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
-- Choose CSV or text file(s) containing the list of forbidden terms
-- Specify the path and the name of the result file to be exported if necessary, by unselecting the check box. The default path is the first bilingual file's path + "checked_result.html"
+- Choose CSV or text file(s) containing the list of forbidden terms, or a Python script
+- Specify the path and the name of the result file to be exported if necessary. The default path is the first bilingual file's path + "checked_result.html"
+- Adjust other options as needed
 - Click "Run!"
 - The result is displayed in the Command Prompt. If exporting is enabled and any matches are found, they are also exported into an HTML file
 - Click "X" (close) button to exit the program
@@ -60,6 +62,8 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
 ### Tips
+- The check is done quickly if all bilingual files are combined into a "view"
+- The check is done quickly if the bilingual files are located on your local PC rather than on a shared drive
 - If you type or paste a path into the entry field and press the button to choose the file(s) afterwards, browsing starts from the folder written in the field
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
