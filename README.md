@@ -95,6 +95,9 @@ The term list needs to meet the following specifications:
 
 ![CSV](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_csv.png)
 
+#### txt file formats
+- Commas and double quotation marks need to be escaped as `""` and `"String, including comma"`
+
 ### Regular expressions
 - This program uses the syntax in [re](https://docs.python.org/3/library/re.html) module
 - memoQ's regex for tags `\tag` is not currently supported
@@ -102,7 +105,7 @@ The term list needs to meet the following specifications:
 - (Example) `\\)\S` searches for a bracket without whitespace around it
 
 ### Call external functions
-When the function check box is selected, you can call a function from an external Python script. *Specifications below are to be changed soon.*
+When the function check box is selected, you can call a function from an external Python script.
 
 - Call a function named "function" in an external Python script, which takes six arguments: segment ID (integer), the source segment (string), target segment (string), match percentage (integer), locked status (boolean), target same as source (boolean)
 - The function should return a 2D list for each segment, each inner list representing one line in the result display both on Command Prompt and in the HTML table

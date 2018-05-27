@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '2.3.6'
+    'version': '2.3.6.1'
 }
 
 dict_options = {
@@ -88,5 +88,5 @@ if __name__ == "__main__":
             'start',
             ''.join([
                 'Output/check_forbidden_installer_',
-                dict_console['version'], '.0.exe'
+                zero_pad(dict_console['version']), '.exe'
             ])], shell=True)

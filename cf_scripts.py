@@ -95,11 +95,11 @@ def check_updates(*event, download_function=download_installer):
     pattern_installer = re.compile(r'/ShunSakurai/check_forbidden/releases/download/v([0-9.]+)/(check_forbidden_installer_\1.0.exe)')
     str_newest_version = pattern_version.search(str_release_page).group(0)
     url_installer = pattern_installer.search(str_release_page)
-    if installed_version_is_newer(setup.dict_console['version'], str_newest_version):
-        print('You are using the newest version:', setup.dict_console['version'])
-    else:
+    if new_version_is_available(setup.dict_console['version'], str_newest_version):
         download_path = download_function(str_newest_version, url_installer)
         apply_update(download_path)
+    else:
+        print('You are using the newest version:', setup.dict_console['version'])
 
 
 def dir_from_str_path(str_path):
@@ -135,19 +135,6 @@ def get_max_length(two_dimensions_list):
 def fname_from_str_path(str_path):
     f_name = str_path.rsplit('/', 1)[-1]
     return f_name
-
-
-def installed_version_is_newer(str_installed, str_online):
-    list_installed = str_installed.split('.')
-    list_online = str_online.split('.')
-    for i in range(3):
-        if int(list_installed[i]) < int(list_online[i]):
-            return False
-        elif int(list_installed[i]) > int(list_online[i]):
-            return True
-        else:
-            pass
-    return True
 
 
 def is_range(tuple_range, dict_options):
@@ -276,6 +263,17 @@ def ls_from_tuple_str(tuple_str):
 
     list_from_str_clean = [i.strip(' {},"\'') for i in list_from_str]
     return list_from_str_clean
+
+
+def new_version_is_available(str_installed, str_online):
+    list_installed = setup.zero_pad(str_installed).split('.')
+    list_online = setup.zero_pad(str_online).split('.')
+    for (i, o) in zip(list_installed, list_online):
+        if int(i) == int(o):
+            pass
+        else:
+            return int(i) < int(o)
+    return False
 
 
 def open_file(str_file_path):
