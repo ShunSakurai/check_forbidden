@@ -628,6 +628,8 @@ def toggle_open_if_enabled(*event):
 
 def bind_keys(key, func):
     root.bind(key, lambda x: sc_only_when_out_of_ent(func))
+    if len(key) == 1 and key.upper() != key:
+        root.bind(key.upper(), lambda x: sc_only_when_out_of_ent(func))
 
 
 bind_keys('<Return>', run)
