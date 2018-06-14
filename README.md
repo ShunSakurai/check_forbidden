@@ -177,10 +177,10 @@ Below are some best practices to avoid false positives.
 ### Working on
 - Show whitespace characters in HTML file
 - Save term lists and their paths as favorites
-- Make the program window re-sizable
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
 
 ### Maybe later
+- Make the program window re-sizable
 - Add an ability to handle non-memoQ files
 - Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 - Make the program callable from external programs

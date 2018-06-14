@@ -98,11 +98,14 @@ label_guide.grid(row=3, column=2, sticky='w')
 btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
 btn_options.grid(row=3, column=3, sticky='e', padx=80)
 
+btn_clear = tkinter.Button(text='✗', borderwidth=0, font=('', 15))
+btn_clear.grid(row=3, column=3, sticky='e', padx=50)
+
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
 all_guided_ui = three_buttons + three_folder_buttons + [
-    cb_function, cb_export, btn_options, btn_run]
+    cb_function, cb_export, btn_options, btn_clear, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
 
@@ -243,6 +246,16 @@ def choose_result(*event):
     if f_result:
         var_str_result.set(f_result)
     focus_off()
+
+
+def clear_fields():
+    var_str_bl.set('')
+    var_str_terms.set('')
+    if not btn_result['state'] == 'disabled':
+       var_str_result.set('')
+    path_saved_terms.set('')
+    path_saved_function.set('')
+    path_saved_result.set('')
 
 
 def turn_off_function():
@@ -531,6 +544,7 @@ btn_folder_terms['command'] = lambda: cf_scripts.open_folder(var_str_terms.get()
 btn_folder_result['command'] = lambda: cf_scripts.open_folder(var_str_result.get())
 
 btn_options['command'] = lambda: toggle_options(btn_options)
+btn_clear['command'] = clear_fields
 btn_run['command'] = run
 
 cb_function['command'] = toggle_cb_function
@@ -548,12 +562,14 @@ guide_folder = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_export = 'Select this check box if you don\'t Export the CSV file.'
 guide_options = 'Show or hide Options.'
+guide_clear = 'Clear all three fields.'
 guide_run = 'Enabled when all the three fields are filled. (Return key)'
 
 ul_no = -1
 ul_function = 0
 ul_export = 35
 ul_options = 13
+ul_clear = 0
 
 
 def show_guide(event, guide, underline):
@@ -574,6 +590,7 @@ bind_show_guide(btn_result, guide_result, ul_no)
 for btn in three_folder_buttons:
     bind_show_guide(btn, guide_folder, ul_no)
 bind_show_guide(btn_options, guide_options, ul_options)
+bind_show_guide(btn_clear, guide_clear, ul_clear)
 bind_show_guide(btn_run, guide_run, ul_no)
 
 for btn in all_guided_ui:
@@ -633,6 +650,7 @@ def bind_keys(key, func):
 
 
 bind_keys('<Return>', run)
+bind_keys('c', lambda x: clear_fields())
 bind_keys('o', lambda x: toggle_options(btn_options))
 bind_keys('b', choose_bl)
 bind_keys('t', choose_terms)
