@@ -192,10 +192,6 @@ btn_update.grid(row=4, column=2, sticky='w', padx=20)
 
 
 # Functions
-def focus_off():
-    label_guide.focus_set()
-
-
 def choose_bl(*event):
     path = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
     if path:
@@ -211,7 +207,6 @@ def choose_bl(*event):
             cf_scripts.dir_from_str_path(
                 cf_scripts.ls_from_tuple_str(var_str_bl.get())[0])
                 + '/' + fn_result)
-    focus_off()
 
 
 def choose_terms(*event):
@@ -228,7 +223,6 @@ def choose_terms(*event):
         filetypes=extensions, initialdir=initial_dir)
     if f_terms:
         var_str_terms.set(f_terms)
-    focus_off()
 
 
 def choose_result(*event):
@@ -245,7 +239,6 @@ def choose_result(*event):
         initialfile=fn_result)
     if f_result:
         var_str_result.set(f_result)
-    focus_off()
 
 
 def clear_fields():
@@ -536,9 +529,6 @@ three_funcs = [choose_bl, choose_terms, choose_result]
 for i in range(3):
     three_buttons[i]['command'] = three_funcs[i]
 
-for ent in three_entries:
-    ent.bind('<Leave>', lambda x: focus_off())
-
 btn_folder_bl['command'] = lambda: cf_scripts.open_folder(var_str_bl.get())
 btn_folder_terms['command'] = lambda: cf_scripts.open_folder(var_str_terms.get())
 btn_folder_result['command'] = lambda: cf_scripts.open_folder(var_str_result.get())
@@ -637,28 +627,28 @@ def toggle_open_if_enabled(*event):
 
 
 def bind_keys(key, func):
-    root.bind(key, lambda x: func(''))
+    root.bind(''.join(['<Alt-', key, '>']), lambda x: func(''))
     if len(key) == 1 and key.upper() != key:
-        root.bind(key.upper(), lambda x: func(''))
+        root.bind(''.join(['<Alt-', key.upper(), '>']), lambda x: func(''))
 
 
-bind_keys('<Alt-Return>', run)
-bind_keys('<Alt-c>', lambda x: clear_fields())
-bind_keys('<Alt-o>', lambda x: toggle_options(btn_options))
-bind_keys('<Alt-b>', choose_bl)
-bind_keys('<Alt-t>', choose_terms)
-bind_keys('<Alt-r>', choose_result)
-bind_keys('<Alt-f>', toggle_cb_function)
-bind_keys('<Alt-e>', toggle_cb_export)
-bind_keys('<Alt-m>', cf_scripts.open_readme)
-bind_keys('<Alt-u>', cf_scripts.check_updates)
-bind_keys('<Alt-1>', toggle_101_if_enabled)
-bind_keys('<Alt-0>', lambda x: cb_ex_100.toggle())
-bind_keys('<Alt-l>', lambda x: cb_ex_locked.toggle())
-bind_keys('<Alt-s>', lambda x: cb_ex_same.toggle())
-bind_keys('<Alt-n>', toggle_open_if_enabled)
-bind_keys('<Alt-v>', lambda x: cb_save.toggle())
-bind_keys('<Alt-d>', restore_default)
+bind_keys('Return', run)
+bind_keys('c', lambda x: clear_fields())
+bind_keys('o', lambda x: toggle_options(btn_options))
+bind_keys('b', choose_bl)
+bind_keys('t', choose_terms)
+bind_keys('r', choose_result)
+bind_keys('f', toggle_cb_function)
+bind_keys('e', toggle_cb_export)
+bind_keys('m', cf_scripts.open_readme)
+bind_keys('u', cf_scripts.check_updates)
+bind_keys('1', toggle_101_if_enabled)
+bind_keys('0', lambda x: cb_ex_100.toggle())
+bind_keys('l', lambda x: cb_ex_locked.toggle())
+bind_keys('s', lambda x: cb_ex_same.toggle())
+bind_keys('n', toggle_open_if_enabled)
+bind_keys('v', lambda x: cb_save.toggle())
+bind_keys('d', restore_default)
 
 # Initiating the program
 if __name__ == "__main__":
