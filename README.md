@@ -124,15 +124,14 @@ def function(seg_id, source, target, percent, locked, same):
 ```
 
 ### Keyboard shortcuts
-Buttons can be selected by pressing the underlined characters on the keyboard. For other buttons without an underline, they can be invoked with the following keys:
+Buttons can be selected by pressing the underlined characters along with Alt key. For other buttons without an underline, they can be invoked with the following keys:
 
-- Run!: Return (Enter)
-- Show or hide the options: O
+- Run!: Alt + Return (Alt + Enter)
+- Show or hide the options: Alt + o
+- Clear three fields: Alt + c
 - Open the folder: no shortcut key
 
 You can move along the UI items with "Tab" key and invoke the focused item with the space bar.
-
-The shortcut keys are disabled when the cursor is in the entry fields. That allows you to type directly in the fields.
 
 ## Answers to FAQ, and known issues and workarounds
 

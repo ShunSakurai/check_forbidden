@@ -563,7 +563,7 @@ guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_export = 'Select this check box if you don\'t Export the CSV file.'
 guide_options = 'Show or hide Options.'
 guide_clear = 'Clear all three fields.'
-guide_run = 'Enabled when all the three fields are filled. (Return key)'
+guide_run = 'Enabled when all the three fields are filled. (Alt + Return)'
 
 ul_no = -1
 ul_function = 0
@@ -626,13 +626,6 @@ for cb, enter, leave in zip(
     cb.bind('<Leave>', leave)
 
 
-def sc_only_when_out_of_ent(func):
-    if type(frame_main.focus_get()) == tkinter.Entry:
-        pass
-    else:
-        func('')
-
-
 def toggle_101_if_enabled(*event):
     if cb_ex_101['state'] != 'disabled':
         cb_ex_101.toggle()
@@ -644,28 +637,28 @@ def toggle_open_if_enabled(*event):
 
 
 def bind_keys(key, func):
-    root.bind(key, lambda x: sc_only_when_out_of_ent(func))
+    root.bind(key, lambda x: func(''))
     if len(key) == 1 and key.upper() != key:
-        root.bind(key.upper(), lambda x: sc_only_when_out_of_ent(func))
+        root.bind(key.upper(), lambda x: func(''))
 
 
-bind_keys('<Return>', run)
-bind_keys('c', lambda x: clear_fields())
-bind_keys('o', lambda x: toggle_options(btn_options))
-bind_keys('b', choose_bl)
-bind_keys('t', choose_terms)
-bind_keys('r', choose_result)
-bind_keys('f', toggle_cb_function)
-bind_keys('e', toggle_cb_export)
-bind_keys('m', cf_scripts.open_readme)
-bind_keys('u', cf_scripts.check_updates)
-bind_keys('1', toggle_101_if_enabled)
-bind_keys('0', lambda x: cb_ex_100.toggle())
-bind_keys('l', lambda x: cb_ex_locked.toggle())
-bind_keys('s', lambda x: cb_ex_same.toggle())
-bind_keys('n', toggle_open_if_enabled)
-bind_keys('v', lambda x: cb_save.toggle())
-bind_keys('d', restore_default)
+bind_keys('<Alt-Return>', run)
+bind_keys('<Alt-c>', lambda x: clear_fields())
+bind_keys('<Alt-o>', lambda x: toggle_options(btn_options))
+bind_keys('<Alt-b>', choose_bl)
+bind_keys('<Alt-t>', choose_terms)
+bind_keys('<Alt-r>', choose_result)
+bind_keys('<Alt-f>', toggle_cb_function)
+bind_keys('<Alt-e>', toggle_cb_export)
+bind_keys('<Alt-m>', cf_scripts.open_readme)
+bind_keys('<Alt-u>', cf_scripts.check_updates)
+bind_keys('<Alt-1>', toggle_101_if_enabled)
+bind_keys('<Alt-0>', lambda x: cb_ex_100.toggle())
+bind_keys('<Alt-l>', lambda x: cb_ex_locked.toggle())
+bind_keys('<Alt-s>', lambda x: cb_ex_same.toggle())
+bind_keys('<Alt-n>', toggle_open_if_enabled)
+bind_keys('<Alt-v>', lambda x: cb_save.toggle())
+bind_keys('<Alt-d>', restore_default)
 
 # Initiating the program
 if __name__ == "__main__":
