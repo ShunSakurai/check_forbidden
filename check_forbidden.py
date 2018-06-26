@@ -492,8 +492,6 @@ def main(tuple_str_bl, tuple_str_terms, str_result, dict_options):
             if file_existing:
                 overwrite_file = ask_question(
                     'Warning', 'Overwrite ' + fpath_result + '?')
-                if not overwrite_file:
-                    display_toast(message_no_export, also_print=True)
             if not file_existing or overwrite_file:
                 fname_result = cf_scripts.write_result(
                     f_result_w, fpath_result, dict_options)
