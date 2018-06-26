@@ -485,6 +485,7 @@ def check_against_function(
 
 def check_against_terms(
         fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
+    pattern_special_characters = re.compile(r'(["\'>]|&(?!\(\?\!amp;)(?!amp;)(?!gt;)(?!lt;)(?!quot;)(?!apos;)|(?<!\?)<)')
     sublist_matched_rows = []
     sublist_matches_summary = []
 
@@ -497,6 +498,9 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
+        match_special = pattern_special_characters.search(row[0])
+        if match_special:
+            print('Special character detected. Please escape:', match_special[0], 'in', row[0])
         for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
             match = pattern.search(target)
             if match:

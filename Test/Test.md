@@ -54,6 +54,7 @@
 ## Web links
 - Readme opens
 - Check for updates works
+- Offline
 
 ## UI
 - SC keys
