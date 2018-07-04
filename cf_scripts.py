@@ -348,7 +348,7 @@ def replace_tags(segment):
         if match_tag:
             match_displaytext = re.search(regex_displaytext, match_tag[2])
             match_val = re.search(regex_val, match_tag[2])
-            if match_displaytext:
+            if match_displaytext and not match_displaytext[1].startswith('&amp;lt;'):
                 text_after = match_displaytext[1]
                 for (entity, symbol) in tuple_html_entities:
                     text_after = text_after.replace(entity, symbol)
