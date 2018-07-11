@@ -346,16 +346,17 @@ def replace_tags(segment):
     while match_tag:
         match_tag = re.search(regex_tag, segment)
         if match_tag:
-            match_displaytext = re.search(regex_displaytext, match_tag[2])
-            match_val = re.search(regex_val, match_tag[2])
-            if match_displaytext and not match_displaytext[1].startswith('&amp;lt;'):
-                text_after = match_displaytext[1]
-                for (entity, symbol) in tuple_html_entities:
-                    text_after = text_after.replace(entity, symbol)
-            elif match_val and not match_val[1].startswith('&amp;lt;'):
-                text_after = match_val[1]
+            if match_tag[1] == 'ph' and match_tag[2] in ['&lt;br /&gt;']:
+                text_after = ' '
             else:
-                text_after = ''
+                match_displaytext = re.search(regex_displaytext, match_tag[2])
+                match_val = re.search(regex_val, match_tag[2])
+                if match_displaytext and not match_displaytext[1].startswith('&amp;lt;'):
+                    text_after = match_displaytext[1]
+                elif match_val and not match_val[1].startswith('&amp;lt;') and match_val[1] not in ['&ampnbsp;', 'nbsp']:
+                    text_after = match_val[1]
+                else:
+                    text_after = ''
             segment = ''.join([
                 segment[:match_tag.start()], text_after, segment[match_tag.end():]
             ])
