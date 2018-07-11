@@ -73,12 +73,12 @@ for ent in three_entries:
     ent.grid(
         row=three_entries.index(ent), column=2, columnspan=2, sticky='w')
 
-path_saved_terms = tkinter.StringVar(frame_main)
-path_saved_terms.set('')
-path_saved_function = tkinter.StringVar(frame_main)
-path_saved_function.set('')
-path_saved_result = tkinter.StringVar(frame_main)
-path_saved_result.set('')
+var_saved_terms = tkinter.StringVar(frame_main)
+var_saved_terms.set('')
+var_saved_function = tkinter.StringVar(frame_main)
+var_saved_function.set('')
+var_saved_result = tkinter.StringVar(frame_main)
+var_saved_result.set('')
 
 btn_folder_bl = tkinter.Button(
     text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
@@ -246,25 +246,25 @@ def clear_fields():
     var_str_terms.set('')
     if not btn_result['state'] == 'disabled':
        var_str_result.set('')
-    path_saved_terms.set('')
-    path_saved_function.set('')
-    path_saved_result.set('')
+    var_saved_terms.set('')
+    var_saved_function.set('')
+    var_saved_result.set('')
 
 
 def turn_off_function():
     btn_terms.config(text='Terms', underline=0)
-    path_saved_function.set(var_str_terms.get())
-    if path_saved_terms.get():
-        var_str_terms.set(path_saved_terms.get())
+    var_saved_function.set(var_str_terms.get())
+    if var_saved_terms.get():
+        var_str_terms.set(var_saved_terms.get())
     else:
         var_str_terms.set('')
 
 
 def turn_on_function():
     btn_terms.config(text='Funct.', underline=4)
-    path_saved_terms.set(var_str_terms.get())
-    if path_saved_function.get():
-        var_str_terms.set(path_saved_function.get())
+    var_saved_terms.set(var_str_terms.get())
+    if var_saved_function.get():
+        var_str_terms.set(var_saved_function.get())
     else:
         var_str_terms.set('')
 
@@ -282,15 +282,15 @@ def toggle_cb_function(*event):
 
 
 def turn_on_export():
-    path_saved_result.set(var_str_result.get())
+    var_saved_result.set(var_str_result.get())
     var_str_result.set(ph_cp_only)
     btn_result['state'] = 'disabled'
 
 
 def turn_off_export():
-    if path_saved_result.get():
-        var_str_result.set(path_saved_result.get())
-    elif not path_saved_result.get() and var_str_bl.get():
+    if var_saved_result.get():
+        var_str_result.set(var_saved_result.get())
+    elif not var_saved_result.get() and var_str_bl.get():
         path_1 = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
         var_str_result.set(
             cf_scripts.dir_from_str_path(path_1) + '/' + fn_result)
