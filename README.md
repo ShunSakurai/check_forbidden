@@ -84,7 +84,6 @@ The term list needs to meet the following specifications:
 - Encoding: UTF-8
 - All terms are considered as regex patterns and are case-sensitive
 - Any special characters (`(`, `)`, `[`, `]`, `.`, `\*`, `?`, `!` ,etc.) used in regex need to be **escaped with a backslash**
-- Special characters in xml files need to be escaped. Use `&amp;`, `&gt;`, `&lt;`, `&quot;`, and `&apos;`, instead of `&`, `>`, `<`, `"`, and `'`. (You can use `<` in look behind `(?<=)` in regex)
 - Terms in the **first** column will be considered as the forbidden terms
 - You can use other columns to provide detailed information e.g. the index number, the source term, and the correct target term
 - When a comma is included in the CSV file, it may be interpreted as the delimiter
@@ -171,7 +170,6 @@ Below are some best practices to avoid false positives.
 - Add file by dragging. The drag and drop feature is hard to use in tkinter
 - Mark and ignore false positives. It is technically difficult
 - Add settings to specify the row of forbidden terms
-- Warn if non-escaped characters are included in the term list. `&lt;` and `<` cannot be distinguished
 - Add an ability to choose multiple bilingual files from different folders. Not very important
 
 Please let me know from [Github Issues](https://github.com/ShunSakurai/check_forbidden/issues) or [Asana](https://app.asana.com/0/264039980253157/list) if you need any of the features as soon as possible.

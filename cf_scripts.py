@@ -28,6 +28,8 @@ default_dict_options = {
     'bool_open': True, 'bool_save': False
 }
 
+tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&apos;', '\''))
+
 
 def append_metadata(dict_options):
     list_metadata = []
@@ -42,8 +44,6 @@ def append_metadata(dict_options):
     ]))
 
     return list_metadata
-
-tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'))
 
 
 def apply_update(download_path):
@@ -328,9 +328,12 @@ def print_or_append(to_print, to_write, file_to_write_in, dict_options):
         try_printing(to_print)
 
 
-def replace_entities(string):
+def escape_html_entities(string, *unescape):
     for (entity, symbol) in tuple_html_entities:
-        string = string.replace(symbol, entity)
+        if not unescape:
+            string = string.replace(symbol, entity)
+        else:
+            string = string.replace(entity, symbol)
     return string
 
 
@@ -365,7 +368,7 @@ def replace_tags(segment):
             segment = ''.join([
                 segment[:match_tag.start()], text_after, segment[match_tag.end():]
             ])
-    return segment
+    return escape_html_entities(segment, True)
 
 
 def replace_bslash_w_fslash(str_path):
@@ -484,7 +487,6 @@ def check_against_function(
 
 def check_against_terms(
         fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
-    pattern_special_characters = re.compile(r'(["\'>]|&(?!\(\?\!amp;)(?!amp;)(?!gt;)(?!lt;)(?!quot;)(?!apos;)|(?<!\?)<)')
     sublist_matched_rows = []
     sublist_matches_summary = []
 
@@ -497,9 +499,6 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
-        match_special = pattern_special_characters.search(row[0])
-        if match_special:
-            print('Special character detected. Please escape:', match_special[0], 'in', row[0])
         for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
             match = pattern.search(target)
             if match:
@@ -508,20 +507,19 @@ def check_against_terms(
                     '\n\r'.join([
                         str(row),
                         ''.join([
-                            str(seg_id), '\t',
-                            target[s - 5:s], '...', target[s:e],
-                            '...', target[e:e + 5]
-                        ]),
+                            str(seg_id), '\t', target[s - 5:s], '...',
+                            target[s:e], '...', target[e:e + 5]]),
                         source, target, ''
                     ]),
                     [
-                        fname_bl, seg_id, re.sub(r'\n+', '<br />', source),
+                        fname_bl, seg_id,
+                        re.sub(r'\n+', '<br />', escape_html_entities(source)),
                         re.sub(r'\n+', '<br />', ''.join([
-                            target[:s], '<mark>', target[s:e],
-                            '</mark>', target[e:]
-                        ])),
+                            escape_html_entities(target[:s]), '<mark>',
+                            escape_html_entities(target[s:e]), '</mark>',
+                            escape_html_entities(target[e:])])),
                         percent, tf_to_yn(locked), tf_to_yn(same)
-                    ] + [replace_entities(cell) for cell in row],
+                    ] + [escape_html_entities(cell) for cell in row],
                     sublist_matched_rows, dict_options
                 )
                 sublist_matches_summary.append(row)
