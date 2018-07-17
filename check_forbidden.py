@@ -160,6 +160,12 @@ cb_save = tkinter.Checkbutton(
     underline=2, variable=var_bool_save)
 cb_save.deselect()
 
+var_bool_save_terms = tkinter.BooleanVar()
+cb_save_terms = tkinter.Checkbutton(
+    frame_options, text='Save last used term lists',
+    underline=1, variable=var_bool_save_terms)
+cb_save_terms.deselect()
+
 btn_default = tkinter.Button(
     frame_options, text='Restore settings to default', underline=20,
     takefocus=True
@@ -168,7 +174,8 @@ btn_default = tkinter.Button(
 label_settings.grid(row=0, column=1, sticky='w')
 cb_open.grid(row=1, column=1, sticky='w', padx=20)
 cb_save.grid(row=2, column=1, sticky='w', padx=20)
-btn_default.grid(row=3, column=1, sticky='w', padx=20)
+cb_save_terms.grid(row=3, column=1, sticky='w', padx=20)
+btn_default.grid(row=4, column=1, sticky='w', padx=20)
 
 
 label_about = tkinter.Label(frame_options, text='\tAbout')
@@ -245,7 +252,7 @@ def clear_fields():
     var_str_bl.set('')
     var_str_terms.set('')
     if not btn_result['state'] == 'disabled':
-       var_str_result.set('')
+        var_str_result.set('')
     var_saved_terms.set('')
     var_saved_function.set('')
     var_saved_result.set('')
@@ -368,7 +375,10 @@ def get_options():
         'bool_ex_locked': var_bool_ex_locked.get(),
         'bool_ex_same': var_bool_ex_same.get(),
         'bool_open': var_bool_open.get(),
-        'bool_save': var_bool_save.get()
+        'bool_save': var_bool_save.get(),
+        'bool_save_terms': var_bool_save_terms.get(),
+        'string_saved_terms': var_str_terms.get() if not var_bool_function.get() else var_saved_terms.get(),
+        'string_saved_function': var_str_terms.get() if var_bool_function.get() else var_saved_function.get()
     }
     return dict_options
 
@@ -404,12 +414,12 @@ def restore_default(*event):
     var_bool_ex_same.set(False)
     var_bool_open.set(True)
     var_bool_save.set(False)
+    var_bool_save_terms.set(False)
 
 
 def set_if_in_dict(dictionary, key, var):
-    loaded = cf_scripts.return_if_in_dict(dictionary, key)
-    if loaded is not None:
-        var.set(loaded)
+    if key in dictionary and dictionary[key] is not None:
+        var.set(dictionary[key])
 
 
 def load_options():
@@ -427,10 +437,7 @@ def load_options():
             print(message_not_loaded)
             return
 
-    if not cf_scripts.return_if_in_dict(dict_loaded, 'bool_save'):
-        print(message_not_loaded)
-        return
-    else:
+    if 'bool_save' in dict_loaded and dict_loaded['bool_save']:
         turn_on_options(btn_options)
         set_if_in_dict(dict_loaded, 'bool_function', var_bool_function)
         set_if_in_dict(dict_loaded, 'bool_export', var_bool_export)
@@ -445,6 +452,22 @@ def load_options():
         if var_bool_export.get():
             turn_on_export()
         print(message_loaded)
+    else:
+        print(message_not_loaded)
+
+    if 'bool_save_terms' in dict_loaded and dict_loaded['bool_save_terms']:
+        turn_on_options(btn_options)
+        set_if_in_dict(dict_loaded, 'bool_save_terms', var_bool_save_terms)
+        if 'string_saved_terms' in dict_loaded:
+            if var_bool_function.get():
+                var_saved_terms.set(dict_loaded['string_saved_terms'])
+            else:
+                var_str_terms.set(dict_loaded['string_saved_terms'])
+        if 'string_saved_function' in dict_loaded:
+            if var_bool_function.get():
+                var_str_terms.set(dict_loaded['string_saved_function'])
+            else:
+                var_saved_function.set(dict_loaded['string_saved_function'])
 
 
 def save_options():
@@ -633,6 +656,7 @@ def bind_keys(key, func):
 bind_keys('Return', run)
 bind_keys('0', lambda x: cb_ex_100.toggle())
 bind_keys('1', toggle_101_if_enabled)
+bind_keys('a', lambda x: cb_save_terms.toggle())
 bind_keys('b', choose_bl)
 bind_keys('c', lambda x: clear_fields())
 bind_keys('d', restore_default)
