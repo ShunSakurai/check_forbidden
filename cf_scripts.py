@@ -183,12 +183,12 @@ def load_mqxliff(fn_bl_tuple, dict_options):
             seg_id, percent, locked = load_header_range(f_bl_line)
         elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
             while '</source>' not in f_bl_line:
-                f_bl_line += next(f_bl)
+                f_bl_line += '\n' + next(f_bl)
             source_line_with_tag = source_pattern.search(f_bl_line).group(1)
             source_line_text_only = replace_tags(source_line_with_tag)
         elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
             while '</target>' not in f_bl_line:
-                f_bl_line += next(f_bl)
+                f_bl_line += '\n' + next(f_bl)
             target_line_with_tag = target_pattern.search(f_bl_line).group(1)
             target_line_text_only = replace_tags(target_line_with_tag)
             same = source_line_text_only == target_line_text_only
@@ -338,7 +338,7 @@ def replace_tags(segment):
     regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
     regex_tag_comment = re.compile(r'<mrk mtype=.*?>', re.S)
     regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
-    regex_val = re.compile(r'val=&quot;(.*?)&quot;')
+    regex_val = re.compile(r'val=&quot;(.*?)&quot;', re.DOTALL)
     if regex_tag_comment.search(segment):
         segment = regex_tag_comment.sub('', segment)
 
@@ -347,14 +347,19 @@ def replace_tags(segment):
         match_tag = re.search(regex_tag, segment)
         if match_tag:
             if match_tag[1] == 'ph' and match_tag[2] in ['&lt;br /&gt;']:
-                text_after = ' '
+                text_after = '\n'
             else:
                 match_displaytext = re.search(regex_displaytext, match_tag[2])
                 match_val = re.search(regex_val, match_tag[2])
                 if match_displaytext and not match_displaytext[1].startswith('&amp;lt;'):
                     text_after = match_displaytext[1]
-                elif match_val and not match_val[1].startswith('&amp;lt;') and match_val[1] not in ['&ampnbsp;', 'nbsp']:
-                    text_after = match_val[1]
+                elif match_val and not match_val[1].startswith('&amp;lt;'):
+                    if match_val[1] in ['&ampnbsp;', 'nbsp']:
+                        text_after = ' '
+                    elif match_val[1] in ['\n', 'br', 'br/', 'br /']:
+                        text_after = '\n'
+                    else:
+                        text_after = match_val[1]
                 else:
                     text_after = ''
             segment = ''.join([
@@ -510,11 +515,11 @@ def check_against_terms(
                         source, target, ''
                     ]),
                     [
-                        fname_bl, seg_id, source,
-                        ''.join([
+                        fname_bl, seg_id, re.sub(r'\n+', '<br />', source),
+                        re.sub(r'\n+', '<br />', ''.join([
                             target[:s], '<mark>', target[s:e],
                             '</mark>', target[e:]
-                        ]),
+                        ])),
                         percent, tf_to_yn(locked), tf_to_yn(same)
                     ] + [replace_entities(cell) for cell in row],
                     sublist_matched_rows, dict_options
