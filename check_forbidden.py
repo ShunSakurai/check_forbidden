@@ -200,7 +200,7 @@ btn_update.grid(row=4, column=2, sticky='w', padx=20)
 
 # Functions
 def choose_bl(*event):
-    path = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
+    path = cf_scripts.ls_from_str_tuple(var_str_bl.get())[0]
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
@@ -212,12 +212,12 @@ def choose_bl(*event):
     if f_bl and not var_str_result.get():
         var_str_result.set(
             cf_scripts.dir_from_str_path(
-                cf_scripts.ls_from_tuple_str(var_str_bl.get())[0])
+                cf_scripts.ls_from_str_tuple(var_str_bl.get())[0])
                 + '/' + fn_result)
 
 
 def choose_terms(*event):
-    path = cf_scripts.ls_from_tuple_str(var_str_terms.get())[0]
+    path = cf_scripts.ls_from_str_tuple(var_str_terms.get())[0]
     if path:
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
@@ -240,7 +240,7 @@ def choose_result(*event):
         initial_dir = cf_scripts.dir_from_str_path(path)
     else:
         initial_dir = cf_scripts.dir_from_str_path(
-            cf_scripts.ls_from_tuple_str(var_str_bl.get()))
+            cf_scripts.ls_from_str_tuple(var_str_bl.get()))
     f_result = tkinter.filedialog.asksaveasfilename(
         filetypes=ext_result, initialdir=initial_dir,
         initialfile=fn_result)
@@ -298,7 +298,7 @@ def turn_off_export():
     if var_saved_result.get():
         var_str_result.set(var_saved_result.get())
     elif not var_saved_result.get() and var_str_bl.get():
-        path_1 = cf_scripts.ls_from_tuple_str(var_str_bl.get())[0]
+        path_1 = cf_scripts.ls_from_str_tuple(var_str_bl.get())[0]
         var_str_result.set(
             cf_scripts.dir_from_str_path(path_1) + '/' + fn_result)
     else:
@@ -496,12 +496,12 @@ def display_toast(message, also_print=False):
     toast_tk.mainloop()
 
 
-def main(tuple_str_bl, tuple_str_terms, str_result, dict_options):
+def main(str_tuple_bl, str_tuple_terms, str_result, dict_options):
     message_no_export = 'The search was successfully finished.'
     message_no_result = 'No forbidden term was found!'
     snippet_file_created = ' was successfully created.'
     f_result_w, fpath_result, list_fpath_bl = cf_scripts.check_forbidden_terms(
-            tuple_str_bl, tuple_str_terms, str_result, dict_options)
+            str_tuple_bl, str_tuple_terms, str_result, dict_options)
     for fn_bl in list_fpath_bl:
         cf_scripts.cleanup_if_mqxlz(fn_bl)
 

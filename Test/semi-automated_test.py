@@ -17,8 +17,8 @@ dict_options = cf_scripts.default_dict_options
 dict_options['bool_export'] = False
 
 check_forbidden.main(
-    tuple_str_bl='{./check_forbidden.wiki/README.md_jpn.mqxlz} {./check_forbidden.wiki/README.md_jpn2.mqxlz}',
-    tuple_str_terms='{./check_forbidden.wiki/forbidden_terms.csv} {./check_forbidden.wiki/forbidden_terms2.csv}',
+    str_tuple_bl='{./check_forbidden.wiki/README.md_jpn.mqxlz} {./check_forbidden.wiki/README.md_jpn2.mqxlz}',
+    str_tuple_terms='{./check_forbidden.wiki/forbidden_terms.csv} {./check_forbidden.wiki/forbidden_terms2.csv}',
     str_result='./check_forbidden.wiki/result.html',
     dict_options=dict_options
 )

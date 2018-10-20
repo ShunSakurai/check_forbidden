@@ -227,42 +227,42 @@ def ls_from_settings(dict_options):
     return settings
 
 
-def ls_from_tuple_str(tuple_str):
+def ls_from_str_tuple(str_tuple):
     r'''
-    >>> ls_from_tuple_str(r' {C:\Users\path\file name with space.mqliff} C:/Users/path/file_name,_with_comma.mqxlz')
+    >>> ls_from_str_tuple(r' {C:\Users\path\file name with space.mqliff} C:/Users/path/file_name,_with_comma.mqxlz')
     ['C:\\Users\\path\\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz']
-    >>> ls_from_tuple_str(r"('C:\Users\path\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz')")
+    >>> ls_from_str_tuple(r"('C:\Users\path\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz')")
     ['C:\\Users\\path\\file name with space.mqliff', 'C:/Users/path/file_name,_with_comma.mqxlz']
     '''
-    tuple_str = tuple_str.strip()
-    if not tuple_str:
+    if not str_tuple:
         return ['']
-
-    if tuple_str[0] == '(':
-        # file is selected from the button
-        for (old, new) in [('(\'', '{'), ('\',', '}'), ('\')', '}'), ('\'', '{')]:
-            tuple_str = tuple_str.replace(old, new)
-    else:
-        # file is input directly in the field
-        # assuming only one file is selected
-        tuple_str = ''.join(['{', tuple_str, '}'])
     list_from_str = []
+    str_tuple = str_tuple.strip('(, )')
 
-    while tuple_str:
-        if tuple_str[0] == '{':
-            end = tuple_str.find('}') + 1
+    while str_tuple:
+        first_character = str_tuple[0]
+        if first_character in '{\'"':
+            if first_character == '{':
+                # path is input directly in the field
+                pattern_end = re.compile(r'(?<=[^\\])}')
+            else:
+                # files are selected from the button
+                pattern_end = re.compile(r'(?<=[^\\])' + first_character)
+            match = pattern_end.search(str_tuple)
+            if not match:
+                list_from_str.append(str_tuple)
+                break
+            end = match.end(0)
+            list_from_str.append(str_tuple[1: end - 1])
+            str_tuple = str_tuple[end:]
+            str_tuple = str_tuple.strip(', ')
+
         else:
-            end = tuple_str.find(' ', 1)
-
-        if end == -1:
-            list_from_str.append(tuple_str)
+            # only one file is selected and the path doesn't include space
+            list_from_str.append(str_tuple)
             break
-        else:
-            list_from_str.append(tuple_str[: end])
-            tuple_str = tuple_str[end + 1:]
 
-    list_from_str_clean = [i.strip(' {},"\'') for i in list_from_str]
-    return list_from_str_clean
+    return list_from_str
 
 
 def new_version_is_available(str_installed, str_online):
@@ -287,7 +287,7 @@ def open_file(str_file_path):
 
 def open_folder(tuple_path):
     if tuple_path and 'Command Prompt only.' not in tuple_path:
-        str_path_1 = ls_from_tuple_str(tuple_path)[0]
+        str_path_1 = ls_from_str_tuple(tuple_path)[0]
         str_path_dir = dir_from_str_path(str_path_1)
         if sys.platform.startswith('win'):
             str_path_dir_bslash = replace_fslash_w_bslash(str_path_dir)
@@ -561,11 +561,11 @@ def check_for_each_term_list(
 
 
 def check_forbidden_terms(
-        tuple_str_bl, tuple_str_terms, str_result, dict_options):
+        str_tuple_bl, str_tuple_terms, str_result, dict_options):
     dict_options = dict_options or default_dict_options
     start = time.time()
-    list_fpath_bl = ls_from_tuple_str(tuple_str_bl)
-    list_fpath_terms = ls_from_tuple_str(tuple_str_terms)
+    list_fpath_bl = ls_from_str_tuple(str_tuple_bl)
+    list_fpath_terms = ls_from_str_tuple(str_tuple_terms)
     fpath_result = replace_bslash_w_fslash(str_result)
 
     for fn_terms in list_fpath_terms:
