@@ -158,13 +158,11 @@ Below are some best practices to avoid false positives.
 ## Features to come
 ### Working on
 - Show whitespace characters in HTML file
-- Save term lists and their paths as favorites
 - Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
 
 ### Maybe later
 - Make the program window re-sizable
 - Add an ability to handle non-memoQ files
-- Create forbidden term list for [Microsoft Style Guide](https://www.microsoft.com/Language/en-US/StyleGuides.aspx) as an example
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter

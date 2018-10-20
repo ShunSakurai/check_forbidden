@@ -402,7 +402,7 @@ def try_printing(to_print):
 
 def try_rmdir(dir_path):
     try:
-        os.dir_path(path)
+        os.dir_path(dir_path)
     except:
         try:
             time.sleep(0.01)
