@@ -80,16 +80,28 @@ var_saved_function.set('')
 var_saved_result = tkinter.StringVar(frame_main)
 var_saved_result.set('')
 
+btn_clear_bl = tkinter.Button(
+    text='✗', state='disabled', takefocus=True, borderwidth=0, padx=5)
+btn_clear_terms = tkinter.Button(
+    text='✗', state='disabled', takefocus=True, borderwidth=0, padx=5)
+btn_clear_result = tkinter.Button(
+    text='✗', state='disabled', takefocus=True, borderwidth=0, padx=5)
+three_clear_buttons = [btn_clear_bl, btn_clear_terms, btn_clear_result]
+
+for btn in three_clear_buttons:
+    btn.grid(row=three_clear_buttons.index(btn), column=4)
+
+
 btn_folder_bl = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 btn_folder_terms = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 btn_folder_result = tkinter.Button(
-    text='⇨', state='disabled', takefocus=True, borderwidth=0, padx=5)
+    text='⇨', state='disabled', takefocus=True, borderwidth=0)
 three_folder_buttons = [btn_folder_bl, btn_folder_terms, btn_folder_result]
 
 for btn in three_folder_buttons:
-    btn.grid(row=three_folder_buttons.index(btn), column=4)
+    btn.grid(row=three_folder_buttons.index(btn), column=5)
 
 
 label_guide = tkinter.Label(text='')
@@ -104,7 +116,7 @@ btn_clear.grid(row=3, column=3, sticky='e', padx=50)
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
 btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
 
-all_guided_ui = three_buttons + three_folder_buttons + [
+all_guided_ui = three_buttons + three_clear_buttons + three_folder_buttons + [
     cb_function, cb_export, btn_options, btn_clear, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
@@ -248,14 +260,17 @@ def choose_result(*event):
         var_str_result.set(f_result)
 
 
-def clear_fields():
-    var_str_bl.set('')
-    var_str_terms.set('')
-    if not btn_result['state'] == 'disabled':
-        var_str_result.set('')
-    var_saved_terms.set('')
-    var_saved_function.set('')
-    var_saved_result.set('')
+def clear_fields(list_indices):
+    if 0 in list_indices:
+        var_str_bl.set('')
+    if 1 in list_indices:
+        var_str_terms.set('')
+        var_saved_terms.set('')
+        var_saved_function.set('')
+    if 2 in list_indices:
+        if not btn_result['state'] == 'disabled':
+            var_str_result.set('')
+        var_saved_result.set('')
 
 
 def turn_off_function():
@@ -318,32 +333,34 @@ def toggle_cb_export(*event):
         turn_off_export()
 
 
-def enable_folder_btn_if(statement, btn):
+def enable_support_buttons_if(statement, btn_clear, btn_folder):
     if statement:
-        btn.config(text='➔', state='normal')
+        btn_clear.config(state='normal')
+        btn_folder.config(text='➔', state='normal')
     else:
-        btn.config(text='⇨', state='disabled')
+        btn_clear.config(state='disabled')
+        btn_folder.config(text='⇨', state='disabled')
 
 
-def enable_folder_bl_if_filled(var, unknown, w):
-    enable_folder_btn_if(var_str_bl.get(), btn_folder_bl)
+def enable_support_bl_if_filled(var, unknown, w):
+    enable_support_buttons_if(var_str_bl.get(), btn_clear_bl, btn_folder_bl)
 
 
-def enable_folder_terms_if_filled(var, unknown, w):
-    enable_folder_btn_if(var_str_terms.get(), btn_folder_terms)
+def enable_support_terms_if_filled(var, unknown, w):
+    enable_support_buttons_if(var_str_terms.get(), btn_clear_terms, btn_folder_terms)
 
 
-def enable_folder_result_if_filled(var, unknown, w):
+def enable_support_result_if_filled(var, unknown, w):
     statement = var_str_result.get() and var_str_result.get() != ph_cp_only
-    enable_folder_btn_if(statement, btn_folder_result)
+    enable_support_buttons_if(statement, btn_clear_result, btn_folder_result)
 
 
-three_open_funcs = [
-    enable_folder_bl_if_filled, enable_folder_terms_if_filled,
-    enable_folder_result_if_filled]
+three_support_funcs = [
+    enable_support_bl_if_filled, enable_support_terms_if_filled,
+    enable_support_result_if_filled
+]
 
-for var, btn, func in zip(three_vars, three_folder_buttons, three_open_funcs):
-    btn.grid(row=three_folder_buttons.index(btn), column=4)
+for var, func in zip(three_vars, three_support_funcs):
     var.trace('w', func)
 
 
@@ -547,15 +564,15 @@ for var in three_vars:
 
 # Binding
 three_funcs = [choose_bl, choose_terms, choose_result]
+three_clear_funcs = [lambda: clear_fields([0]), lambda: clear_fields([1]), lambda: clear_fields([2])]
+three_folder_funcs = [lambda: cf_scripts.open_folder(three_vars[0].get()), lambda: cf_scripts.open_folder(three_vars[1].get()), lambda: cf_scripts.open_folder(three_vars[2].get())]
 for i in range(3):
     three_buttons[i]['command'] = three_funcs[i]
-
-btn_folder_bl['command'] = lambda: cf_scripts.open_folder(var_str_bl.get())
-btn_folder_terms['command'] = lambda: cf_scripts.open_folder(var_str_terms.get())
-btn_folder_result['command'] = lambda: cf_scripts.open_folder(var_str_result.get())
+    three_clear_buttons[i]['command'] = three_clear_funcs[i]
+    three_folder_buttons[i]['command'] = three_folder_funcs[i]
 
 btn_options['command'] = lambda: toggle_options(btn_options)
-btn_clear['command'] = clear_fields
+btn_clear['command'] = lambda: clear_fields([0, 1, 2])
 btn_run['command'] = run
 
 cb_function['command'] = toggle_cb_function
@@ -569,11 +586,12 @@ btn_update['command'] = cf_scripts.check_updates
 guide_bl = '.mqxlz or .mqxliff'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Export the result in a filterable and searchable HTML file.'
+guide_clear = 'Clear the field.'
 guide_folder = 'Open the folder.'
 guide_function = 'function(int_id, str_target) that returns a 2D list or None'
 guide_export = 'Select this check box if you don\'t Export the CSV file.'
 guide_options = 'Show or hide Options.'
-guide_clear = 'Clear all three fields.'
+guide_clear_all = 'Clear all three fields.'
 guide_run = 'Enabled when all the three fields are filled. (Alt + Return)'
 
 ul_no = -1
@@ -598,10 +616,12 @@ def bind_show_guide(btn, guide, underline):
 bind_show_guide(btn_bl, guide_bl, ul_no)
 bind_show_guide(btn_terms, guide_terms, ul_no)
 bind_show_guide(btn_result, guide_result, ul_no)
+for btn in three_clear_buttons:
+    bind_show_guide(btn, guide_clear, ul_no)
 for btn in three_folder_buttons:
     bind_show_guide(btn, guide_folder, ul_no)
 bind_show_guide(btn_options, guide_options, ul_options)
-bind_show_guide(btn_clear, guide_clear, ul_clear)
+bind_show_guide(btn_clear, guide_clear_all, ul_clear)
 bind_show_guide(btn_run, guide_run, ul_no)
 
 for btn in all_guided_ui:
@@ -658,7 +678,7 @@ bind_keys('0', lambda x: cb_ex_100.toggle())
 bind_keys('1', toggle_101_if_enabled)
 bind_keys('a', lambda x: cb_save_terms.toggle())
 bind_keys('b', choose_bl)
-bind_keys('c', lambda x: clear_fields())
+bind_keys('c', lambda x: clear_fields([0, 1, 2]))
 bind_keys('d', restore_default)
 bind_keys('e', toggle_cb_export)
 bind_keys('f', toggle_cb_function)

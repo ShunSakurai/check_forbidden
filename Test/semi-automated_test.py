@@ -2,6 +2,7 @@
 cd dropbox/codes/check_forbidden
 cd Test
 py -B semi-automated_test.py
+cd ../
 '''
 import os
 import os.path
