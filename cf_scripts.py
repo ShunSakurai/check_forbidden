@@ -91,9 +91,9 @@ def check_updates(*event, download_function=download_installer):
     except:
         print('Check Forbidden could not connect to', url_releases)
         return
-    pattern_version = re.compile(r'(?<=<span class="css-truncate-target">v)[0-9.]+(?=</span>)')
+    pattern_version = re.compile(r'(?:<span class="css-truncate-target"[^>]*?>v)([0-9.]+)(?=</span>)')
     pattern_installer = re.compile(r'/ShunSakurai/check_forbidden/releases/download/v([0-9.]+)/(check_forbidden_installer_\1.0.exe)')
-    str_newest_version = pattern_version.search(str_release_page).group(0)
+    str_newest_version = pattern_version.search(str_release_page).group(1)
     url_installer = pattern_installer.search(str_release_page)
     if new_version_is_available(setup.dict_console['version'], str_newest_version):
         download_path = download_function(str_newest_version, url_installer)
