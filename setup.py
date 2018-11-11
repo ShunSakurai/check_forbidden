@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Check Forbidden',
     'icon_resources': [(1, './icons/check_forbidden_icon.ico')],
     'script': 'check_forbidden.py',
-    'version': '2.5.4'
+    'version': '2.6.0'
 }
 
 dict_options = {
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         '/s', 'copyright', '©2016-2018 ' + dict_console['author']
     ]
 
-    list_iscc = ['C:\Program Files (x86)\Inno Setup 5\iscc', 'setup_installer.iss']
+    list_iscc = [r'C:\Program Files (x86)\Inno Setup 5\iscc', 'setup_installer.iss']
 
     if os.path.exists(folder_dist):
         shutil.rmtree(folder_dist)

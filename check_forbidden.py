@@ -121,44 +121,7 @@ all_guided_ui = three_buttons + three_clear_buttons + three_folder_buttons + [
 
 frame_options = tkinter.Frame(root, pady=5)
 
-label_exclude = tkinter.Label(frame_options, text='\tExclude')
-
-var_bool_ex_101 = tkinter.BooleanVar()
-cb_ex_101 = tkinter.Checkbutton(
-    frame_options, text='101% matches',
-    underline=2, variable=var_bool_ex_101
-)
-cb_ex_101.deselect()
-
-var_bool_ex_100 = tkinter.BooleanVar()
-cb_ex_100 = tkinter.Checkbutton(
-    frame_options, text='100% matches',
-    underline=2, variable=var_bool_ex_100
-)
-cb_ex_100.deselect()
-
-var_bool_ex_locked = tkinter.BooleanVar()
-cb_ex_locked = tkinter.Checkbutton(
-    frame_options, text='Locked',
-    underline=0, variable=var_bool_ex_locked
-)
-cb_ex_locked.deselect()
-
-var_bool_ex_same = tkinter.BooleanVar()
-cb_ex_same = tkinter.Checkbutton(
-    frame_options, text='Same as source',
-    underline=0, variable=var_bool_ex_same
-)
-cb_ex_same.deselect()
-
-label_exclude.grid(row=0, column=0, sticky='w')
-cb_ex_101.grid(row=1, column=0, sticky='w', padx=20)
-cb_ex_100.grid(row=2, column=0, sticky='w', padx=20)
-cb_ex_locked.grid(row=3, column=0, sticky='w', padx=20)
-cb_ex_same.grid(row=4, column=0, sticky='w', padx=20)
-
-
-label_settings = tkinter.Label(frame_options, text='\tOther settings')
+label_settings = tkinter.Label(frame_options, text='\tSettings')
 
 var_bool_open = tkinter.BooleanVar()
 cb_open = tkinter.Checkbutton(
@@ -183,11 +146,21 @@ btn_default = tkinter.Button(
     takefocus=True
 )
 
-label_settings.grid(row=0, column=1, sticky='w')
-cb_open.grid(row=1, column=1, sticky='w', padx=20)
-cb_save.grid(row=2, column=1, sticky='w', padx=20)
-cb_save_terms.grid(row=3, column=1, sticky='w', padx=20)
-btn_default.grid(row=4, column=1, sticky='w', padx=20)
+label_settings.grid(row=0, column=0, sticky='w')
+cb_open.grid(row=1, column=0, sticky='w', padx=20)
+cb_save.grid(row=2, column=0, sticky='w', padx=20)
+cb_save_terms.grid(row=3, column=0, sticky='w', padx=20)
+btn_default.grid(row=4, column=0, sticky='w', padx=20)
+
+
+label_online = tkinter.Label(frame_options, text='\tOnline')
+
+btn_readme = tkinter.Button(frame_options, text='Read readme', underline=9)
+btn_update = tkinter.Button(frame_options, text='Check for updates', underline=10)
+
+label_online.grid(row=0, column=1, sticky='w')
+btn_readme.grid(row=1, column=1, sticky='w', padx=20)
+btn_update.grid(row=2, column=1, sticky='w', padx=20)
 
 
 label_about = tkinter.Label(frame_options, text='\tAbout')
@@ -200,14 +173,10 @@ label_author = tkinter.Label(
     frame_options, text=''.join([
         '©2016-', str(datetime.date.today().year), ' ', setup.dict_console['author']
     ]), justify='left')
-btn_readme = tkinter.Button(frame_options, text='Read readme', underline=9)
-btn_update = tkinter.Button(frame_options, text='Check for updates', underline=10)
 
 label_about.grid(row=0, column=2, sticky='w')
 label_version.grid(row=1, column=2, sticky='w', padx=20)
 label_author.grid(row=2, column=2, sticky='w', padx=20)
-btn_readme.grid(row=3, column=2, sticky='w', padx=20)
-btn_update.grid(row=4, column=2, sticky='w', padx=20)
 
 
 # Functions
@@ -387,10 +356,6 @@ def get_options():
     dict_options = {
         'bool_function': var_bool_function.get(),
         'bool_export': var_bool_export.get(),
-        'bool_ex_101': var_bool_ex_101.get(),
-        'bool_ex_100': var_bool_ex_100.get(),
-        'bool_ex_locked': var_bool_ex_locked.get(),
-        'bool_ex_same': var_bool_ex_same.get(),
         'bool_open': var_bool_open.get(),
         'bool_save': var_bool_save.get(),
         'bool_save_terms': var_bool_save_terms.get(),
@@ -400,13 +365,6 @@ def get_options():
     return dict_options
 
 
-def disable_101_when_100(var, unknown, w):
-    if var_bool_ex_100.get():
-        cb_ex_101['state'] = 'disabled'
-    else:
-        cb_ex_101['state'] = 'normal'
-
-
 def disable_open_when_result(var, unknown, w):
     if var_bool_export.get():
         cb_open['state'] = 'disabled'
@@ -414,7 +372,6 @@ def disable_open_when_result(var, unknown, w):
         cb_open['state'] = 'normal'
 
 
-var_bool_ex_100.trace('w', disable_101_when_100)
 var_bool_export.trace('w', disable_open_when_result)
 
 
@@ -425,10 +382,6 @@ def restore_default(*event):
         toggle_cb_export()
     var_bool_function.set(False)
     var_bool_export.set(False)
-    var_bool_ex_101.set(False)
-    var_bool_ex_100.set(False)
-    var_bool_ex_locked.set(False)
-    var_bool_ex_same.set(False)
     var_bool_open.set(True)
     var_bool_save.set(False)
     var_bool_save_terms.set(False)
@@ -458,10 +411,6 @@ def load_options():
         turn_on_options(btn_options)
         set_if_in_dict(dict_loaded, 'bool_function', var_bool_function)
         set_if_in_dict(dict_loaded, 'bool_export', var_bool_export)
-        set_if_in_dict(dict_loaded, 'bool_ex_101', var_bool_ex_101)
-        set_if_in_dict(dict_loaded, 'bool_ex_100', var_bool_ex_100)
-        set_if_in_dict(dict_loaded, 'bool_ex_locked', var_bool_ex_locked)
-        set_if_in_dict(dict_loaded, 'bool_ex_same', var_bool_ex_same)
         set_if_in_dict(dict_loaded, 'bool_open', var_bool_open)
         set_if_in_dict(dict_loaded, 'bool_save', var_bool_save)
         if var_bool_function.get():
@@ -657,11 +606,6 @@ for cb, enter, leave in zip(
     cb.bind('<Leave>', leave)
 
 
-def toggle_101_if_enabled(*event):
-    if cb_ex_101['state'] != 'disabled':
-        cb_ex_101.toggle()
-
-
 def toggle_open_if_enabled(*event):
     if cb_open['state'] != 'disabled':
         cb_open.toggle()
@@ -674,20 +618,16 @@ def bind_keys(key, func):
 
 
 bind_keys('Return', run)
-bind_keys('0', lambda x: cb_ex_100.toggle())
-bind_keys('1', toggle_101_if_enabled)
 bind_keys('a', lambda x: cb_save_terms.toggle())
 bind_keys('b', choose_bl)
 bind_keys('c', lambda x: clear_fields([0, 1, 2]))
 bind_keys('d', restore_default)
 bind_keys('e', toggle_cb_export)
 bind_keys('f', toggle_cb_function)
-bind_keys('l', lambda x: cb_ex_locked.toggle())
 bind_keys('m', cf_scripts.open_readme)
 bind_keys('n', toggle_open_if_enabled)
 bind_keys('o', lambda x: toggle_options(btn_options))
 bind_keys('r', choose_result)
-bind_keys('s', lambda x: cb_ex_same.toggle())
 bind_keys('t', choose_terms)
 bind_keys('u', cf_scripts.check_updates)
 bind_keys('v', lambda x: cb_save.toggle())

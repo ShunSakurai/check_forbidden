@@ -23,15 +23,13 @@ import zipfile
 
 default_dict_options = {
     'bool_function': False, 'bool_export': False,
-    'bool_ex_101': False, 'bool_ex_100': False,
-    'bool_ex_locked': False, 'bool_ex_same': False,
     'bool_open': True, 'bool_save': False
 }
 
 tuple_html_entities = (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&quot;', '"'), ('&apos;', '\''))
 
 
-def append_metadata(dict_options):
+def append_metadata():
     list_metadata = []
 
     meta_date_time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
@@ -137,24 +135,9 @@ def fname_from_str_path(str_path):
     return f_name
 
 
-def is_range(tuple_range, dict_options):
-    (percent, locked, same) = tuple_range
-    if dict_options['bool_ex_100'] and percent >= 100:
-        pass
-    elif dict_options['bool_ex_101'] and percent >= 101:
-        pass
-    elif dict_options['bool_ex_locked'] and locked:
-        pass
-    elif dict_options['bool_ex_same'] and same:
-        pass
-    else:
-        return True
-    return False
-
-
 def load_header_range(header):
-    regex_id = re.compile('<trans-unit id="(\d+)"')
-    regex_percent = re.compile('mq:percent="(\d+)"')
+    regex_id = re.compile(r'<trans-unit id="(\d+)"')
+    regex_percent = re.compile(r'mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
     seg_id = int(regex_id.search(header).group(1))
     percent = 0
@@ -165,9 +148,9 @@ def load_header_range(header):
     return seg_id, percent, locked
 
 
-def load_mqxliff(fn_bl_tuple, dict_options):
+def load_mqxliff(fn_bl_tuple):
     f_bl = open(fn_bl_tuple[1], encoding='utf-8')
-    f_bl_line_range_list = []
+    f_bl_line_list = []
     source_pattern = re.compile(
         '<source xml:space="preserve".*?>(.*?)</source>', re.S)
     target_pattern = re.compile(
@@ -192,14 +175,14 @@ def load_mqxliff(fn_bl_tuple, dict_options):
             target_line_with_tag = target_pattern.search(f_bl_line).group(1)
             target_line_text_only = replace_tags(target_line_with_tag)
             same = source_line_text_only == target_line_text_only
-            if is_range((percent, locked, same), dict_options) and target_line_text_only:
-                f_bl_line_range_list.append(
+            if target_line_text_only:
+                f_bl_line_list.append(
                     (seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
                 )
         else:
             continue
     f_bl.close()
-    return f_bl_line_range_list
+    return f_bl_line_list
 
 
 def ls_from_list_str(list_str):
@@ -212,19 +195,6 @@ def ls_from_list_str(list_str):
     '''
     list_from_str = [i.strip('\'') for i in list_str.strip('[]').split(', ')]
     return list_from_str
-
-
-def ls_from_settings(dict_options):
-    if dict_options['bool_ex_100']:
-        setting_rate = r'Exclude 100% / 101%'
-    elif dict_options['bool_ex_101']:
-        setting_rate = r'Exclude 101% matches'
-    if dict_options['bool_ex_locked']:
-        setting_locked = 'Exclude locked segments'
-    if dict_options['bool_ex_same']:
-        setting_locked = 'Exclude segments same as source'
-    settings = [setting_rate, setting_locked]
-    return settings
 
 
 def ls_from_str_tuple(str_tuple):
@@ -430,7 +400,7 @@ def unzip_if_mqxlz(fn_bl):
 
 
 def write_result(f_result_w, fpath_result, dict_options):
-    list_metadata = append_metadata(dict_options)
+    list_metadata = append_metadata()
     if not dict_options['bool_function']:
         fpath_template = 'files/cf_template_terms.html'
         num_columns = 8
@@ -469,14 +439,14 @@ def wrap_up_result_if_found(
 
 
 def check_against_function(
-        fname_bl, f_bl_line_range_list, fpath_terms, dict_options):
+        fname_bl, f_bl_line_list, fpath_terms, dict_options):
     sublist_matched_rows = []
 
     mdir, mfile = fpath_terms.rsplit('/', 1)
     mname = mfile.rsplit('.', 1)[0]
     sys.path.append(mdir)
     external_script = importlib.import_module(mname)
-    for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
+    for (seg_id, source, target, percent, locked, same) in f_bl_line_list:
         result = external_script.function(seg_id, source, target, percent, locked, same)
         if result:
             for ls in result:
@@ -486,7 +456,7 @@ def check_against_function(
 
 
 def check_against_terms(
-        fname_bl, f_bl_line_range_list, f_terms_reader, dict_options):
+        fname_bl, f_bl_line_list, f_terms_reader, dict_options):
     sublist_matched_rows = []
     sublist_matches_summary = []
 
@@ -499,7 +469,7 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
-        for (seg_id, source, target, percent, locked, same) in f_bl_line_range_list:
+        for (seg_id, source, target, percent, locked, same) in f_bl_line_list:
             match = pattern.search(target)
             if match:
                 s, e = match.start(), match.end()
@@ -536,16 +506,16 @@ def check_for_each_term_list(
     for fn_bl_tuple in list_fn_bl_tuple:
         try_printing(fn_bl_tuple[0] + '\n')
         fname_bl = fname_from_str_path(fn_bl_tuple[0])
-        f_bl_line_range_list = load_mqxliff(fn_bl_tuple, dict_options)
+        f_bl_line_list = load_mqxliff(fn_bl_tuple)
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_reader = csv.reader(f_terms)
         if dict_options['bool_function']:
             list_matched_rows += check_against_function(
-                fname_bl, f_bl_line_range_list, fpath_terms, dict_options)
+                fname_bl, f_bl_line_list, fpath_terms, dict_options)
         else:
             sublist_matched_rows, sublist_matches_summary = check_against_terms(
-                fname_bl, f_bl_line_range_list, f_terms_reader, dict_options)
+                fname_bl, f_bl_line_list, f_terms_reader, dict_options)
             list_matched_rows += sublist_matched_rows
             list_matches_summary += sublist_matches_summary
     f_terms.close()

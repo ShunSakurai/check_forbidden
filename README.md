@@ -54,7 +54,6 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 - Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose CSV or text file(s) containing the list of forbidden terms, or a Python script
 - Specify the path and the name of the result file to be exported if necessary. The default path is the first bilingual file's path + "checked_result.html"
-- Adjust other options as needed
 - Click "Run!"
 - The result is displayed in the Command Prompt. If exporting is enabled and any matches are found, they are also exported into an HTML file
 - Click "X" (close) button to exit the program
@@ -62,9 +61,9 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ![Result](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_result.png)
 
 ### Options
-You can specify what kind of segments to include in the search range. To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▼ icon.
+To display the options pane, click on the gear ⚙ icon. To hide the pane, click on the triangle ▼ icon.
 
-You can also specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\<UserName>\AppData\Roaming\Check Forbidden" (on Windows).
+You can specify whether you save the last used options. A file named "cf_options.p" is created in "C:\Users\<UserName>\AppData\Roaming\Check Forbidden" (on Windows).
 
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
@@ -152,7 +151,6 @@ Below are some best practices to avoid false positives.
 - When many false positives are found for 1 term, consider dividing the CSV file
 
 ### Things to do when searching takes too long time
-- Consider using Exclude 100%/101% matches or Exclude Locked options
 - Consider creating a view for multiple documents (files)
 
 ## Features to come
