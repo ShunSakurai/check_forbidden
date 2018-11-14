@@ -107,17 +107,17 @@ for btn in three_folder_buttons:
 label_guide = tkinter.Label(text='')
 label_guide.grid(row=3, column=2, sticky='w')
 
-btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
-btn_options.grid(row=3, column=3, sticky='e', padx=80)
-
 btn_clear = tkinter.Button(text='✗', borderwidth=0, font=('', 15))
-btn_clear.grid(row=3, column=3, sticky='e', padx=50)
+btn_clear.grid(row=3, column=3, sticky='e', padx=90)
+
+btn_options = tkinter.Button(text='⚙', borderwidth=0, font=('', 15))
+btn_options.grid(row=3, column=3, sticky='e', padx=50)
 
 btn_run = tkinter.Button(text='Run', state='disabled', takefocus=True)
-btn_run.grid(row=3, column=3, sticky='e', padx=15, pady=5)
+btn_run.grid(row=3, column=3, sticky='e', padx=10, pady=5)
 
 all_guided_ui = three_buttons + three_clear_buttons + three_folder_buttons + [
-    cb_function, cb_export, btn_options, btn_clear, btn_run]
+    cb_function, cb_export, btn_clear, btn_options, btn_run]
 
 frame_options = tkinter.Frame(root, pady=5)
 
@@ -334,14 +334,14 @@ for var, func in zip(three_vars, three_support_funcs):
 
 
 def turn_on_options(widget):
-    widget.config(text='▼', font=('', 12))
+    widget.config(text='▼')
     frame_options.grid(
         row=4, column=0, columnspan=4, sticky='w', padx=20
     )
 
 
 def turn_off_options(widget):
-        widget.config(text='⚙', font=('', 15))
+        widget.config(text='⚙')
         frame_options.grid_forget()
 
 
@@ -520,8 +520,8 @@ for i in range(3):
     three_clear_buttons[i]['command'] = three_clear_funcs[i]
     three_folder_buttons[i]['command'] = three_folder_funcs[i]
 
-btn_options['command'] = lambda: toggle_options(btn_options)
 btn_clear['command'] = lambda: clear_fields([0, 1, 2])
+btn_options['command'] = lambda: toggle_options(btn_options)
 btn_run['command'] = run
 
 cb_function['command'] = toggle_cb_function
@@ -569,8 +569,8 @@ for btn in three_clear_buttons:
     bind_show_guide(btn, guide_clear, ul_no)
 for btn in three_folder_buttons:
     bind_show_guide(btn, guide_folder, ul_no)
-bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_clear, guide_clear_all, ul_clear)
+bind_show_guide(btn_options, guide_options, ul_options)
 bind_show_guide(btn_run, guide_run, ul_no)
 
 for btn in all_guided_ui:
