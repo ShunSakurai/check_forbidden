@@ -19,7 +19,7 @@ For example, you can use this tool in the following situations:
 
 All you have to prepare are:
 
-- memoQ bilingual .mqxlz or .mqxliff file(s)
+- memoQ bilingual .mqxlz or .mqxliff file(s), or plain text file(s) which include translation
 - CSV or text file(s) containing the list of forbidden terms
 
 This tool searches for the forbidden terms in the target segments of bilingual files, segment by segment. It displays the result on the Command Prompt, and exports it into an HTML file. Command Prompt is good when the file is small and you want to quickly check what was detected. The Summary result is useful when you are working on a "View." Some characters are non-printable on Command Prompt. The HTML file is useful when you have many matches and you want to use filtering features.
@@ -51,7 +51,7 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ### Overview
 - Export bilingual file(s) from memoQ
 - Open the program by double-clicking Check Forbidden.exe or its alias
-- Choose bilingual file(s) by clicking "Bilingual" or by typing / pasting the path to the file
+- Choose translation file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose CSV or text file(s) containing the list of forbidden terms, or a Python script
 - Specify the path and the name of the result file to be exported if necessary. The default path is the first bilingual file's path + "checked_result.html"
 - Click "Run!"
@@ -67,13 +67,16 @@ You can specify whether you save the last used options. A file named "cf_options
 
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
-### memoQ file types
+### Translation file types
 Two file types are supported:
 
 - .mqxliff
 - .mqxlz
+- .txt
 
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when the processing is finished.
+
+The text file needs to be encoded in UTF-8.
 
 ### CSV file formats
 The term list needs to meet the following specifications:

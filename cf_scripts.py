@@ -148,9 +148,17 @@ def load_header_range(header):
     return seg_id, percent, locked
 
 
-def load_mqxliff(fn_bl_tuple):
-    f_bl = open(fn_bl_tuple[1], encoding='utf-8')
+def load_translation(fn_bl_tuple):
+    fn_bl = fn_bl_tuple[1]
+    f_bl = open(fn_bl, encoding='utf-8')
     f_bl_line_list = []
+
+    if fn_bl.endswith('.txt'):
+        index = 1
+        for i in f_bl.readlines():
+            f_bl_line_list.append((index, '', i, '-', 'No', '-'))
+            index += 1
+
     source_pattern = re.compile(
         '<source xml:space="preserve".*?>(.*?)</source>', re.S)
     target_pattern = re.compile(
@@ -349,8 +357,10 @@ def replace_fslash_w_bslash(str_path):
     return str_path.replace('/', '\\')
 
 
-def tf_to_yn(boolian):
-    if boolian:
+def tf_to_yn(value):
+    if isinstance(value, str):
+        return value
+    if value:
         return ('Yes')
     else:
         return ('No')
@@ -506,7 +516,7 @@ def check_for_each_term_list(
     for fn_bl_tuple in list_fn_bl_tuple:
         try_printing(fn_bl_tuple[0] + '\n')
         fname_bl = fname_from_str_path(fn_bl_tuple[0])
-        f_bl_line_list = load_mqxliff(fn_bl_tuple)
+        f_bl_line_list = load_translation(fn_bl_tuple)
 
         f_terms = open(fpath_terms, encoding='utf-8')
         f_terms_reader = csv.reader(f_terms)
@@ -544,7 +554,7 @@ def check_forbidden_terms(
             return
 
     for fn_bl in list_fpath_bl:
-        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff']:
+        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff', 'txt']:
             print('File name is invalid:', fn_bl)
             return
 
