@@ -68,11 +68,13 @@ Pythonコードを.exeファイルに変換し、インストーラーを作成�
 ![オプション](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
 ### 翻訳ファイルの種類
-次の2種類のファイルに対応しています。
+次のファイル形式がサポートされています。
 
 - .mqxliff
 - .mqxlz
 - .txt
+- .srt
+- .po
 
 .mqxlzファイルは、document.mqxliffファイル、スケルトン(書式情報)、バージョン情報(場合により)を圧縮したファイルです。このプログラムでは、document.mqxliffをフォルダーに展開し、処理の終了後に削除しています。
 
@@ -163,7 +165,6 @@ Windowsのコマンドプロンプトでマルチバイト文字が文字化け�
 
 ### 棚上げ中の機能
 - プログラム画面の大きさの自由変更
-- memoQ以外のファイルへの対応
 
 ### 追加予定のない機能
 - ドラッグでファイルを追加。tkinterでドラッグアンドドロップ機能を使用するのは難しいため

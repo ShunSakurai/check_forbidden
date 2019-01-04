@@ -350,8 +350,8 @@ def print_and_append_terms_data(fpath_terms, dict_options):
     return fname_header_terms
 
 
-def print_or_append(to_print, to_write, file_to_write_in, dict_options):
-    file_to_write_in.append(to_write)
+def print_or_append_to_html(to_print, to_write, file_to_write_in, dict_options):
+    file_to_write_in.append([re.sub(r'\n+', '<br />', str(i)) for i in to_write])
     if dict_options['bool_export']:
         try_printing(to_print)
 
@@ -510,7 +510,7 @@ def check_against_function(
         result = external_script.function(seg_id, source, target, percent, locked, same)
         if result:
             for ls in result:
-                print_or_append(ls, ls, sublist_matched_rows, dict_options)
+                print_or_append_to_html(ls, ls, sublist_matched_rows, dict_options)
 
     return sublist_matched_rows
 
@@ -533,7 +533,7 @@ def check_against_terms(
             match = pattern.search(target)
             if match:
                 s, e = match.start(), match.end()
-                print_or_append(
+                print_or_append_to_html(
                     '\n\r'.join([
                         str(row),
                         ''.join([
@@ -543,11 +543,12 @@ def check_against_terms(
                     ]),
                     [
                         fname_bl, seg_id,
-                        re.sub(r'\n+', '<br />', escape_html_entities(source)),
-                        re.sub(r'\n+', '<br />', ''.join([
+                        escape_html_entities(source),
+                        ''.join([
                             escape_html_entities(target[:s]), '<mark>',
                             escape_html_entities(target[s:e]), '</mark>',
-                            escape_html_entities(target[e:])])),
+                            escape_html_entities(target[e:])
+                        ]),
                         percent, tf_to_yn(locked), tf_to_yn(same)
                     ] + [escape_html_entities(cell) for cell in row],
                     sublist_matched_rows, dict_options
@@ -586,7 +587,7 @@ def check_for_each_term_list(
         )
         return fname_header_terms + list_matched_rows
     else:
-        print('No forbidden term was found!')
+        print('No result found!')
         return []
 
 

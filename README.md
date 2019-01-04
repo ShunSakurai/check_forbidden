@@ -68,16 +68,17 @@ You can specify whether you save the last used options. A file named "cf_options
 ![Options](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_options.png)
 
 ### Translation file types
-Two file types are supported:
+Following file types are supported:
 
 - .mqxliff
 - .mqxlz
 - .txt
 - .srt
+- .po
 
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when the processing is finished.
 
-The text file needs to be encoded in UTF-8.
+The text files need to be encoded in UTF-8.
 
 ### CSV file formats
 The term list needs to meet the following specifications:

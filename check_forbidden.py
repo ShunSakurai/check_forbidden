@@ -464,7 +464,7 @@ def display_toast(message, also_print=False):
 
 def main(str_tuple_bl, str_tuple_terms, str_result, dict_options):
     message_no_export = 'The search was successfully finished.'
-    message_no_result = 'No forbidden term was found!'
+    message_no_result = 'No result found!'
     snippet_file_created = ' was successfully created.'
     f_result_w, fpath_result, list_fpath_bl = cf_scripts.check_forbidden_terms(
             str_tuple_bl, str_tuple_terms, str_result, dict_options)
