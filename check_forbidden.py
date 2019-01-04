@@ -20,8 +20,8 @@ root = tkinter.Tk()
 frame_main = tkinter.Frame(root)
 
 ext_bl = [
-    ('All supported files', '*.mqxlz;*.mqxliff;*.txt;*.srt'),
-    ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff'), ('text', '*.txt'), ('srt', '*.srt')]
+    ('All supported files', '*.mqxlz;*.mqxliff;*.txt;*.srt;*.po'),
+    ('mqxlz', '*.mqxlz'), ('mqxliff', '*.mqxliff'), ('text', '*.txt'), ('srt', '*.srt'), ('po', '*.po')]
 ext_terms = [
     ('csv / text', '*.csv;*.txt'), ('csv', '*.csv'), ('text', '*.txt')]
 ext_function = [('Python', '*.py')]
@@ -532,7 +532,7 @@ btn_default['command'] = restore_default
 btn_readme['command'] = cf_scripts.open_readme
 btn_update['command'] = cf_scripts.check_updates
 
-guide_bl = '.mqxlz, .mqxliff, .txt, or .srt'
+guide_bl = '.mqxlz, .mqxliff, .txt, .srt, or .po'
 guide_terms = 'Text or CSV: Target (NG), Index, Source, Target (OK), etc.'
 guide_result = 'Export the result in a filterable and searchable HTML file.'
 guide_clear = 'Clear the field.'

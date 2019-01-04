@@ -177,12 +177,42 @@ def load_translation(fn_bl_tuple):
                         break
                 f_bl_line_list.append((index, '', target, '-', 'No', '-'))
 
+    elif fn_bl.endswith('.po'):
+        index = 1
+        source = ''
+        target = ''
+        is_msgid = False
+        is_msgstr = False
+        blank_line_pattern = re.compile(r'^[\n\r]*$')
+        for f_bl_line in f_bl:
+            if blank_line_pattern.match(f_bl_line):
+                is_msgstr = False
+                if source and target:
+                    f_bl_line_list.append(
+                        (index, source.replace('\\n', '\n'), target.replace('\\n', '\n'), '-', 'No', '-')
+                    )
+                if f_bl_line_list:
+                    index += 1
+            elif f_bl_line.startswith('#'):
+                continue
+            elif f_bl_line.startswith('msgid'):
+                is_msgid = True
+                source = f_bl_line.replace('msgid ', '').strip('"\r\n')
+            elif f_bl_line.startswith('msgstr'):
+                is_msgid = False
+                is_msgstr = True
+                target = f_bl_line.replace('msgstr ', '').strip('"\r\n')
+            elif f_bl_line.startswith('"'):
+                if is_msgid:
+                    source += f_bl_line.strip('"\r\n')
+                elif is_msgstr:
+                    target += f_bl_line.strip('"\r\n')
+
     else:
         source_pattern = re.compile(
             '<source xml:space="preserve".*?>(.*?)</source>', re.S)
         target_pattern = re.compile(
             '<target xml:space="preserve">(.*?)</target>', re.S)
-
         not_historical = True
         for f_bl_line in f_bl:
             if '<mq:historical-unit ' in f_bl_line:
@@ -347,7 +377,7 @@ def replace_tags(segment):
     while match_tag:
         match_tag = re.search(regex_tag, segment)
         if match_tag:
-            if match_tag[1] == 'ph' and match_tag[2] in ['&lt;br /&gt;']:
+            if match_tag[1] == 'ph' and match_tag[2] in {'&lt;br /&gt;'}:
                 text_after = '\n'
             else:
                 match_displaytext = re.search(regex_displaytext, match_tag[2])
@@ -355,9 +385,9 @@ def replace_tags(segment):
                 if match_displaytext and not match_displaytext[1].startswith('&amp;lt;'):
                     text_after = match_displaytext[1]
                 elif match_val and not match_val[1].startswith('&amp;lt;'):
-                    if match_val[1] in ['&ampnbsp;', 'nbsp']:
+                    if match_val[1] in {'&ampnbsp;', 'nbsp'}:
                         text_after = ' '
-                    elif match_val[1] in ['\n', 'br', 'br/', 'br /']:
+                    elif match_val[1] in {'\n', 'br', 'br/', 'br /'}:
                         text_after = '\n'
                     else:
                         text_after = match_val[1]
@@ -569,12 +599,12 @@ def check_forbidden_terms(
     fpath_result = replace_bslash_w_fslash(str_result)
 
     for fn_terms in list_fpath_terms:
-        if fn_terms.rsplit('.', 1)[-1] not in ['csv', 'txt', 'py']:
+        if fn_terms.rsplit('.', 1)[-1] not in {'csv', 'txt', 'py'}:
             print('File name is invalid:', fn_terms)
             return
 
     for fn_bl in list_fpath_bl:
-        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff', 'txt', 'srt']:
+        if fn_bl.rsplit('.', 1)[-1] not in {'mqxlz', 'mqxliff', 'txt', 'srt', 'po'}:
             print('File name is invalid:', fn_bl)
             return
 
