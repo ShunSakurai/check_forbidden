@@ -73,6 +73,7 @@ Two file types are supported:
 - .mqxliff
 - .mqxlz
 - .txt
+- .srt
 
 A .mqxlz file is a compressed file of a document.mqxliff file, a skeleton (formatting information), and sometimes the version information. The program extracts the document.mqxliff to a folder and removes it when the processing is finished.
 
@@ -163,7 +164,6 @@ Below are some best practices to avoid false positives.
 
 ### Maybe later
 - Make the program window re-sizable
-- Add an ability to handle non-memoQ files
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter

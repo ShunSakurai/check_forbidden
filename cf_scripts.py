@@ -150,46 +150,66 @@ def load_header_range(header):
 
 def load_translation(fn_bl_tuple):
     fn_bl = fn_bl_tuple[1]
-    f_bl = open(fn_bl, encoding='utf-8')
+    f_bl = open(fn_bl, encoding='utf-8-sig')
     f_bl_line_list = []
 
     if fn_bl.endswith('.txt'):
         index = 1
-        for i in f_bl.readlines():
-            f_bl_line_list.append((index, '', i, '-', 'No', '-'))
+        for f_bl_line in f_bl:
+            f_bl_line_list.append((index, '', f_bl_line, '-', 'No', '-'))
             index += 1
 
-    source_pattern = re.compile(
-        '<source xml:space="preserve".*?>(.*?)</source>', re.S)
-    target_pattern = re.compile(
-        '<target xml:space="preserve">(.*?)</target>', re.S)
+    elif fn_bl.endswith('.srt'):
+        srt_index_pattern = re.compile(r'^(\d+)[\n\r]?$')
+        blank_line_pattern = re.compile(r'^[\n\r]*$')
+        for f_bl_line in f_bl:
+            if srt_index_pattern.match(f_bl_line):
+                index = f_bl_line
+                next(f_bl)
+                target = ''
+                while True:
+                    try:
+                        next_line = next(f_bl)
+                        if blank_line_pattern.match(next_line):
+                            break
+                        target += next_line
+                    except StopIteration:
+                        break
+                f_bl_line_list.append((index, '', target, '-', 'No', '-'))
 
-    not_historical = True
-    for f_bl_line in f_bl:
-        if '<mq:historical-unit ' in f_bl_line:
-            not_historical = False
-        elif '</mq:historical-unit>' in f_bl_line:
-            not_historical = True
-        elif f_bl_line.startswith('<trans-unit id="') and not_historical:
-            seg_id, percent, locked = load_header_range(f_bl_line)
-        elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
-            while '</source>' not in f_bl_line:
-                f_bl_line += '\n' + next(f_bl)
-            source_line_with_tag = source_pattern.search(f_bl_line).group(1)
-            source_line_text_only = replace_tags(source_line_with_tag)
-        elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
-            while '</target>' not in f_bl_line:
-                f_bl_line += '\n' + next(f_bl)
-            target_line_with_tag = target_pattern.search(f_bl_line).group(1)
-            target_line_text_only = replace_tags(target_line_with_tag)
-            same = source_line_text_only == target_line_text_only
-            if target_line_text_only:
-                f_bl_line_list.append(
-                    (seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
-                )
-        else:
-            continue
-    f_bl.close()
+    else:
+        source_pattern = re.compile(
+            '<source xml:space="preserve".*?>(.*?)</source>', re.S)
+        target_pattern = re.compile(
+            '<target xml:space="preserve">(.*?)</target>', re.S)
+
+        not_historical = True
+        for f_bl_line in f_bl:
+            if '<mq:historical-unit ' in f_bl_line:
+                not_historical = False
+            elif '</mq:historical-unit>' in f_bl_line:
+                not_historical = True
+            elif f_bl_line.startswith('<trans-unit id="') and not_historical:
+                seg_id, percent, locked = load_header_range(f_bl_line)
+            elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
+                while '</source>' not in f_bl_line:
+                    f_bl_line += '\n' + next(f_bl)
+                source_line_with_tag = source_pattern.search(f_bl_line).group(1)
+                source_line_text_only = replace_tags(source_line_with_tag)
+            elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
+                while '</target>' not in f_bl_line:
+                    f_bl_line += '\n' + next(f_bl)
+                target_line_with_tag = target_pattern.search(f_bl_line).group(1)
+                target_line_text_only = replace_tags(target_line_with_tag)
+                same = source_line_text_only == target_line_text_only
+                if target_line_text_only:
+                    f_bl_line_list.append(
+                        (seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
+                    )
+            else:
+                continue
+        f_bl.close()
+    
     return f_bl_line_list
 
 
@@ -554,7 +574,7 @@ def check_forbidden_terms(
             return
 
     for fn_bl in list_fpath_bl:
-        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff', 'txt']:
+        if fn_bl.rsplit('.', 1)[-1] not in ['mqxlz', 'mqxliff', 'txt', 'srt']:
             print('File name is invalid:', fn_bl)
             return
 
