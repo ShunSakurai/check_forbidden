@@ -37,7 +37,7 @@ def append_metadata():
     meta_version = 'v' + setup.dict_console['version']
     list_metadata.append(meta_date_time)
     list_metadata.append(''.join([
-        '<a href="https://github.com/ShunSakurai/check_forbidden" target="_blank">',
+        '<a href="https://github.com/ShunSakurai/check_forbidden" rel="noopener noreferrer" target="_blank">',
         meta_program, '</a>', ' ', meta_version
     ]))
 
@@ -239,7 +239,7 @@ def load_translation(fn_bl_tuple):
             else:
                 continue
         f_bl.close()
-    
+
     return f_bl_line_list
 
 
