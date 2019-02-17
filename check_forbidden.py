@@ -5,7 +5,6 @@ py -B check_forbidden.py
 '''
 import cf_scripts
 import setup
-import datetime
 import os
 import pickle
 import sys
@@ -153,30 +152,19 @@ cb_save_terms.grid(row=3, column=0, sticky='w', padx=20)
 btn_default.grid(row=4, column=0, sticky='w', padx=20)
 
 
-label_online = tkinter.Label(frame_options, text='\tOnline')
-
-btn_readme = tkinter.Button(frame_options, text='Read readme', underline=9)
-btn_update = tkinter.Button(frame_options, text='Check for updates', underline=10)
-
-label_online.grid(row=0, column=1, sticky='w')
-btn_readme.grid(row=1, column=1, sticky='w', padx=20)
-btn_update.grid(row=2, column=1, sticky='w', padx=20)
-
-
 label_about = tkinter.Label(frame_options, text='\tAbout')
 
 label_version = tkinter.Label(
     frame_options, text=''.join([
         'Version ', setup.dict_console['version']
     ]), justify='left')
-label_author = tkinter.Label(
-    frame_options, text=''.join([
-        '©2016-', str(datetime.date.today().year), ' ', setup.dict_console['author']
-    ]), justify='left')
+btn_readme = tkinter.Button(frame_options, text='Read readme', underline=9)
+btn_update = tkinter.Button(frame_options, text='Check for updates', underline=10)
 
-label_about.grid(row=0, column=2, sticky='w')
-label_version.grid(row=1, column=2, sticky='w', padx=20)
-label_author.grid(row=2, column=2, sticky='w', padx=20)
+label_about.grid(row=0, column=1, sticky='w')
+label_version.grid(row=1, column=1, sticky='w', padx=20)
+btn_readme.grid(row=2, column=1, sticky='w', padx=20)
+btn_update.grid(row=3, column=1, sticky='w', padx=20)
 
 
 # Functions
@@ -341,8 +329,8 @@ def turn_on_options(widget):
 
 
 def turn_off_options(widget):
-        widget.config(text='⚙')
-        frame_options.grid_forget()
+    widget.config(text='⚙')
+    frame_options.grid_forget()
 
 
 def toggle_options(widget):
