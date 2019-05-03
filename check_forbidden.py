@@ -627,4 +627,7 @@ if __name__ == "__main__":
     load_options()
     print('tk window is ready to use.')
     root.protocol('WM_DELETE_WINDOW', lambda: (save_options(), root.destroy()))
-    frame_main.mainloop()
+    try:
+        frame_main.mainloop()
+    except KeyboardInterrupt:
+        save_options(), root.destroy()

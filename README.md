@@ -137,6 +137,7 @@ You can move along the UI items with "Tab" key and invoke the focused item with 
 - If you type or paste a path into the entry field and press the button to choose the file(s) afterwards, browsing starts from the folder written in the field
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
+- PyInstaller might create large folders named like "_MEI000000" in `C:\Users\%username%\AppData\Local\Temp` folder. They can be deleted safely
 
 ## Troubleshooting
 
@@ -187,7 +188,7 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 ## License
 ### Usage
 You can use it for free.
-© 2016-2018 Shun Sakurai
+© 2016-2019 Shun Sakurai
 
 ### MIT License
 The code is protected under MIT License. Please see license.md for details.
