@@ -134,10 +134,14 @@ You can move along the UI items with "Tab" key and invoke the focused item with 
 ### Tips
 - The check is done quickly if all bilingual files are combined into a "view"
 - The check is done quickly if the bilingual files are located on your local PC rather than on a shared drive
-- If you type or paste a path into the entry field and press the button to choose the file(s) afterwards, browsing starts from the folder written in the field
+- If you type or paste a path into the entry fields and press the button to choose the file(s) afterwards, browsing starts from the folder written in the field
+- If you save the last used term file name(s), their file path will be the default location to browse term files
 - When any of the entry field is filled, you can open the folder by pressing the arrow on the right
 - The result is displayed for both individual and whole files (as the "Summary")
 - PyInstaller might create large folders named like "_MEI000000" in `C:\Users\%username%\AppData\Local\Temp` folder. They can be deleted safely
+
+### Integration with XProof
+If you have [XProof](https://github.com/AlissaSabre/XProof) installed on your Windows, you can call XProofCmd from Check Forbidden, against the bilingual files selected in the "Bilingual" field. If no bilingual file is selected in the field, XProof opens with any file path in the field copied to the clipboard. XProof supports xliff files (.mqxlz and .mqxliff), not .txt/.srt/.po.
 
 ## Troubleshooting
 
@@ -162,10 +166,9 @@ Below are some best practices to avoid false positives.
 ## Features to come
 ### Working on
 - Show whitespace characters in HTML file
-- Exclude memoQ tags `{1}`, which is `<x id="1" />` in mqxliff file
-
-### Maybe later
+- Support only registered memoQ tags
 - Make the program window re-sizable
+- Do more with external Python functions
 
 ### Features not coming
 - Add file by dragging. The drag and drop feature is hard to use in tkinter

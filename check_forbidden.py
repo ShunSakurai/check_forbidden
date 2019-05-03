@@ -620,6 +620,47 @@ bind_keys('t', choose_terms)
 bind_keys('u', cf_scripts.check_updates)
 bind_keys('v', lambda x: cb_save.toggle())
 
+# Integrate with XProof
+if sys.platform.startswith('win'):
+    import winreg
+    path_xproof = ''
+    for path in [r'SOFTWARE\Alissa Sabre\XProof', r'SOFTWARE\Wow6432Node\Alissa Sabre\XProof']:
+        try:
+            path_xproof = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path), 'InstallDir')[0]
+            break
+        except FileNotFoundError:
+            pass
+
+    if path_xproof:
+        def open_xproof(*event):
+            if var_str_bl.get():
+                path_list = cf_scripts.ls_from_str_tuple(var_str_bl.get())
+                path_dir = cf_scripts.dir_from_str_path(path_list[0])
+                byte_path_dir = path_dir.encode()
+            else:
+                byte_path_dir = ''
+            print('-' * 70)
+            print('Calling XProof...')
+            print('Check Forbidden will be disabled while the process is running.')
+            try:
+                to_run = '"' + '" "'.join([path_xproof + 'XProofCmd.exe'] + path_list) + '"'
+                cf_scripts.subprocess.run(to_run)
+            except:
+                cf_scripts.subprocess.Popen(['clip'], stdin=cf_scripts.subprocess.PIPE).communicate(byte_path_dir)
+                cf_scripts.subprocess.run(path_xproof + 'XProof.exe')
+            finally:
+                print('Exited from XProof.')
+
+        btn_xproof = tkinter.Button(
+            text='Xproof', command=open_xproof, underline=0,
+            borderwidth=0, foreground='blue')
+        btn_xproof.grid(row=3, column=0, sticky='w', padx=5)
+
+        guide_xproof = 'Run XProofCmd or XProof copying the path. Only xliff files.'
+        btn_xproof.bind('<Enter>', lambda x: show_guide('<Enter>', guide_xproof, -1))
+        btn_xproof.bind('<Leave>', lambda x: hide_guide('<Leave>'))
+        bind_keys('x', open_xproof)
+
 # Initiating the program
 if __name__ == "__main__":
     top = frame_main.winfo_toplevel()
