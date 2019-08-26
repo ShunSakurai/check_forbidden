@@ -1,5 +1,5 @@
 ﻿# Check Forbidden
-A tool for checking forbidden terms included in the target segments of memoQ bilingual files (.mqxlz / .mqxliff), using CSV files
+A tool for checking forbidden terms in target segments of translation files (.mqxlz, .mqxliff, .xlf, etc.), using CSV files
 
 [Japanese README](https://github.com/ShunSakurai/check_forbidden/blob/master/README_jpn.md) is also available.
 
@@ -19,7 +19,7 @@ For example, you can use this tool in the following situations:
 
 All you have to prepare are:
 
-- memoQ bilingual .mqxlz or .mqxliff file(s), or plain text file(s) which include translation
+- memoQ bilingual .mqxlz or .mqxliff, version 1.2 XLIFF, or plain text file(s) which include translation
 - CSV or text file(s) containing the list of forbidden terms
 
 This tool searches for the forbidden terms in the target segments of bilingual files, segment by segment. It displays the result on the Command Prompt, and exports it into an HTML file. Command Prompt is good when the file is small and you want to quickly check what was detected. The Summary result is useful when you are working on a "View." Some characters are non-printable on Command Prompt. The HTML file is useful when you have many matches and you want to use filtering features.
@@ -49,7 +49,7 @@ To convert the Python code to an .exe file, and to create an installer, follow t
 ## Usage
 
 ### Overview
-- Export bilingual file(s) from memoQ
+- Export bilingual file(s) from memoQ or other CAT tools (Transifex supported)
 - Open the program by double-clicking Check Forbidden.exe or its alias
 - Choose translation file(s) by clicking "Bilingual" or by typing / pasting the path to the file
 - Choose CSV or text file(s) containing the list of forbidden terms, or a Python script
@@ -72,6 +72,7 @@ Following file types are supported:
 
 - .mqxliff
 - .mqxlz
+- .xlf ([XLIFF version 1.2](http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html))
 - .txt
 - .srt
 - .po
@@ -186,12 +187,10 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/che
 ## Contribution
 This is just a personal project. Any feedback and contribution from [Github Issues](https://github.com/ShunSakurai/check_forbidden/issues) or [Asana](https://app.asana.com/0/264039980253157/list) and contribution is welcome!
 
-Dear colleague translators and PMs, please help me brush up my English on this page.
-
 ## License
 ### Usage
 You can use it for free.
 © 2016-2019 Shun Sakurai
 
 ### MIT License
-The code is protected under MIT License. Please see license.md for details.
+The code is protected under MIT License. Please see [license.md](https://github.com/ShunSakurai/check_forbidden/blob/master/license.md) for details.

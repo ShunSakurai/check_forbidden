@@ -210,23 +210,24 @@ def load_translation(fn_bl_tuple):
 
     else:
         source_pattern = re.compile(
-            '<source xml:space="preserve".*?>(.*?)</source>', re.S)
+            '<source[^>]*?>(.*?)</source>', re.S)
         target_pattern = re.compile(
-            '<target xml:space="preserve">(.*?)</target>', re.S)
-        not_historical = True
+            '<target[^>]*?>(.*?)</target>', re.S)
+        mq_not_historical = True
         for f_bl_line in f_bl:
+            f_bl_line = f_bl_line.lstrip(' ')
             if '<mq:historical-unit ' in f_bl_line:
-                not_historical = False
+                mq_not_historical = False
             elif '</mq:historical-unit>' in f_bl_line:
-                not_historical = True
-            elif f_bl_line.startswith('<trans-unit id="') and not_historical:
+                mq_not_historical = True
+            elif f_bl_line.startswith('<trans-unit id="') and mq_not_historical:
                 seg_id, percent, locked = load_header_range(f_bl_line)
-            elif f_bl_line.startswith('<source xml:space="preserve"') and not_historical:
+            elif f_bl_line.startswith('<source') and mq_not_historical:
                 while '</source>' not in f_bl_line:
                     f_bl_line += '\n' + next(f_bl)
                 source_line_with_tag = source_pattern.search(f_bl_line).group(1)
                 source_line_text_only = replace_tags(source_line_with_tag)
-            elif f_bl_line.startswith('<target xml:space="preserve">') and not_historical:
+            elif f_bl_line.startswith('<target') and mq_not_historical:
                 while '</target>' not in f_bl_line:
                     f_bl_line += '\n' + next(f_bl)
                 target_line_with_tag = target_pattern.search(f_bl_line).group(1)
@@ -605,7 +606,7 @@ def check_forbidden_terms(
             return
 
     for fn_bl in list_fpath_bl:
-        if fn_bl.rsplit('.', 1)[-1] not in {'mqxlz', 'mqxliff', 'txt', 'srt', 'po'}:
+        if fn_bl.rsplit('.', 1)[-1] not in {'mqxlz', 'mqxliff', 'xlf', 'txt', 'srt', 'po'}:
             print('File name is invalid:', fn_bl)
             return
 
