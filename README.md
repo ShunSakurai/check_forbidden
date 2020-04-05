@@ -115,11 +115,11 @@ calculate_width.py
 import re
 pattern_half_width = re.compile(r'[ -~]')
 
-def function(int_seg_id, str_source, str_target, int_percent, bool_locked, bool_same):
+def function(str_seg_id, str_source, str_target, int_percent, bool_locked, bool_same):
     length_half = len(re.findall(pattern_half_width, str_target))
     length_full = len(str_target) - length_half
     length_total = length_half + length_full * 2
-    return [[int_seg_id, str_target, length_full, length_half, length_total]]
+    return [[str_seg_id, str_target, length_full, length_half, length_total]]
 ```
 
 ### Keyboard shortcuts

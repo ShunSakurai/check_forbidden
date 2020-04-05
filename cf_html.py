@@ -76,7 +76,7 @@ def mk_table_result(f_result_w, dict_options):
 
         if isinstance(line, str):
             ls_str_tables.append(''.join([
-                ' ' * 4, '<table border="1">\n',
+                ' ' * 4, '<table>\n',
                 ' ' * 6, f'<caption onclick="collapseTbody(this)">▼ {line}</caption>\n',
                 ' ' * 6, '<tbody>\n', ' ' * 8, f'<tr id="{str(counter_id)}">'
             ])

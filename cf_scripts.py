@@ -136,10 +136,10 @@ def fname_from_str_path(str_path):
 
 
 def load_header_range(header):
-    regex_id = re.compile(r'<trans-unit id="(\d+)"')
+    regex_id = re.compile(r'<trans-unit id="(\d+|[^"]+)(\[\d\])?"')
     regex_percent = re.compile(r'mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
-    seg_id = int(regex_id.search(header).group(1))
+    seg_id = regex_id.search(header).group(1)
     percent = 0
     match_percent = regex_percent.search(header)
     locked = string_locked in header
@@ -538,7 +538,7 @@ def check_against_terms(
                     '\n\r'.join([
                         str(row),
                         ''.join([
-                            str(seg_id), '\t', target[s - 5:s], '...',
+                            seg_id, '\t', target[s - 5:s], '...',
                             target[s:e], '...', target[e:e + 5]]),
                         source, target, ''
                     ]),
