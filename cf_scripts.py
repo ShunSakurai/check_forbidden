@@ -139,13 +139,13 @@ def load_header_range(header):
     regex_id = re.compile(r'<trans-unit id="(\d+|[^"]+)(\[\d\])?"')
     regex_percent = re.compile(r'mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
-    seg_id = regex_id.search(header).group(1)
+    str_seg_id = regex_id.search(header).group(1)
     percent = 0
     match_percent = regex_percent.search(header)
     locked = string_locked in header
     if match_percent:
         percent = int(match_percent.group(1))
-    return seg_id, percent, locked
+    return str_seg_id, percent, locked
 
 
 def load_translation(fn_bl_tuple):
@@ -156,7 +156,8 @@ def load_translation(fn_bl_tuple):
     if fn_bl.endswith('.txt'):
         index = 1
         for f_bl_line in f_bl:
-            f_bl_line_list.append((index, '', f_bl_line, '-', 'No', '-'))
+            str_seg_id = str(index)
+            f_bl_line_list.append((str_seg_id, '', f_bl_line, '-', 'No', '-'))
             index += 1
 
     elif fn_bl.endswith('.srt'):
@@ -164,7 +165,7 @@ def load_translation(fn_bl_tuple):
         blank_line_pattern = re.compile(r'^[\n\r]*$')
         for f_bl_line in f_bl:
             if srt_index_pattern.match(f_bl_line):
-                index = f_bl_line
+                str_seg_id = f_bl_line
                 next(f_bl)
                 target = ''
                 while True:
@@ -175,7 +176,7 @@ def load_translation(fn_bl_tuple):
                         target += next_line
                     except StopIteration:
                         break
-                f_bl_line_list.append((index, '', target, '-', 'No', '-'))
+                f_bl_line_list.append((str_seg_id, '', target, '-', 'No', '-'))
 
     elif fn_bl.endswith('.po'):
         index = 1
@@ -188,8 +189,9 @@ def load_translation(fn_bl_tuple):
             if blank_line_pattern.match(f_bl_line):
                 is_msgstr = False
                 if source and target:
+                    str_seg_id = str(index)
                     f_bl_line_list.append(
-                        (index, source.replace('\\n', '\n'), target.replace('\\n', '\n'), '-', 'No', '-')
+                        (str_seg_id, source.replace('\\n', '\n'), target.replace('\\n', '\n'), '-', 'No', '-')
                     )
                 if f_bl_line_list:
                     index += 1
@@ -221,7 +223,7 @@ def load_translation(fn_bl_tuple):
             elif '</mq:historical-unit>' in f_bl_line:
                 mq_not_historical = True
             elif f_bl_line.startswith('<trans-unit id="') and mq_not_historical:
-                seg_id, percent, locked = load_header_range(f_bl_line)
+                str_seg_id, percent, locked = load_header_range(f_bl_line)
             elif f_bl_line.startswith('<source') and mq_not_historical:
                 while '</source>' not in f_bl_line:
                     f_bl_line += '\n' + next(f_bl)
@@ -235,7 +237,7 @@ def load_translation(fn_bl_tuple):
                 same = source_line_text_only == target_line_text_only
                 if target_line_text_only:
                     f_bl_line_list.append(
-                        (seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
+                        (str_seg_id, source_line_text_only, target_line_text_only, percent, locked, same)
                     )
             else:
                 continue
@@ -507,8 +509,8 @@ def check_against_function(
     mname = mfile.rsplit('.', 1)[0]
     sys.path.append(mdir)
     external_script = importlib.import_module(mname)
-    for (seg_id, source, target, percent, locked, same) in f_bl_line_list:
-        result = external_script.function(seg_id, source, target, percent, locked, same)
+    for (str_seg_id, source, target, percent, locked, same) in f_bl_line_list:
+        result = external_script.function(str_seg_id, source, target, percent, locked, same)
         if result:
             for ls in result:
                 print_or_append_to_html(ls, ls, sublist_matched_rows, dict_options)
@@ -530,7 +532,7 @@ def check_against_terms(
             print('Error occurred with regex pattern:', row[0])
             print(sys.exc_info()[1], '\n', sys.exc_info()[0])
             continue
-        for (seg_id, source, target, percent, locked, same) in f_bl_line_list:
+        for (str_seg_id, source, target, percent, locked, same) in f_bl_line_list:
             match = pattern.search(target)
             if match:
                 s, e = match.start(), match.end()
@@ -538,12 +540,12 @@ def check_against_terms(
                     '\n\r'.join([
                         str(row),
                         ''.join([
-                            seg_id, '\t', target[s - 5:s], '...',
+                            str_seg_id, '\t', target[s - 5:s], '...',
                             target[s:e], '...', target[e:e + 5]]),
                         source, target, ''
                     ]),
                     [
-                        fname_bl, seg_id,
+                        fname_bl, str_seg_id,
                         escape_html_entities(source),
                         ''.join([
                             escape_html_entities(target[:s]), '<mark>',
