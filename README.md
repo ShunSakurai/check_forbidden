@@ -1,6 +1,8 @@
 ﻿# Check Forbidden
 A tool for checking forbidden terms in target segments of translation files (.mqxlz, .mqxliff, .xlf, etc.), using CSV files
 
+This project will be discontinued, and I'll develop an online tool: [yure-checker](https://github.com/ShunSakurai/yure-checker).
+
 [Japanese README](https://github.com/ShunSakurai/check_forbidden/blob/master/README_jpn.md) is also available.
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)

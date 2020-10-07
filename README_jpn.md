@@ -1,6 +1,8 @@
 ﻿# Check Forbidden
 翻訳ファイル(.mqxlz、.mqxliff、.xlfなど)の訳文中に含まれる禁止されている訳語を、CSVファイルを使用して確認するためのツールです。
 
+このプロジェクトは開発を終了し、今後は[揺れチェッカー](https://github.com/ShunSakurai/yure-checker)というオンラインツールを開発する予定です。
+
 [英語のREADME](https://github.com/ShunSakurai/check_forbidden/blob/master/README.md)もあります。
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/check_forbidden/check_forbidden_ui.png)

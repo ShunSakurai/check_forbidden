@@ -1,6 +1,7 @@
 '''
 cd dropbox/codes/check_forbidden
 py -B cf_scripts.py
+python3 -B cf_scripts.py
 
 This file contains helper functions, which are
 basically without any side effects to UIs and Variables

@@ -2,6 +2,7 @@
 cd /d z:
 cd dropbox/codes/check_forbidden
 py -B check_forbidden.py
+python3 -B check_forbidden.py
 '''
 import cf_scripts
 import setup
