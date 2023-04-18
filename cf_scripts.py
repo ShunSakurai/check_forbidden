@@ -137,7 +137,7 @@ def fname_from_str_path(str_path):
 
 
 def load_header_range(header):
-    regex_id = re.compile(r'<trans-unit id="(\d+|[^"]+)(\[\d\])?"')
+    regex_id = re.compile(r'<trans-unit[^>]+?id="(\d+|[^"]+)(\[\d\])?"')
     regex_percent = re.compile(r'mq:percent="(\d+)"')
     string_locked = 'mq:locked="locked"'
     str_seg_id = regex_id.search(header).group(1)
@@ -223,7 +223,7 @@ def load_translation(fn_bl_tuple):
                 mq_not_historical = False
             elif '</mq:historical-unit>' in f_bl_line:
                 mq_not_historical = True
-            elif f_bl_line.startswith('<trans-unit id="') and mq_not_historical:
+            elif f_bl_line.startswith('<trans-unit ') and mq_not_historical:
                 str_seg_id, percent, locked = load_header_range(f_bl_line)
             elif f_bl_line.startswith('<source') and mq_not_historical:
                 while '</source>' not in f_bl_line:
@@ -370,12 +370,12 @@ def escape_html_entities(string, *unescape):
 
 
 def replace_tags(segment):
+    regex_markers = re.compile(r'<mrk [^>]+?>|</mrk>')
+    segment = regex_markers.sub('', segment)
+
     regex_tag = re.compile(r'<([^/\s]+).*?>(.*?)</\1>', re.S)
-    regex_tag_comment = re.compile(r'<mrk mtype=.*?>', re.S)
     regex_displaytext = re.compile(r'displaytext=&quot;(.*?)&quot;')
     regex_val = re.compile(r'val=&quot;(.*?)&quot;', re.DOTALL)
-    if regex_tag_comment.search(segment):
-        segment = regex_tag_comment.sub('', segment)
 
     match_tag = True
     while match_tag:
