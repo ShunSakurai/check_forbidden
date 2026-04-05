@@ -318,7 +318,7 @@ three_support_funcs = [
 ]
 
 for var, func in zip(three_vars, three_support_funcs):
-    var.trace('w', func)
+    var.trace_add('write', func)
 
 
 def turn_on_options(widget):
@@ -360,7 +360,7 @@ def disable_open_when_result(var, unknown, w):
         cb_open['state'] = 'normal'
 
 
-var_bool_export.trace('w', disable_open_when_result)
+var_bool_export.trace_add('write', disable_open_when_result)
 
 
 def restore_default(*event):
@@ -497,7 +497,7 @@ def enable_run_if_filled(var, unknown, w):
 
 
 for var in three_vars:
-    var.trace('w', enable_run_if_filled)
+    var.trace_add('write', enable_run_if_filled)
 
 # Binding
 three_funcs = [choose_bl, choose_terms, choose_result]
